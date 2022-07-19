@@ -10,10 +10,12 @@ use App\Models\Items;
 use App\Models\Mark;
 use App\Models\CarsImage;
 use App\Models\Cars;
+use App\Models\RealtyImage;
+use App\Models\Realty;
 
 class AddEditController extends Controller
 {
-    public function add_estate(){
+    public function add_estate(Request $data){
         return view('add_estate');
     }
     public function edit_estate(){
@@ -240,5 +242,92 @@ class AddEditController extends Controller
     }
     public function delete_marka() {
         CarsImage::where('user', '=', auth()->user()->id)->delete();
+    }
+    public function img_add_realty(Request $data) {
+        if(!empty($data->image)) {
+            if(RealtyImage::where('user', '=', auth()->user()->id)->count() <= 19) {
+                $realty_image = new RealtyImage();
+                $file = $data->file('image');
+                $upload_folder = 'public/realty_image/'.auth()->user()->id;
+                $filename = rand().'_'.$file->getClientOriginalName();
+                $realty_image->image = $filename;
+                $realty_image->user = auth()->user()->id;
+                Storage::putFileAs($upload_folder, $file, $filename);
+                $realty_image->save();
+                $realty = array(
+                    "id" => $realty_image->id,
+                    "image" => $realty_image->image,
+                );
+                return $realty;
+            }
+        }
+    }
+    public function all_img_realty(){
+        $realty_image_count = RealtyImage::where('user', '=', auth()->user()->id)->count();
+        if($realty_image_count != 0) {
+            $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+            return $realty_image;
+        } else {
+            return 0;
+        }
+    }
+    public function img_delete_realty($id){
+        $realty_image = RealtyImage::find($id);
+        $upload_folder = 'public/realty_image/'.auth()->user()->id;
+        Storage::delete($upload_folder . '/' . $realty_image->image);
+        RealtyImage::find($id)->delete();
+    }
+    public function add_estate_post(Request $data){
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new Realty();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+        $realty->cs_newold = $data->input('cs_newold');
+
+        $realty->adres = $data['adres'];
+        $realty->number_flat = $data['number_flat'];
+        $realty->who_add = $data['who_add'];
+        $realty->online_display = $data['online_display'];
+
+        $realty->type_residential = $data['type_residential'];
+        $realty->floor = $data['floor'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->square = $data['square'];
+        $realty->residential_square = $data['residential_square'];
+        $realty->type_home = $data['type_home'];
+        $realty->floor_home = $data['floor_home'];
+        $realty->elevator = $data['elevator'];
+        $realty->closed_territory = $data['closed_territory'];
+        $realty->children_playground = $data['children_playground'];
+        $realty->sports_ground = $data['sports_ground'];
+        $realty->parking = $data['parking'];
+        
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->realty_images = rtrim($images, ",");
+        } else {
+            $realty->realty_images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->method_sale = $data['method_sale'];
+        $realty->mortgage = $data['mortgage'];
+        $realty->sale_share = $data['sale_share'];
+        $realty->auction = $data['auction'];
+        $realty->price = $data['price'];
+
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
     }
 }
