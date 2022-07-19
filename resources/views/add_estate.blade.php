@@ -276,44 +276,47 @@
                 <div class="row g-3 align-items-center mb-4">
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Фотографии <span class="text-muted small">(Максимум
-                                3)</span></label>
+                                20)</span></label>
                     </div>
                     <div class="col-auto mt-0">
                         <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addimage"><span>+</span> Добавить фото</button>
-                        <div class="text-danger">@{{cars_images_error}}</div>
+                        <div class="text-danger">@{{realty_images_error}}</div>
                         <div class="mt-3">
-                            <span v-for="(item, id) in cars_images" key="id" style="width:100px;display:inline-block;">
+                            <span v-for="(item, id) in realty_images" key="id" style="width:100px;display:inline-block;">
                                 <img width="100"
-                                    :src="'/storage/cars_image/{{auth()->user()->id}}/' + item.image"
+                                    :src="'/storage/realty_image/{{auth()->user()->id}}/' + item.image"
                                     alt="">
-                                <span class="bg-danger pt-2 text-white px-1" style="position: relative;bottom:28px;cursor:pointer;" v-on:click="delete_images_cars(id)"><i class="material-icons">delete</i></span>
+                                <span class="bg-danger pt-2 text-white px-1" style="position: relative;bottom:28px;cursor:pointer;" v-on:click="delete_images_realty(id)"><i class="material-icons">delete</i></span>
                             </span>
                         </div>
                     </div>
                 </div>
                 <h2>Описание</h2>
-                <textarea type="text" class="form-control mb-4" style="height: 250px; width: 700px" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
+                <div class="d-flex flex-column mb-4">
+                    <textarea type="text" class="form-control" v-model="description" style="height: 250px; width: 700px" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
+                    <div class="text-danger">@{{description_error}}</div>
+                </div>
                 <h2>Условия сделки</h2>
                 <div class="d-flex mt-2 mb-5">
                     <label for="name" class="col-form-label fs-5">Способ продажи</label>
                     <div class="d-flex flex-column">
                         <div class="mt-0 d-flex" style="margin-left: 14%;">
-                            <input type="radio" class="btn-check" name="parking" v-model="parking" id="parking1" autocomplete="off">
-                            <label class="btn btn-outline-secondary border-right-none" for="parking1">Свободная</label>
-                            <input type="radio" class="btn-check" name="parking" v-model="parking" id="parking2" autocomplete="off">
-                            <label class="btn btn-outline-secondary border-left-none" for="parking2">Альтернативная</label>
+                            <input type="radio" class="btn-check" name="method_sale" v-model="method_sale" id="method_sale1" autocomplete="off">
+                            <label class="btn btn-outline-secondary border-right-none" for="method_sale1">Свободная</label>
+                            <input type="radio" class="btn-check" name="method_sale" v-model="method_sale" id="method_sale2" autocomplete="off">
+                            <label class="btn btn-outline-secondary border-left-none" for="method_sale2">Альтернативная</label>
                         </div>
                         <div class="d-flex flex-column mt-2" style="margin-left: 14%;">
                             <div>   
-                                <input class="form-check-input me-2 mb-2" type="checkbox" v-model="closed_territory" id="closed_territory" value="Закрытая территория" aria-label="...">
+                                <input class="form-check-input me-2 mb-2" type="checkbox" v-model="mortgage" id="mortgage" value="Можно в ипотеку" aria-label="...">
                                 <span>Можно в ипотеку</span>
                             </div>
                             <div>
-                                <input class="form-check-input me-2 mb-2" type="checkbox" v-model="children_playground" id="children_playground" value="Детская площадка" aria-label="...">
+                                <input class="form-check-input me-2 mb-2" type="checkbox" v-model="sale_share" id="sale_share" value="Продажа доли" aria-label="...">
                                 <span>Продажа доли</span>
                             </div>
                             <div>
-                                <input class="form-check-input me-2" type="checkbox" v-model="sports_ground" id="sports_ground" value="Спортивная площадка" aria-label="...">
+                                <input class="form-check-input me-2" type="checkbox" v-model="auction" id="auction" value="Аукцион" aria-label="...">
                                 <span>Аукцион</span>
                             </div>
                         </div>
@@ -322,12 +325,12 @@
                 <div class="d-flex mb-2">
                     <label for="name" class="col-form-label">Цена</label>
                     <div class="mt-0" style="margin-left: 12%;">
-                        <input type="text" name="name" id="name" v-model="number_flat" class="form-control" aria-describedby="passwordHelpInline">
-                        <div class="text-danger">@{{number_flat_error}}</div>
+                        <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
+                        <div class="text-danger">@{{price_error}}</div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two()">Продолжить</button>
+            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_three()">Опубликовать</button>
         </div>
 
         <!-- Начало модального окна добавления фото -->
@@ -337,17 +340,17 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Выберите изображение</h5>
-                        <button type="button" id="close_cars_image" class="btn-close" data-bs-dismiss="modal"
+                        <button type="button" id="close_realty_image" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <form id="form_add_image_cars">
+                    <form id="form_add_image_realty">
                     @csrf
                         <div class="modal-body">
-                            <input type="file" name="image" id="file_cars" class="w-100">
-                            <div class="text-danger">@{{file_cars_error}}</div>
+                            <input type="file" name="image" id="file_realty" class="w-100">
+                            <div class="text-danger">@{{file_realty_error}}</div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary" v-on:click="add_images_cars()">Загрузить</button>
+                            <button class="btn btn-primary" v-on:click="add_images_realty()">Загрузить</button>
                         </div>
                     </form>
                 </div>
@@ -380,6 +383,13 @@
                     children_playground: '',
                     sports_ground: '',
                     parking: '',
+                    realty_images: [],
+                    description: '',
+                    method_sale: '',
+                    mortgage: '',
+                    sale_share: '',
+                    auction: '',
+                    price: '',
                     adres_error: '',
                     who_add_error: '',
                     number_flat_error: '',
@@ -389,11 +399,35 @@
                     square_error: '',
                     type_home_error: '',
                     floor_home_error: '',
+                    file_realty_error: '',
+                    description_error: '',
+                    price_error: '',
                     res_one: false,
                     res_two: false,
                 }
             },
+            beforeMount(){
+                this.all();
+            },
             methods: {
+                all() {
+                    var prom = this.realty_images
+                    axios({
+                        method: 'get',
+                        url: '/all_img_realty',
+                        responseType: 'json',
+                    })
+                    .then(function (response) {
+                        if(response.data != 0) {
+                            response.data.forEach(function(elem) {
+                                prom.push({
+                                    id: elem['id'],
+                                    image: elem['image'],
+                                })
+                            })
+                        }
+                    })
+                },
                 choose_realty(realty) {
                     this.what_i_sell = realty
                 },
@@ -613,6 +647,102 @@
                         }
                     } else {
                         this.type_residential_error = 'Укажите тип жилья'
+                    }
+                },
+                add_images_realty() {
+                    event.preventDefault();
+                    if(document.getElementById('file_realty').files.length != 0) {
+                        if(this.realty_images.length <= 19) {
+                            this.realty_images_error = ''
+                            this.file_realty_error = ''
+                            var form_add_image_cars = new FormData($("#form_add_image_realty")[0]);
+
+                            var prom = this.realty_images
+                            axios({
+                                method: 'post',
+                                url: '/img_add_realty',
+                                responseType: 'json',
+                                data: form_add_image_cars,
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then(function (response) {
+                                close_realty_image.click()
+                                prom.push({
+                                    id: response.data['id'],
+                                    image: response.data['image'],
+                                })
+                                file_realty.value = "";
+                            })
+                        } else {
+                            this.file_realty_error = 'Добавлено максимальное количество изображений'
+                        }
+                    } else {
+                        this.file_realty_error = 'Вы не выбрали изображение'
+                    }
+                },
+                delete_images_realty(id) {
+                    var prom = this.realty_images
+                    var e_item = prom[id]
+
+                    axios({
+                        method: 'get',
+                        url: `/img_delete_realty/${e_item.id}`,
+                        responseType: 'json',
+                    })
+                    .then(function (response) {
+                        prom.splice(id, 1)
+                    })
+                },
+                resume_three() {
+                    if(this.description != '') {
+                        if(this.price != '') {
+                            this.price_error = ''
+                            this.description_error = ''
+                            
+                            axios({
+                                method: 'post',
+                                url: '/add_estate',
+                                responseType: 'json',
+                                data: {
+                                    what_i_sell: this.what_i_sell,
+                                    sell_and_buy: this.sell_and_buy,
+                                    cs_newold: this.cs_newold,
+                                    adres: this.adres,
+                                    number_flat: this.number_flat,
+                                    who_add: this.who_add,
+                                    online_display: this.online_display,
+                                    type_residential: this.type_residential,
+                                    floor: this.floor,
+                                    count_rooms: this.count_rooms,
+                                    square: this.square,
+                                    residential_square: this.residential_square,
+                                    type_home: this.type_home,
+                                    floor_home: this.floor_home,
+                                    elevator: this.elevator,
+                                    closed_territory: this.closed_territory,
+                                    children_playground: this.children_playground,
+                                    sports_ground: this.sports_ground,
+                                    parking: this.parking,
+                                    realty_images: this.realty_images,
+                                    description: this.description,
+                                    method_sale: this.method_sale,
+                                    mortgage: this.mortgage,
+                                    sale_share: this.sale_share,
+                                    auction: this.auction,
+                                    price: this.price,
+                                },
+                            })
+                            .then(function (response) {
+                                alert('Получилось')
+                            })
+                        } else {
+                            this.price_error = 'Введите цену'
+                            this.description_error = ''
+                        }
+                    } else {
+                        this.description_error = 'Пожалуйста, заполните описание'
                     }
                 }
             }

@@ -1441,7 +1441,6 @@
                             },
                         })
                         .then(function (response) {
-                            
                         })
 
                         this.car_selected = true
