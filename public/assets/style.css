@@ -1,0 +1,107 @@
+.img-c {
+    object-fit: cover;
+    height: 60px;
+}
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.card {
+    display: inline-block;
+    width: 95px;
+    text-decoration: none;
+    color: black;
+    border: none;
+}
+.small-c {
+    font-size: 9pt;
+}
+.logo-img {
+    width: 180px;
+}
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.img-fluid {
+    height: 250px;
+    object-fit: cover;
+}
+.yes-wrap {
+    white-space: normal;
+}
+.input-marka {
+    display: flex;
+    border: 1px solid #ced4da;
+    padding: .375rem .75rem;
+    border-radius: .375rem;
+    cursor: pointer;
+}
+.card-marks {
+    background-color: #3a3a6514;
+    width: 23.6%;
+    height: 70pt;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.card-year {
+    width: 23.6%;
+    height: 27pt;
+    padding-left: 5pt;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.card-marks:hover {
+    border-color: blue !important;
+}
+.card-year:hover {
+    color: blue;
+}
+.btn-close-auto {
+    position: absolute;
+    right: 0px;
+}
+.btn-out {
+    color: black;
+}
+.btn-out:hover {
+    color: white ;
+}
+.border-right-none {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.border-left-none {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+@media (min-width: 700px) {
+    .logo {
+        margin-right: 1.5rem !important;
+    }
+}
+@media (max-width: 700px) {
+    .logo {
+        width: 100%;
+        display: flex;
+    }
+    .main-search {
+        width: 100%;
+    }
+    .btn-main {
+        width: 100%;
+    }
+    .text-logo {
+        justify-content: center;
+    }
+    .btn-custom {
+        width: 100%;
+    }
+    .img-slider {
+        object-fit: cover;
+        height: 180px;
+    }
+}
