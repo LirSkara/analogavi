@@ -21,4 +21,7 @@ class HomeController extends Controller
     public function items(){
         return view('items');
     }
+    public function sotr(){
+        return view('sotr');
+    }
 }

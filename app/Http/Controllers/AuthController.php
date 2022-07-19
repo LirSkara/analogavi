@@ -56,6 +56,18 @@ class AuthController extends Controller
         return view('cabinet');
     }
 
+    public function user_info(){
+        return view('user_info');
+    }
+
+    public function my_adv(){
+        return view('my_adv');
+    }
+
+    public function favorites(){
+        return view('favorites');
+    }
+
     public function exit(){
         auth('web')->logout();
         return redirect()->route('home');

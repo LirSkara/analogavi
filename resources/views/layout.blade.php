@@ -40,7 +40,7 @@
         <div class="d-flex flex-wrap">
             <div class="p-2 me-4 logo">
                 <!-- <span class="fs-4 fw-bold text-logo">LOGO DESC</span> -->
-                <a class="mx-auto" href="/"><img class="logo-img" src="https://shopcrossroadstc.com/wp-content/uploads/sites/4/2014/07/Party-City.png" alt=""></a>
+                <a class="mx-auto" href="/"><img class="logo-img" src="/assets/khalif.png" alt=""></a>
             </div>
             <div class="p-2 flex-grow-1 main-search">
                 <div class="input-group mb-3">

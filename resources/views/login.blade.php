@@ -15,6 +15,7 @@
               <input name="password" type="password" class="form-control" id="exampleInputPassword1">
             </div>
             <button type="submit" class="btn btn-primary w-100"><i class="material-icons align-middle">login</i> Войти</button>
+            <a class="mt-3 text-center d-block btn btn-light border" href="/reg"><i class="material-icons align-middle">how_to_reg</i> Создать аккаунт</a>
         </form>
     </div>
 </div>

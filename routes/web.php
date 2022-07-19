@@ -7,6 +7,7 @@ use App\Http\Controllers\AddEditController; //Подключаем контро�
 
 Route::get('/', [HomeController::class, 'welcome'])->name('home');
 Route::get('/estate', [HomeController::class, 'estate']);
+Route::get('/sotr', [HomeController::class, 'sotr']);
 Route::get('/add_estate', [AddEditController::class, 'add_estate']);
 Route::get('/edit_estate', [AddEditController::class, 'edit_estate']);
 Route::get('/cars', [HomeController::class, 'cars']);
@@ -35,4 +36,7 @@ Route::get('/reg', [AuthController::class, 'reg']);
 Route::post('/login', [AuthController::class, 'login_p']);
 Route::post('/reg', [AuthController::class, 'reg_p']);
 Route::get('/cabinet', [AuthController::class, 'cabinet']);
+Route::get('/user_info', [AuthController::class, 'user_info']);
+Route::get('/my_adv', [AuthController::class, 'my_adv']);
+Route::get('/favorites', [AuthController::class, 'favorites']);
 Route::get('/exit', [AuthController::class, 'exit']);
