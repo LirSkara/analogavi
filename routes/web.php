@@ -34,6 +34,10 @@ Route::post('/img_add_realty', [AddEditController::class, 'img_add_realty']);
 Route::get('/img_delete_realty/{id}', [AddEditController::class, 'img_delete_realty']);
 Route::get('/all_img_realty', [AddEditController::class, 'all_img_realty']);
 Route::post('/add_estate', [AddEditController::class, 'add_estate_post']);
+Route::post('/add_apartment_rent', [AddEditController::class, 'add_apartment_rent']);
+Route::post('/add_apartment_buy', [AddEditController::class, 'add_apartment_buy']);
+Route::post('/add_apartment_take', [AddEditController::class, 'add_apartment_take']);
+Route::post('/add_room', [AddEditController::class, 'add_room']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/reg', [AuthController::class, 'reg']);

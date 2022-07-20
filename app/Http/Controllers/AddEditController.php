@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApartmentRent;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -12,11 +13,18 @@ use App\Models\CarsImage;
 use App\Models\Cars;
 use App\Models\RealtyImage;
 use App\Models\Realty;
+use App\Models\ApartmentBuy;
+use App\Models\ApartmentTake;
+use App\Models\Rooms;
 
 class AddEditController extends Controller
 {
-    public function add_estate(Request $data){
-        return view('add_estate');
+    public function add_estate(){
+        if(Auth()->check()){
+            return view('add_estate');
+        } else {
+            return redirect()->route('login');
+        }
     }
     public function edit_estate(){
         return view('estate');
@@ -286,7 +294,180 @@ class AddEditController extends Controller
         $realty->name_user = auth()->user()->name;
         $realty->what_i_sell = $data['what_i_sell'];
         $realty->sell_and_buy = $data['sell_and_buy'];
-        $realty->cs_newold = $data->input('cs_newold');
+
+        $realty->adres = $data['adres'];
+        $realty->number_flat = $data['number_flat'];
+        $realty->who_add = $data['who_add'];
+        $realty->online_display = $data['online_display'];
+
+        $realty->type_residential = $data['type_residential'];
+        $realty->floor = $data['floor'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->square = $data['square'];
+        $realty->residential_square = $data['residential_square'];
+        $realty->type_home = $data['type_home'];
+        $realty->floor_home = $data['floor_home'];
+        $realty->elevator = $data['elevator'];
+        $realty->closed_territory = $data['closed_territory'];
+        $realty->children_playground = $data['children_playground'];
+        $realty->sports_ground = $data['sports_ground'];
+        $realty->parking = $data['parking'];
+        
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->realty_images = rtrim($images, ",");
+        } else {
+            $realty->realty_images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->method_sale = $data['method_sale'];
+        $realty->mortgage = $data['mortgage'];
+        $realty->sale_share = $data['sale_share'];
+        $realty->auction = $data['auction'];
+        $realty->price = $data['price'];
+        
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_apartment_rent(Request $data){
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new ApartmentRent();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->number_flat = $data['number_flat'];
+        $realty->who_add = $data['who_add'];
+        $realty->online_display = $data['online_display'];
+
+        $realty->type_time = $data['type_time'];
+        $realty->type_residential = $data['type_residential'];
+        $realty->floor = $data['floor'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->square = $data['square'];
+        $realty->residential_square = $data['residential_square'];
+        $realty->conditioner = $data['conditioner'];
+        $realty->fridge = $data['fridge'];
+        $realty->stove = $data['stove'];
+        $realty->nuke = $data['nuke'];
+        $realty->washing_machine = $data['washing_machine'];
+        $realty->dishwasher = $data['dishwasher'];
+        $realty->water_heater = $data['water_heater'];
+        $realty->TV = $data['TV'];
+        $realty->wi_fi = $data['wi_fi'];
+        $realty->television = $data['television'];
+        $realty->type_home = $data['type_home'];
+        $realty->floor_home = $data['floor_home'];
+        $realty->elevator = $data['elevator'];
+        $realty->closed_territory = $data['closed_territory'];
+        $realty->children_playground = $data['children_playground'];
+        $realty->sports_ground = $data['sports_ground'];
+        $realty->parking = $data['parking'];
+        $realty->max_guest = $data['max_guest'];
+        $realty->may_children = $data['may_children'];
+        $realty->may_animal = $data['may_animal'];
+        $realty->allowed_smoke = $data['allowed_smoke'];
+        
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->realty_images = rtrim($images, ",");
+        } else {
+            $realty->realty_images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->method_sale = $data['method_sale'];
+        $realty->mortgage = $data['mortgage'];
+        $realty->sale_share = $data['sale_share'];
+        $realty->auction = $data['auction'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_apartment_buy(Request $data){        
+        $realty = new ApartmentBuy();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_apartment_take(Request $data){        
+        $realty = new ApartmentTake();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->count_bed = $data['count_bed'];
+        $realty->count_sleeping_places = $data['count_sleeping_places'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->conditioner = $data['conditioner'];
+        $realty->fridge = $data['fridge'];
+        $realty->stove = $data['stove'];
+        $realty->nuke = $data['nuke'];
+        $realty->washing_machine = $data['washing_machine'];
+        $realty->TV = $data['TV'];
+        $realty->wi_fi = $data['wi_fi'];
+        $realty->parking = $data['parking'];
+        $realty->may_children = $data['may_children'];
+        $realty->may_animal = $data['may_animal'];
+        $realty->allowed_smoke = $data['allowed_smoke'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_room(Request $data){
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new Rooms();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
 
         $realty->adres = $data['adres'];
         $realty->number_flat = $data['number_flat'];
@@ -323,6 +504,7 @@ class AddEditController extends Controller
         $realty->auction = $data['auction'];
         $realty->price = $data['price'];
 
+        $realty->city = 'Дербент';
         $realty->status = 0;
         $realty->save();
 

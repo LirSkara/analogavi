@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('realties', function (Blueprint $table) {
+        Schema::create('apartment_rents', function (Blueprint $table) {
             $table->id();
             $table->string('user');
             $table->text('tel');
@@ -24,11 +24,22 @@ return new class extends Migration
             $table->text('number_flat');
             $table->text('who_add');
             $table->text('online_display');
+            $table->text('type_time');
             $table->text('type_residential');
             $table->text('floor');
             $table->text('count_rooms');
             $table->text('square');
             $table->text('residential_square')->nullable();
+            $table->text('conditioner')->nullable();
+            $table->text('fridge')->nullable();
+            $table->text('stove')->nullable();
+            $table->text('nuke')->nullable();
+            $table->text('washing_machine')->nullable();
+            $table->text('dishwasher')->nullable();
+            $table->text('water_heater')->nullable();
+            $table->text('TV')->nullable();
+            $table->text('wi_fi')->nullable();
+            $table->text('television')->nullable();
             $table->text('type_home');
             $table->text('floor_home');
             $table->text('elevator')->nullable();
@@ -36,6 +47,10 @@ return new class extends Migration
             $table->text('children_playground')->nullable();
             $table->text('sports_ground')->nullable();
             $table->text('parking')->nullable();
+            $table->text('max_guest')->nullable();
+            $table->text('may_children');
+            $table->text('may_animal');
+            $table->text('allowed_smoke')->nullable();
             $table->text('realty_images')->nullable();
             $table->text('description');
             $table->text('method_sale')->nullable();
@@ -56,6 +71,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('realties');
+        Schema::dropIfExists('apartment_rents');
     }
 };

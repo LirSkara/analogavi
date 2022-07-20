@@ -32,57 +32,35 @@
 <div class="container px-0">
     <div class="scrolling-wrapper scroll-none pb-2 px-2">
 
-        <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-            <img src="https://88.img.avito.st/image/1/1.2YEuZbaydWgYzLdtEAKy9v7GdW6OxHc.oNS940ITybIG7ErNUQFpk4EJ8jy516_FHbBOjAjohH4" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-            <div class="text-dark px-3 pt-2">
-                <div class="mb-3">
-                    <a href="" class="text-decoration-none link-dark yes-wrap">
-                        <div class="fs-5 mb-1" style="height: 60px;">Квартира-студия, 28,4 м², 25/29 эт.</div>
-                        <p class="mb-2 fw-bold">12 070 000 ₽</p>
-                        <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> Москва, Строгино</p>
-                    </a>
+        @foreach($realty as $item)
+            <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
+                <img src="/storage/realty_image/{{auth()->user()->id}}/{{explode(',', $item->realty_images)[0]}}" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
+                <div class="text-dark px-3 pt-2">
+                    <div class="mb-3">
+                        <a href="" class="text-decoration-none link-dark yes-wrap">
+                            <div class="fs-5 mb-1" style="height: 60px;">{{$item->count_rooms}}-к. квартира, {{$item->square}} м², {{$item->floor}}/{{$item->floor_home}} эт.</div>
+                            <p class="mb-2 fw-bold">{{$item->price}} ₽</p>
+                            <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> {{$item->city}}</p>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
 
-        <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-            <img src="https://19.img.avito.st/image/1/1.8rYNHLayXl87tZxaZR_Kqdy_XlmtvVw._hPzoqn-knhQMNZAO3I9d_dWIE2c-hBiAMb0GUA7oz4" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-            <div class="text-dark px-3 pt-2">
-                <div class="mb-3">
-                    <a href="" class="text-decoration-none link-dark yes-wrap">
-                        <div class="fs-5 mb-1" style="height: 60px;">1-к. квартира, 33,7 м², 6/10 эт.</div>
-                        <p class="mb-2 fw-bold">4 850 000 ₽</p>
-                        <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> Москва, МКАД, съезд 51</p>
-                    </a>
+        @foreach($rooms as $item)
+            <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
+                <img src="/storage/realty_image/{{auth()->user()->id}}/{{explode(',', $item->realty_images)[0]}}" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
+                <div class="text-dark px-3 pt-2">
+                    <div class="mb-3">
+                        <a href="" class="text-decoration-none link-dark yes-wrap">
+                            <div class="fs-5 mb-1" style="height: 60px;">Комната {{$item->square}} м² в {{$item->count_rooms}}-k., {{$item->floor}}/{{$item->floor_home}} эт.</div>
+                            <p class="mb-2 fw-bold">{{$item->price}} ₽</p>
+                            <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> {{$item->city}}</p>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-            <img src="https://15.img.avito.st/image/1/1.ihWaFbayJvysvOT5gkuSB0m2Jvo6tCQ.HjraLXTzDzWlUfZmlTrzarLQx3pJ-E3aklNWeX0w7Ok" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-            <div class="text-dark px-3 pt-2">
-                <div class="mb-3">
-                    <a href="" class="text-decoration-none link-dark yes-wrap">
-                        <div class="fs-5 mb-1" style="height: 60px;">1-к. апартаменты, 16,1 м², 3/3 эт.</div>
-                        <p class="mb-2 fw-bold">4 350 000 ₽</p>
-                        <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> Москва, Строгино</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-            <img src="https://16.img.avito.st/image/1/1.XRlkJbay8fBSjDP1UjBoWLWG8fbEhPM.5w53e3tbqSaXLLJjN2NcbmUrlbhIsZU9S0y7d5oeISM" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-            <div class="text-dark px-3 pt-2">
-                <div class="mb-3">
-                    <a href="" class="text-decoration-none link-dark yes-wrap">
-                        <div class="fs-5 mb-1" style="height: 60px;">1-к. квартира, 41,6 м², 5/10 эт.</div>
-                        <p class="mb-2 fw-bold">4 750 000 ₽</p>
-                        <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> Москва, МКАД, съезд 51</p>
-                    </a>
-                </div>
-            </div>
-        </div>
+        @endforeach
 
     </div>
 </div>

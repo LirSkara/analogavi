@@ -38,22 +38,26 @@
                 <h2>Категория</h2>
                 <nav aria-label="breadcrumb d-flex" style="margin-left: 10%;">
                     <ol class="breadcrumb mt-1">
-                        <li class="breadcrumb-item fs-4"><a href="#" class="text-decoration-none">@{{what_i_sell}}</a></li>
-                        <li class="breadcrumb-item fs-4"><a href="#" class="text-decoration-none">@{{sell_and_buy}}</a></li>
-                        <li class="breadcrumb-item active fs-4" aria-current="page">@{{cs_newold}}</li>
+                        <li class="breadcrumb-item fs-4"><a href="#" v-on:click="back_category()" class="text-decoration-none">@{{what_i_sell}}</a></li>
+                        <li class="breadcrumb-item active fs-4" aria-current="page">@{{sell_and_buy}}</li>
                     </ol>
                 </nav>
             </div>
             <div class="d-flex flex-column">
                 <h2>Расположение</h2>
                 <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Адрес</label>
-                    <div class="mt-0" style="margin-left: 18%;">
+                    <label v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" for="name" class="col-form-label">Адрес</label>
+                    <label v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" for="name" class="col-form-label">Желаемый район</label>
+                    <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="mt-0" style="margin-left: 18%;">
+                        <input type="text" name="name" id="name" v-model="adres" class="form-control" aria-describedby="passwordHelpInline" placeholder="Улица и номер дома">
+                        <div class="text-danger">@{{adres_error}}</div>
+                    </div>
+                    <div v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" class="mt-0" style="margin-left: 11.7%;">
                         <input type="text" name="name" id="name" v-model="adres" class="form-control" aria-describedby="passwordHelpInline" placeholder="Улица и номер дома">
                         <div class="text-danger">@{{adres_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
+                <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="d-flex mb-2">
                     <label for="name" class="col-form-label">Номер квартиры</label>
                     <div class="mt-0" style="margin-left: 12%;">
                         <input type="text" name="name" id="name" v-model="number_flat" class="form-control" aria-describedby="passwordHelpInline">
@@ -61,7 +65,7 @@
                     </div>
                 </div>
                 <h2>Контакты</h2>
-                <div class="d-flex flex-column mb-2">
+                <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="d-flex flex-column mb-2">
                     <div class="d-flex">
                         <label for="name" class="col-form-label">Размещает объявление</label>
                         <div class="d-flex flex-column" style="margin-left: 8.1%;">
@@ -81,19 +85,20 @@
                         <span class="fw-bold">{{auth()->user()->tel}}</span>
                     </div>
                 </div>
-                <div class="d-flex mb-5">
+                <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="d-flex mb-5">
                     <label for="name" class="col-form-label">Онлайн-показ</label>
                     <div class="mt-0 d-flex" style="margin-left: 13.5%;">
-                        <input type="radio" class="btn-check" name="online_display" v-model="online_display" id="online_display1" autocomplete="off">
+                        <input type="radio" class="btn-check" name="online_display" value="Проведу" v-model="online_display" id="online_display1" autocomplete="off">
                         <label class="btn btn-secondary border-right-none" for="online_display1">Проведу</label>
-                        <input type="radio" class="btn-check" name="online_display" v-model="online_display" id="online_display2" autocomplete="off">
+                        <input type="radio" class="btn-check" name="online_display" value="Не хочу" v-model="online_display" id="online_display2" autocomplete="off">
                         <label class="btn btn-outline-secondary border-left-none" for="online_display2">Не хочу</label>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_one()">Продолжить</button>
+            <button v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_one()">Продолжить</button>
+            <button v-if="sell_and_buy == 'Куплю'  || sell_and_buy == 'Сниму'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_one_buy()">Продолжить</button>
         </div>
-        <div v-if="res_one == true && res_two != true">
+        <div v-if="res_one == true && res_two != true && sell_and_buy == 'Продам'">
             <div class="d-flex">
                 <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
                 <span class="ms-4 fs-5">Категория, расположение, контакты</span>
@@ -104,9 +109,9 @@
                     <label for="name" class="col-form-label fs-5">Тип жилья</label>
                     <div class="d-flex flex-column" style="margin-left: 13.5%;">
                         <div class="mt-0 d-flex">
-                            <input type="radio" class="btn-check" name="type_residential" v-model="type_residential" id="type_residential1" autocomplete="off">
+                            <input type="radio" class="btn-check" name="type_residential" value="Квартира" v-model="type_residential" id="type_residential1" autocomplete="off">
                             <label class="btn btn-outline-secondary border-right-none" for="type_residential1">Квартира</label>
-                            <input type="radio" class="btn-check" name="type_residential" v-model="type_residential" id="type_residential2" autocomplete="off">
+                            <input type="radio" class="btn-check" name="type_residential" value="Апартаменты" v-model="type_residential" id="type_residential2" autocomplete="off">
                             <label class="btn btn-outline-secondary border-left-none" for="type_residential2">Апартаменты</label>
                         </div>
                         <div class="text-danger">@{{type_residential_error}}</div>
@@ -231,9 +236,9 @@
                 <div class="d-flex mb-2">
                     <label for="name" class="col-form-label fs-5">Лифт</label>
                     <div class="mt-0 d-flex" style="margin-left: 17.1%;">
-                        <input type="radio" class="btn-check" name="elevator" v-model="elevator" id="elevator1" autocomplete="off">
+                        <input type="radio" class="btn-check" name="elevator" value="true" v-model="elevator" id="elevator1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="elevator1">Есть</label>
-                        <input type="radio" class="btn-check" name="elevator" v-model="elevator" id="elevator2" autocomplete="off">
+                        <input type="radio" class="btn-check" name="elevator" value="false" v-model="elevator" id="elevator2" autocomplete="off">
                         <label class="btn btn-outline-secondary border-left-none" for="elevator2">Нет</label>
                     </div>
                 </div>
@@ -257,16 +262,16 @@
                 <div class="d-flex mb-5">
                     <label for="name" class="col-form-label fs-5">Парковка</label>
                     <div class="mt-0 d-flex" style="margin-left: 14%;">
-                        <input type="radio" class="btn-check" name="parking" v-model="parking" id="parking1" autocomplete="off">
+                        <input type="radio" class="btn-check" name="parking" value="true" v-model="parking" id="parking1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="parking1">Есть</label>
-                        <input type="radio" class="btn-check" name="parking" v-model="parking" id="parking2" autocomplete="off">
+                        <input type="radio" class="btn-check" name="parking" value="false" v-model="parking" id="parking2" autocomplete="off">
                         <label class="btn btn-outline-secondary border-left-none" for="parking2">Нет</label>
                     </div>
                 </div>              
             </div>
             <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two()">Продолжить</button>
         </div>
-        <div v-if="res_two == true">
+        <div v-if="res_two == true && sell_and_buy == 'Сдам' || res_two == true && sell_and_buy == 'Продам'">
             <div class="d-flex">
                 <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
                 <span class="ms-4 fs-5">О квартире, о доме</span>
@@ -301,9 +306,9 @@
                     <label for="name" class="col-form-label fs-5">Способ продажи</label>
                     <div class="d-flex flex-column">
                         <div class="mt-0 d-flex" style="margin-left: 14%;">
-                            <input type="radio" class="btn-check" name="method_sale" v-model="method_sale" id="method_sale1" autocomplete="off">
+                            <input type="radio" class="btn-check" name="method_sale" value="Свободная" v-model="method_sale" id="method_sale1" autocomplete="off">
                             <label class="btn btn-outline-secondary border-right-none" for="method_sale1">Свободная</label>
-                            <input type="radio" class="btn-check" name="method_sale" v-model="method_sale" id="method_sale2" autocomplete="off">
+                            <input type="radio" class="btn-check" name="method_sale" value="Альтернативная" v-model="method_sale" id="method_sale2" autocomplete="off">
                             <label class="btn btn-outline-secondary border-left-none" for="method_sale2">Альтернативная</label>
                         </div>
                         <div class="d-flex flex-column mt-2" style="margin-left: 14%;">
@@ -331,6 +336,691 @@
                 </div>
             </div>
             <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_three()">Опубликовать</button>
+        </div>
+        <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Сдам'">
+            <div class="d-flex mb-3">
+                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
+                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
+            </div>
+            <h2>О квартире</h2>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Тип времени</label>
+                <div class="d-flex flex-column" style="margin-left: 11.7%;">
+                    <div class="mt-0 d-flex">
+                        <input type="radio" class="btn-check" name="type_time" value="Длительный срок" v-model="type_time" id="type_time1" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-right-none" for="type_time1">Длительный срок</label>
+                        <input type="radio" class="btn-check" name="type_time" value="Сутки" v-model="type_time" id="type_time2" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-left-none" for="type_time2">Сутки</label>
+                    </div>
+                    <div class="text-danger">@{{type_time_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Тип жилья</label>
+                <div class="d-flex flex-column" style="margin-left: 13.5%;">
+                    <div class="mt-0 d-flex">
+                        <input type="radio" class="btn-check" name="type_residential" value="Квартира" v-model="type_residential" id="type_residential1" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-right-none" for="type_residential1">Квартира</label>
+                        <input type="radio" class="btn-check" name="type_residential" value="Апартаменты" v-model="type_residential" id="type_residential2" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-left-none" for="type_residential2">Апартаменты</label>
+                    </div>
+                    <div class="text-danger">@{{type_residential_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Этаж</label>
+                <div class="d-flex flex-column mb-3" style="margin-left: 17.3%;">
+                    <div class="mt-0 d-flex">
+                        <select name="floor" v-model="floor" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                    <div class="text-danger">@{{floor_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Количество комнат</label>
+                <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                    <div class="mt-0 d-flex">
+                        <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="Студия">Студия</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10 комнат и больше">10 комнат и больше</option>
+                            <option value="Свободная планировка">Своб. планировка</option>
+                        </select>
+                    </div>
+                    <div class="text-danger">@{{count_rooms_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Площадь</label>
+                <div class="mt-0" style="margin-left: 14.3%;">
+                    <input type="text" v-model="square" class="form-control" name="square" placeholder="0,0 м²">
+                    <div class="text-danger">@{{square_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Жилая площадь</label>
+                <div class="mt-0 d-flex" style="margin-left: 9.5%;">
+                    <input type="text" v-model="residential_square" class="form-control" name="residential_square" placeholder="0,0 м²">
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Техника</label>
+                <div class="mt-0 d-flex" style="margin-left: 15.1%; width: 600px;">
+                    <div class="d-flex flex-column mt-2">
+                        <div>   
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="conditioner" id="conditioner" value="Кондиционер" aria-label="...">
+                            <span>Кондиционер</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="fridge" id="fridge" value="Холодильник" aria-label="...">
+                            <span>Холодильник</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3 mb-3" type="checkbox" v-model="stove" id="stove" value="Плита" aria-label="...">
+                            <span>Плита</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2" type="checkbox" v-model="nuke" id="nuke" value="Микроволновка" aria-label="...">
+                            <span>Микроволновка</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-2" style="margin-left: 14%;">
+                        <div>   
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="washing_machine" id="washing_machine" value="Стиральная машина" aria-label="...">
+                            <span>Стиральная машина</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="dishwasher" id="dishwasher" value="Посудомоечная машина" aria-label="...">
+                            <span>Посудомоечная машина</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="water_heater" id="water_heater" value="Водонагреватель" aria-label="...">
+                            <span>Водонагреватель</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="TV" id="TV" value="Телевизор" aria-label="...">
+                            <span>Телевизор</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Интернет и ТВ</label>
+                <div class="mt-0 d-flex" style="margin-left: 10.6%;">
+                    <div class="d-flex flex-column mt-2">
+                        <div>   
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="wi_fi" id="wi_fi" value="Wi-Fi" aria-label="...">
+                            <span>Wi-Fi</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="television" id="television" value="Телевидение" aria-label="...">
+                            <span>Телевидиние</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>О доме</h2>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Тип дома</label>
+                <div class="d-flex flex-column mb-3" style="margin-left: 14.2%;">
+                    <div class="mt-0 d-flex">
+                        <select name="type_home" v-model="type_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">Кирпичный</option>
+                            <option value="2">Панельный</option>
+                            <option value="3">Блочный</option>
+                            <option value="4">Монолитный</option>
+                            <option value="5">Монолитно-кирпичный</option>
+                            <option value="6">Деревянный</option>
+                        </select>
+                    </div>
+                    <div class="text-danger">@{{type_home_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Этажей в доме</label>
+                <div class="d-flex flex-column mb-3" style="margin-left: 10.2%;">
+                    <div class="mt-0 d-flex">
+                        <select name="floor_home" v-model="floor_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                    <div class="text-danger">@{{floor_home_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Лифт</label>
+                <div class="mt-0 d-flex" style="margin-left: 17.1%;">
+                    <input type="radio" class="btn-check" name="elevator" value="true" v-model="elevator" id="elevator1" autocomplete="off">
+                    <label class="btn btn-outline-secondary border-right-none" for="elevator1">Есть</label>
+                    <input type="radio" class="btn-check" name="elevator" value="false" v-model="elevator" id="elevator2" autocomplete="off">
+                    <label class="btn btn-outline-secondary border-left-none" for="elevator2">Нет</label>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Парковка</label>
+                <div class="mt-0 d-flex" style="margin-left: 14%;">
+                    <input type="radio" class="btn-check" name="parking" value="true" v-model="parking" id="parking1" autocomplete="off">
+                    <label class="btn btn-outline-secondary border-right-none" for="parking1">Есть</label>
+                    <input type="radio" class="btn-check" name="parking" value="false" v-model="parking" id="parking2" autocomplete="off">
+                    <label class="btn btn-outline-secondary border-left-none" for="parking2">Нет</label>
+                </div>
+            </div>
+            <h2>Правила заселения</h2>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Максимум гостей</label>
+                <div class="d-flex flex-column mb-3" style="margin-left: 8.4%;">
+                    <div class="mt-0 d-flex">
+                        <select name="max_guest" v-model="max_guest" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8 и более">8 и более</option>
+                        </select>
+                    </div>
+                    <div class="text-danger">@{{max_guest_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Можно с детьми</label>
+                <div class="d-flex flex-column" style="margin-left: 9%;">
+                    <div class="mt-0 d-flex">
+                        <input type="radio" class="btn-check" name="may_children" value="true" v-model="may_children" id="may_children1" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-right-none" for="may_children1">Да</label>
+                        <input type="radio" class="btn-check" name="may_children" value="false" v-model="may_children" id="may_children2" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-left-none" for="may_children2">Нет</label>
+                    </div>
+                    <div class="text-danger">@{{may_children_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-2">
+                <label for="name" class="col-form-label fs-5">Можно с животными</label>
+                <div class="d-flex flex-column" style="margin-left: 5.6%;">
+                    <div class="mt-0 d-flex">
+                        <input type="radio" class="btn-check" name="may_animal" value="true" v-model="may_animal" id="may_animal1" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-right-none" for="may_animal1">Да</label>
+                        <input type="radio" class="btn-check" name="may_animal" value="false" v-model="may_animal" id="may_animal2" autocomplete="off">
+                        <label class="btn btn-outline-secondary border-left-none" for="may_animal2">Нет</label>
+                    </div>
+                    <div class="text-danger">@{{may_animal_error}}</div>
+                </div>
+            </div>
+            <div class="d-flex mb-5">
+                <label for="name" class="col-form-label fs-5">Разрешено курить</label>
+                <div class="mt-0 d-flex" style="margin-left: 7.7%;">
+                    <input type="radio" class="btn-check" name="allowed_smoke" value="true" v-model="allowed_smoke" id="allowed_smoke1" autocomplete="off">
+                    <label class="btn btn-outline-secondary border-right-none" for="allowed_smoke1">Да</label>
+                    <input type="radio" class="btn-check" name="allowed_smoke" value="false" v-model="allowed_smoke" id="allowed_smoke2" autocomplete="off">
+                    <label class="btn btn-outline-secondary border-left-none" for="allowed_smoke2">Нет</label>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 700px;" v-on:click="apartment_rent_two()">Продолжить</button>
+        </div>
+        <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Куплю'">
+            <div class="d-flex">
+                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
+                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
+            </div>
+            <div class="d-flex flex-column mt-3">
+                <h2>О квартире</h2>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Количество комнат</label>
+                    <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                        <div class="mt-0 d-flex">
+                            <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="Студия">Студия</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10 комнат и больше">10 комнат и больше</option>
+                                <option value="Свободная планировка">Своб. планировка</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{count_rooms_error}}</div>
+                    </div>
+                </div>         
+            </div>
+            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_buy()">Продолжить</button>
+        </div>
+        <div v-if="res_two == true && sell_and_buy == 'Куплю' || res_two == true && sell_and_buy == 'Сниму'">
+            <div class="d-flex">
+                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
+                <span class="ms-4 fs-5">О квартире, о доме</span>
+            </div>
+            <div class="d-flex flex-column mt-3 mb-5">
+                <h2>Описание</h2>
+                <div class="d-flex flex-column mb-4">
+                    <textarea type="text" class="form-control" v-model="description" style="height: 250px; width: 700px" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
+                    <div class="text-danger">@{{description_error}}</div>
+                </div>
+                <h2>Условия сделки</h2>     
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label">Цена</label>
+                    <div class="mt-0" style="margin-left: 12%;">
+                        <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
+                        <div class="text-danger">@{{price_error}}</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_three()">Опубликовать</button>
+        </div>
+        <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Сниму'">
+            <div class="d-flex">
+                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
+                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
+            </div>
+            <div class="d-flex flex-column mt-3">
+                <h2>О квартире</h2>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Количество комнат</label>
+                    <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                        <div class="mt-0 d-flex">
+                            <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="Студия">Студия</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10 комнат и больше">10 комнат и больше</option>
+                                <option value="Свободная планировка">Своб. планировка</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{count_rooms_error}}</div>
+                    </div>
+                </div>
+                <h2>Дополнительные параметры</h2>
+                <div class="d-flex" style="width: 500px;">
+                    <div class="d-flex flex-column w-50">
+                        <span class="mb-2">Количество кроватей</span>
+                        <select name="count_bed" v-model="count_bed" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8+">8+</option>
+                        </select>
+                        <span class="mb-2 mt-2">Количество спальных мест</span>
+                        <select name="count_sleeping_places" v-model="count_sleeping_places" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16+">16+</option>
+                        </select>
+                        <span class="mb-2 mt-2">Мультимедиа</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="wi_fi" value="wi_fi" aria-label="...">
+                            <span>Wi-Fi</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="TV" value="Телевизор" aria-label="...">
+                            <span>Телевизор</span>
+                        </div>
+                        <span class="mb-2 mt-2">Бытовая техника</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="stove" value="Плита" aria-label="...">
+                            <span>Плита</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="nuke" value="Микроволновка" aria-label="...">
+                            <span>Микроволновка</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="fridge" value="Холодильник" aria-label="...">
+                            <span>Холодильник</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="washing_machine" value="Стиральная машина" aria-label="...">
+                            <span>Стиральная машина</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column w-50 ms-5 mb-4">
+                        <span class="mb-2 mt-2">Бытовая техника</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="conditioner" value="Кондиционер" aria-label="...">
+                            <span>Кондиционер</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="parking" value="Парковочное место" aria-label="...">
+                            <span>Парковочное место</span>
+                        </div>
+                        <span class="mb-2 mt-2">Бытовая техника</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="may_animal" value="Можно с питомцами" aria-label="...">
+                            <span>Можно с питомцами</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="may_children" value="Можно с детьми" aria-label="...">
+                            <span>Можно с детьми</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="allowed_smoke" value="Можно курить" aria-label="...">
+                            <span>Можно курить</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_buy()">Продолжить</button>
+        </div>
+        <div v-if="res_one == true && res_two != true && what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам'">
+            <div class="d-flex">
+                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
+                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
+            </div>
+            <div class="d-flex flex-column mt-3">
+                <h2>Параметры</h2>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Тип жилья</label>
+                    <div class="d-flex flex-column" style="margin-left: 13.5%;">
+                        <div class="mt-0 d-flex">
+                            <input type="radio" class="btn-check" name="type_residential" value="Квартира" v-model="type_residential" id="type_residential1" autocomplete="off">
+                            <label class="btn btn-outline-secondary border-right-none" for="type_residential1">Комната</label>
+                            <input type="radio" class="btn-check" name="type_residential" value="Апартаменты" v-model="type_residential" id="type_residential2" autocomplete="off">
+                            <label class="btn btn-outline-secondary border-left-none" for="type_residential2">Койко-место</label>
+                        </div>
+                        <div class="text-danger">@{{type_residential_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Расположение</label>
+                    <div class="d-flex flex-column" style="margin-left: 10.7%;">
+                        <div>
+                            <input class="form-check-input me-2 mb-3" name="location" type="radio" v-model="location" value="Квартира" aria-label="...">
+                            <span>Квартира</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" name="location" type="radio" v-model="location" value="Хостел" aria-label="...">
+                            <span>Хостел</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" name="location" type="radio" v-model="location" value="Гостиница" aria-label="...">
+                            <span>Гостиница</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Количество комнат</label>
+                    <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                        <div class="mt-0 d-flex">
+                            <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="Студия">Студия</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10 комнат и больше">10 комнат и больше</option>
+                                <option value="Свободная планировка">Своб. планировка</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{count_rooms_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Тип дома</label>
+                    <div class="d-flex flex-column mb-3" style="margin-left: 14.2%;">
+                        <div class="mt-0 d-flex">
+                            <select name="type_home" v-model="type_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="1">Кирпичный</option>
+                                <option value="2">Панельный</option>
+                                <option value="3">Блочный</option>
+                                <option value="4">Монолитный</option>
+                                <option value="5">Монолитно-кирпичный</option>
+                                <option value="6">Деревянный</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{type_home_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Этаж</label>
+                    <div class="d-flex flex-column mb-3" style="margin-left: 17.3%;">
+                        <div class="mt-0 d-flex">
+                            <select name="floor" v-model="floor" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{floor_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Этажей в доме</label>
+                    <div class="d-flex flex-column mb-3" style="margin-left: 10.2%;">
+                        <div class="mt-0 d-flex">
+                            <select name="floor_home" v-model="floor_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{floor_home_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label for="name" class="col-form-label fs-5">Площадь</label>
+                    <div class="mt-0" style="margin-left: 14.3%;">
+                        <input type="text" v-model="square" class="form-control" name="square" placeholder="0,0 м²">
+                        <div class="text-danger">@{{square_error}}</div>
+                    </div>
+                </div>
+                <h2>Дополнительные параметры</h2>
+                <div class="d-flex" style="width: 500px;">
+                    <div class="d-flex flex-column w-50">
+                        <span class="mb-2">Количество кроватей</span>
+                        <select name="count_bed" v-model="count_bed" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8+">8+</option>
+                        </select>
+                        <span class="mb-2 mt-2">Количество спальных мест</span>
+                        <select name="count_sleeping_places" v-model="count_sleeping_places" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16+">16+</option>
+                        </select>
+                        <span class="mb-2 mt-2">Мультимедиа</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="wi_fi" value="wi_fi" aria-label="...">
+                            <span>Wi-Fi</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="TV" value="Телевизор" aria-label="...">
+                            <span>Телевизор</span>
+                        </div>
+                        <span class="mb-2 mt-2">Бытовая техника</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="stove" value="Плита" aria-label="...">
+                            <span>Плита</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="nuke" value="Микроволновка" aria-label="...">
+                            <span>Микроволновка</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="fridge" value="Холодильник" aria-label="...">
+                            <span>Холодильник</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="washing_machine" value="Стиральная машина" aria-label="...">
+                            <span>Стиральная машина</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column w-50 ms-5 mb-4">
+                        <span class="mb-2 mt-2">Бытовая техника</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="conditioner" value="Кондиционер" aria-label="...">
+                            <span>Кондиционер</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="parking" value="Парковочное место" aria-label="...">
+                            <span>Парковочное место</span>
+                        </div>
+                        <span class="mb-2 mt-2">Бытовая техника</span>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="may_animal" value="Можно с питомцами" aria-label="...">
+                            <span>Можно с питомцами</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="may_children" value="Можно с детьми" aria-label="...">
+                            <span>Можно с детьми</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-3" type="checkbox" v-model="allowed_smoke" value="Можно курить" aria-label="...">
+                            <span>Можно курить</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_rent_room()">Продолжить</button>
         </div>
 
         <!-- Начало модального окна добавления фото -->
@@ -390,6 +1080,24 @@
                     sale_share: '',
                     auction: '',
                     price: '',
+                    type_time: '',
+                    conditioner: '',
+                    fridge: '',
+                    stove: '',
+                    nuke: '',
+                    washing_machine: '',
+                    dishwasher: '',
+                    water_heater: '',
+                    TV: '',
+                    wi_fi: '',
+                    television: '',
+                    max_guest: '',
+                    may_children: '',
+                    may_animal: '',
+                    allowed_smoke: '',
+                    count_bed: '',
+                    count_sleeping_places: '',
+                    location: 'Квартира',
                     adres_error: '',
                     who_add_error: '',
                     number_flat_error: '',
@@ -402,6 +1110,9 @@
                     file_realty_error: '',
                     description_error: '',
                     price_error: '',
+                    type_time_error: '',
+                    may_children_error: '',
+                    may_animal_error: '',
                     res_one: false,
                     res_two: false,
                 }
@@ -435,57 +1146,10 @@
                     this.sell_and_buy = sellbuy
 
                     if(this.what_i_sell == 'Квартиры') {
-                        if(this.sell_and_buy == 'Продам') {
-                            this.new_old.push(
-                                'Вторичка'
-                            )
-                            this.new_old.push(
-                                'Новостройка'
-                            )
-                        } else 
-                        if(this.sell_and_buy == 'Сдам') {
-                            this.new_old.push(
-                                'На длительный срок'
-                            )
-                            this.new_old.push(
-                                'Посуточно'
-                            )
-                        } else
-                        if(this.sell_and_buy == 'Куплю') {
-                            alert('Идем дальше')
-                        } else
-                        if(this.sell_and_buy == 'Сниму') {
-                            this.new_old.push(
-                                'На длительный срок'
-                            )
-                            this.new_old.push(
-                                'Посуточно'
-                            )
-                        }
+                        this.cs_newold = true
                     } else 
                     if(this.what_i_sell == 'Комнаты') {
-                        if(this.sell_and_buy == 'Продам') {
-                            alert('Идем дальше')
-                        } else 
-                        if(this.sell_and_buy == 'Сдам') {
-                            this.new_old.push(
-                                'На длительный срок'
-                            )
-                            this.new_old.push(
-                                'Посуточно'
-                            )
-                        } else
-                        if(this.sell_and_buy == 'Куплю') {
-                            alert('Идем дальше')
-                        } else
-                        if(this.sell_and_buy == 'Сниму') {
-                            this.new_old.push(
-                                'На длительный срок'
-                            )
-                            this.new_old.push(
-                                'Посуточно'
-                            )
-                        }
+                        this.cs_newold = true
                     } else 
                     if(this.what_i_sell == 'Дома, дачи, коттеджи') {
                         if(this.sell_and_buy == 'Продам') {
@@ -698,45 +1362,200 @@
                 resume_three() {
                     if(this.description != '') {
                         if(this.price != '') {
-                            this.price_error = ''
-                            this.description_error = ''
-                            
-                            axios({
-                                method: 'post',
-                                url: '/add_estate',
-                                responseType: 'json',
-                                data: {
-                                    what_i_sell: this.what_i_sell,
-                                    sell_and_buy: this.sell_and_buy,
-                                    cs_newold: this.cs_newold,
-                                    adres: this.adres,
-                                    number_flat: this.number_flat,
-                                    who_add: this.who_add,
-                                    online_display: this.online_display,
-                                    type_residential: this.type_residential,
-                                    floor: this.floor,
-                                    count_rooms: this.count_rooms,
-                                    square: this.square,
-                                    residential_square: this.residential_square,
-                                    type_home: this.type_home,
-                                    floor_home: this.floor_home,
-                                    elevator: this.elevator,
-                                    closed_territory: this.closed_territory,
-                                    children_playground: this.children_playground,
-                                    sports_ground: this.sports_ground,
-                                    parking: this.parking,
-                                    realty_images: this.realty_images,
-                                    description: this.description,
-                                    method_sale: this.method_sale,
-                                    mortgage: this.mortgage,
-                                    sale_share: this.sale_share,
-                                    auction: this.auction,
-                                    price: this.price,
-                                },
-                            })
-                            .then(function (response) {
-                                alert('Получилось')
-                            })
+                            if(this.what_i_sell == 'Квартиры') {
+                                if(this.sell_and_buy == 'Продам') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_estate',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            number_flat: this.number_flat,
+                                            who_add: this.who_add,
+                                            online_display: this.online_display,
+                                            type_residential: this.type_residential,
+                                            floor: this.floor,
+                                            count_rooms: this.count_rooms,
+                                            square: this.square,
+                                            residential_square: this.residential_square,
+                                            type_home: this.type_home,
+                                            floor_home: this.floor_home,
+                                            elevator: this.elevator,
+                                            closed_territory: this.closed_territory,
+                                            children_playground: this.children_playground,
+                                            sports_ground: this.sports_ground,
+                                            parking: this.parking,
+                                            realty_images: this.realty_images,
+                                            description: this.description,
+                                            method_sale: this.method_sale,
+                                            mortgage: this.mortgage,
+                                            sale_share: this.sale_share,
+                                            auction: this.auction,
+                                            price: this.price,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        alert('Получилось')
+                                    })
+                                } else
+                                if(this.sell_and_buy == 'Сдам') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_apartment_rent',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            number_flat: this.number_flat,
+                                            who_add: this.who_add,
+                                            online_display: this.online_display,
+                                            type_time: this.type_time,
+                                            type_residential: this.type_residential,
+                                            floor: this.floor,
+                                            count_rooms: this.count_rooms,
+                                            square: this.square,
+                                            residential_square: this.residential_square,
+                                            conditioner: this.conditioner,
+                                            fridge: this.fridge,
+                                            stove: this.stove,
+                                            nuke: this.nuke,
+                                            washing_machine: this.washing_machine,
+                                            dishwasher: this.dishwasher,
+                                            water_heater: this.water_heater,
+                                            TV: this.TV,
+                                            wi_fi: this.wi_fi,
+                                            television: this.television,
+                                            type_home: this.type_home,
+                                            floor_home: this.floor_home,
+                                            elevator: this.elevator,
+                                            closed_territory: this.closed_territory,
+                                            children_playground: this.children_playground,
+                                            sports_ground: this.sports_ground,
+                                            parking: this.parking,
+                                            max_guest: this.max_guest,
+                                            may_children: this.may_children,
+                                            may_animal: this.may_animal,
+                                            allowed_smoke: this.allowed_smoke,
+                                            realty_images: this.realty_images,
+                                            description: this.description,
+                                            method_sale: this.method_sale,
+                                            mortgage: this.mortgage,
+                                            sale_share: this.sale_share,
+                                            auction: this.auction,
+                                            price: this.price,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        alert('Получилось')
+                                    })
+                                } else
+                                if(this.sell_and_buy == 'Куплю') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_apartment_buy',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            count_rooms: this.count_rooms,
+                                            description: this.description,
+                                            price: this.price,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        alert('Получилось')
+                                    })
+                                } else
+                                if(this.sell_and_buy == 'Сниму') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_apartment_take',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            count_rooms: this.count_rooms,
+                                            count_bed: this.count_bed,
+                                            count_sleeping_places: this.count_sleeping_places,
+                                            TV: this.TV,
+                                            wi_fi: this.wi_fi,
+                                            stove: this.stove,
+                                            nuke: this.nuke,
+                                            fridge: this.fridge,
+                                            washing_machine: this.washing_machine,
+                                            conditioner: this.conditioner,
+                                            parking: this.parking,
+                                            may_children: this.may_children,
+                                            may_animal: this.may_animal,
+                                            allowed_smoke: this.allowed_smoke,
+                                            description: this.description,
+                                            price: this.price,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        alert('Получилось')
+                                    })
+                                }
+                            } else 
+                            if(this.what_i_sell == 'Комнаты') {
+                                if(this.sell_and_buy == 'Продам') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_room',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            number_flat: this.number_flat,
+                                            who_add: this.who_add,
+                                            online_display: this.online_display,
+                                            type_residential: this.type_residential,
+                                            floor: this.floor,
+                                            count_rooms: this.count_rooms,
+                                            square: this.square,
+                                            residential_square: this.residential_square,
+                                            type_home: this.type_home,
+                                            floor_home: this.floor_home,
+                                            elevator: this.elevator,
+                                            closed_territory: this.closed_territory,
+                                            children_playground: this.children_playground,
+                                            sports_ground: this.sports_ground,
+                                            parking: this.parking,
+                                            realty_images: this.realty_images,
+                                            description: this.description,
+                                            method_sale: this.method_sale,
+                                            mortgage: this.mortgage,
+                                            sale_share: this.sale_share,
+                                            auction: this.auction,
+                                            price: this.price,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        alert('Получилось')
+                                    })
+                                }
+                            }
                         } else {
                             this.price_error = 'Введите цену'
                             this.description_error = ''
@@ -744,6 +1563,171 @@
                     } else {
                         this.description_error = 'Пожалуйста, заполните описание'
                     }
+                },
+                apartment_rent_two() {
+                    if(this.type_time != '') {
+                        if(this.type_residential != '') {
+                            if(this.floor != '') {
+                                if(this.count_rooms != '') {
+                                    if(this.square != '') {
+                                        if(this.type_home != '') {
+                                            if(this.floor_home != '') {
+                                                if(this.may_children != '') {
+                                                    if(this.may_animal != '') {
+                                                        this.may_animal_error = ''
+                                                        this.may_children_error = ''
+                                                        this.floor_home_error = ''
+                                                        this.type_home_error = ''
+                                                        this.square_error = ''
+                                                        this.count_rooms_error = ''
+                                                        this.floor_error = ''
+                                                        this.type_residential_error = ''
+                                                        this.type_time_error = ''
+
+                                                        this.res_two = true
+                                                    } else {
+                                                        this.may_animal_error = 'Укажите значение параметра'
+                                                        this.may_children_error = ''
+                                                        this.floor_home_error = ''
+                                                        this.type_home_error = ''
+                                                        this.square_error = ''
+                                                        this.count_rooms_error = ''
+                                                        this.floor_error = ''
+                                                        this.type_residential_error = ''
+                                                        this.type_time_error = ''
+                                                    }
+                                                } else {
+                                                    this.may_children_error = 'Укажите значение параметра'
+                                                    this.floor_home_error = ''
+                                                    this.type_home_error = ''
+                                                    this.square_error = ''
+                                                    this.count_rooms_error = ''
+                                                    this.floor_error = ''
+                                                    this.type_residential_error = ''
+                                                    this.type_time_error = ''
+                                                }
+                                            } else {
+                                                this.floor_home_error = 'Укажите этаж'
+                                                this.type_home_error = ''
+                                                this.square_error = ''
+                                                this.count_rooms_error = ''
+                                                this.floor_error = ''
+                                                this.type_residential_error = ''
+                                                this.type_time_error = ''
+                                            }
+                                        } else {
+                                            this.type_home_error = 'Выберите тип дома'
+                                            this.square_error = ''
+                                            this.count_rooms_error = ''
+                                            this.floor_error = ''
+                                            this.type_residential_error = ''
+                                            this.type_time_error = ''
+                                        }
+                                    } else {
+                                        this.square_error = 'Укажите общую площадь'
+                                        this.count_rooms_error = ''
+                                        this.floor_error = ''
+                                        this.type_residential_error = ''
+                                        this.type_time_error = ''
+                                    }
+                                } else {
+                                    this.count_rooms_error = 'Укажите количество комнат'
+                                    this.floor_error = ''
+                                    this.type_residential_error = ''
+                                    this.type_time_error = ''
+                                }
+                            } else {
+                                this.floor_error = 'Укажите этаж'
+                                this.type_residential_error = ''
+                                this.type_time_error = ''
+                            }
+                        } else {
+                            this.type_residential_error = 'Укажите тип жилья'
+                            this.type_time_error = ''
+                        }
+                    } else {
+                        this.type_time_error = 'Укажите тип времени'
+                    }
+                },
+                resume_one_buy() {
+                    if(this.adres != '') {
+                        this.adres_error = ''
+
+                        this.res_one = true
+                    } else {
+                        this.adres_error = 'Укажите адрес'
+                    }
+                },
+                resume_two_buy() {
+                    if(this.count_rooms != '') {
+                        this.count_rooms_error = ''
+
+                        this.res_two = true
+                    } else {
+                        this.count_rooms_error = 'Укажите количество комнат'
+                    }
+                },
+                back_category() {
+                    this.sell_and_buy = ''
+                    this.cs_newold = ''
+                },
+                resume_two_rent_room() {
+                        if(this.type_residential != '') {
+                            if(this.floor != '') {
+                                if(this.count_rooms != '') {
+                                    if(this.square != '') {
+                                        if(this.type_home != '') {
+                                            if(this.floor_home != '') {
+                                                this.may_animal_error = ''
+                                                this.may_children_error = ''
+                                                this.floor_home_error = ''
+                                                this.type_home_error = ''
+                                                this.square_error = ''
+                                                this.count_rooms_error = ''
+                                                this.floor_error = ''
+                                                this.type_residential_error = ''
+                                                this.type_time_error = ''
+
+                                                this.res_two = true
+                                            } else {
+                                                this.floor_home_error = 'Укажите этаж'
+                                                this.type_home_error = ''
+                                                this.square_error = ''
+                                                this.count_rooms_error = ''
+                                                this.floor_error = ''
+                                                this.type_residential_error = ''
+                                                this.type_time_error = ''
+                                            }
+                                        } else {
+                                            this.type_home_error = 'Выберите тип дома'
+                                            this.square_error = ''
+                                            this.count_rooms_error = ''
+                                            this.floor_error = ''
+                                            this.type_residential_error = ''
+                                            this.type_time_error = ''
+                                        }
+                                    } else {
+                                        this.square_error = 'Укажите общую площадь'
+                                        this.count_rooms_error = ''
+                                        this.floor_error = ''
+                                        this.type_residential_error = ''
+                                        this.type_time_error = ''
+                                    }
+                                } else {
+                                    this.count_rooms_error = 'Укажите количество комнат'
+                                    this.floor_error = ''
+                                    this.type_residential_error = ''
+                                    this.type_time_error = ''
+                                }
+                            } else {
+                                this.floor_error = 'Укажите этаж'
+                                this.type_residential_error = ''
+                                this.type_time_error = ''
+                            }
+                        } else {
+                            this.type_residential_error = 'Укажите тип жилья'
+                            this.type_time_error = ''
+                        }
                 }
             }
         }
