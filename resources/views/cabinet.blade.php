@@ -10,12 +10,6 @@
                 <li class="breadcrumb-item active" aria-current="page">Личный кабинет #{{ auth()->user()->id }}</li>
             </ol>
         </nav>
-
-
-        <div class="dropdown text-center">
-
-
-        </div>
         <div class="row">
             <div class="col">
                 <div class="btn-group w-100" role="group" aria-label="Basic example">
@@ -26,6 +20,11 @@
                     <ul class="dropdown-menu small w-100 py-0" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item border-bottom py-2" href="/user_info"><i class="bi bi-person-fill"></i>
                                 Мой профиль</a></li>
+                        @if (auth()->user()->id == 1)
+                            <li><a class="dropdown-item border-bottom py-2" href="/control_panel"><i
+                                        class="bi bi-gear-fill"></i>
+                                    Панель управления</a></li>
+                        @endif
                         <li><a class="dropdown-item py-2 border-bottom" href="/sotr"><i class="bi bi-info-circle"></i>
                                 Сотрудничество с нами</a></li>
                     </ul>
@@ -56,10 +55,6 @@
                             <span class="small text-muted d-block">Мы всегда на связи</span>
                         </a>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>
