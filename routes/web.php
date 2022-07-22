@@ -38,6 +38,15 @@ Route::post('/add_apartment_rent', [AddEditController::class, 'add_apartment_ren
 Route::post('/add_apartment_buy', [AddEditController::class, 'add_apartment_buy']);
 Route::post('/add_apartment_take', [AddEditController::class, 'add_apartment_take']);
 Route::post('/add_room', [AddEditController::class, 'add_room']);
+Route::post('/add_room_rent', [AddEditController::class, 'add_room_rent']);
+Route::post('/add_room_buy', [AddEditController::class, 'add_room_buy']);
+Route::post('/add_room_take', [AddEditController::class, 'add_room_take']);
+Route::post('/add_home', [AddEditController::class, 'add_home']);
+Route::post('/add_home_rent', [AddEditController::class, 'add_home_rent']);
+Route::post('/add_home_buy', [AddEditController::class, 'add_home_buy']);
+Route::post('/add_home_take', [AddEditController::class, 'add_home_take']);
+Route::post('/add_land_plot', [AddEditController::class, 'add_land_plot']);
+Route::post('/add_land_plot_rent', [AddEditController::class, 'add_land_plot_rent']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/reg', [AuthController::class, 'reg']);

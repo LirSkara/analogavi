@@ -16,6 +16,14 @@ use App\Models\Realty;
 use App\Models\ApartmentBuy;
 use App\Models\ApartmentTake;
 use App\Models\Rooms;
+use App\Models\RoomRents;
+use App\Models\RoomBuy;
+use App\Models\RoomTake;
+use App\Models\Homes;
+use App\Models\HomesRent;
+use App\Models\HomesBuy;
+use App\Models\HomesTake;
+use App\Models\LandPlot;
 
 class AddEditController extends Controller
 {
@@ -502,6 +510,323 @@ class AddEditController extends Controller
         $realty->mortgage = $data['mortgage'];
         $realty->sale_share = $data['sale_share'];
         $realty->auction = $data['auction'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_room_rent(Request $data){        
+        $realty = new RoomRents();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->number_flat = $data['number_flat'];
+        $realty->who_add = $data['who_add'];
+        $realty->online_display = $data['online_display'];
+        $realty->type_residential = $data['type_residential'];
+        $realty->location = $data['location'];
+        $realty->floor = $data['floor'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->square = $data['square'];
+        $realty->type_home = $data['type_home'];
+        $realty->floor_home = $data['floor_home'];
+        $realty->count_bed = $data['count_bed'];
+        $realty->count_sleeping_places = $data['count_sleeping_places'];
+        $realty->TV = $data['TV'];
+        $realty->wi_fi = $data['wi_fi'];
+        $realty->stove = $data['stove'];
+        $realty->nuke = $data['nuke'];
+        $realty->fridge = $data['fridge'];
+        $realty->washing_machine = $data['washing_machine'];
+        $realty->conditioner = $data['conditioner'];
+        $realty->parking = $data['parking'];
+        $realty->may_children = $data['may_children'];
+        $realty->may_animal = $data['may_animal'];
+        $realty->allowed_smoke = $data['allowed_smoke'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_room_buy(Request $data){        
+        $realty = new RoomBuy();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_room_take(Request $data){        
+        $realty = new RoomTake();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->count_bed = $data['count_bed'];
+        $realty->count_sleeping_places = $data['count_sleeping_places'];
+        $realty->TV = $data['TV'];
+        $realty->wi_fi = $data['wi_fi'];
+        $realty->stove = $data['stove'];
+        $realty->nuke = $data['nuke'];
+        $realty->fridge = $data['fridge'];
+        $realty->washing_machine = $data['washing_machine'];
+        $realty->conditioner = $data['conditioner'];
+        $realty->parking = $data['parking'];
+        $realty->may_children = $data['may_children'];
+        $realty->may_animal = $data['may_animal'];
+        $realty->allowed_smoke = $data['allowed_smoke'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_home(Request $data){        
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new Homes();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->who_add = $data['who_add'];
+        $realty->online_display = $data['online_display'];
+
+        $realty->object_type = $data['object_type'];
+        $realty->bath_or_sauna = $data['bath_or_sauna'];
+        $realty->swimming_pool = $data['swimming_pool'];
+        $realty->plot_status = $data['plot_status'];
+        $realty->year_construction = $data['year_construction'];
+        $realty->wall_material = $data['wall_material'];
+        $realty->floor_home = $data['floor_home'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->terrace_veranda = $data['terrace_veranda'];
+        $realty->square = $data['square'];
+        $realty->square_region = $data['square_region'];
+        $realty->bathroom_home = $data['bathroom_home'];
+        $realty->bathroom_street = $data['bathroom_street'];
+        
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_home_rent(Request $data){        
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new HomesRent();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->who_add = $data['who_add'];
+        $realty->online_display = $data['online_display'];
+
+        $realty->type_time = $data['type_time'];
+        $realty->object_type = $data['object_type'];
+        $realty->bath_or_sauna = $data['bath_or_sauna'];
+        $realty->swimming_pool = $data['swimming_pool'];
+        $realty->plot_status = $data['plot_status'];
+        $realty->year_construction = $data['year_construction'];
+        $realty->wall_material = $data['wall_material'];
+        $realty->floor_home = $data['floor_home'];
+        $realty->count_rooms = $data['count_rooms'];
+        $realty->terrace_veranda = $data['terrace_veranda'];
+        $realty->square = $data['square'];
+        $realty->square_region = $data['square_region'];
+        $realty->bathroom_home = $data['bathroom_home'];
+        $realty->bathroom_street = $data['bathroom_street'];
+        $realty->conditioner = $data['conditioner'];
+        $realty->fridge = $data['fridge'];
+        $realty->stove = $data['stove'];
+        $realty->nuke = $data['nuke'];
+        $realty->washing_machine = $data['washing_machine'];
+        $realty->TV = $data['TV'];
+        $realty->max_guest = $data['max_guest'];
+        $realty->may_children = $data['may_children'];
+        $realty->may_animal = $data['may_animal'];
+        $realty->allowed_smoke = $data['allowed_smoke'];
+        
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_home_buy(Request $data){                
+        $realty = new HomesBuy();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->object_type = $data['object_type'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_home_take(Request $data){                
+        $realty = new HomesTake();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->object_type = $data['object_type'];
+        $realty->bath_or_sauna = $data['bath_or_sauna'];
+        $realty->swimming_pool = $data['swimming_pool'];
+        $realty->conditioner = $data['conditioner'];
+        $realty->fridge = $data['fridge'];
+        $realty->stove = $data['stove'];
+        $realty->nuke = $data['nuke'];
+        $realty->washing_machine = $data['washing_machine'];
+        $realty->TV = $data['TV'];
+        $realty->count_bed = $data['count_bed'];
+        $realty->count_sleeping_places = $data['count_sleeping_places'];
+        $realty->may_children = $data['may_children'];
+        $realty->may_animal = $data['may_animal'];
+        $realty->allowed_smoke = $data['allowed_smoke'];
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_land_plot(Request $data){        
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new LandPlot();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->who_add = $data['who_add'];
+
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->square = $data['square'];
+        $realty->price = $data['price'];
+
+        $realty->city = 'Дербент';
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_land_plot_rent(Request $data){        
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new LandPlotRent();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->who_add = $data['who_add'];
+
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->square = $data['square'];
         $realty->price = $data['price'];
 
         $realty->city = 'Дербент';
