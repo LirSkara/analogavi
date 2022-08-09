@@ -12,7 +12,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Название объявления</label>
                     </div>
-                    <div class="col-auto mt-0">
+                    <div class="col-12 col-lg-auto mt-0">
                         <input type="text" name="name" id="name" v-model="name" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{name_error}}</div>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Состояние</label>
                     </div>
-                    <div class="col-auto mt-0">
+                    <div class="col-12 col-lg-auto mt-0">
                         <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
                         <select v-model="state" name="state" class="form-select" id="inlineFormSelectPref">
                             <option value="" selected disabled>Выберите состояние</option>
@@ -35,7 +35,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Описание</label>
                     </div>
-                    <div class="col-auto mt-0">
+                    <div class="col-12 col-lg-auto mt-0">
                         <textarea name="description" id="name" v-model="description" class="form-control" aria-describedby="passwordHelpInline"></textarea>
                         <div class="text-danger">@{{description_error}}</div>
                     </div>
@@ -44,7 +44,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Цена</label>
                     </div>
-                    <div class="col-auto mt-0 mb-3">
+                    <div class="col-12 col-lg-auto mt-0 mb-3">
                         <div class="input-group">
                             <input name="price" v-model="price" style="border-right: 0;width:100px;" type="text" class="form-control"
                                 aria-label="Цена" aria-describedby="basic-addon2">
@@ -87,6 +87,7 @@
                         {{ auth()->user()->name }}
                     </div>
                 </div>
+                <input type="hidden" name="city" v-model="my_city">
                 <button class="btn btn-primary w-100" v-on:click="add_personal()">Сохранить и опубликовать</button>
             </form>
             <div class="col-12 col-lg-4"></div>
@@ -134,6 +135,7 @@
                     personal_images: [],
                     personal_images_error: '',
                     file_personal_error: '',
+                    my_city: JSON.parse(localStorage.getItem("city")),
                 }
             },
             beforeMount(){
@@ -180,7 +182,7 @@
                                             data: form_personal,
                                         })
                                         .then(function (response) {
-                                            alert(11)
+                                            window.location.href = '/cabinet'
                                         })
                                     } else {
                                         this.personal_images_error = 'Добавьте фото'

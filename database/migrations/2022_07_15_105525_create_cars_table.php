@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('user');
-            $table->text('name');
             $table->string('state');
             $table->text('description');
             $table->text('price');
@@ -33,6 +32,7 @@ return new class extends Migration
             $table->text('state_number')->nullable();            
             $table->string('vin')->nullable();
             $table->string('ctc')->nullable();
+            $table->text('city');
             $table->string('status');
             $table->timestamps();
         });

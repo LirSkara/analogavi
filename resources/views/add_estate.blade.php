@@ -34,9 +34,9 @@
             </div>
         </div>
         <div v-if="cs_newold != '' && res_one != true">
-            <div class="d-flex">
-                <h2>Категория</h2>
-                <nav aria-label="breadcrumb d-flex" style="margin-left: 10%;">
+            <div class="d-flex-tel">
+                <h2 class="width-blocks">Категория</h2>
+                <nav aria-label="breadcrumb d-flex">
                     <ol class="breadcrumb mt-1">
                         <li class="breadcrumb-item fs-4"><a href="#" v-on:click="back_category()" class="text-decoration-none">@{{what_i_sell}}</a></li>
                         <li class="breadcrumb-item active fs-4" aria-current="page">@{{sell_and_buy}}</li>
@@ -45,30 +45,30 @@
             </div>
             <div class="d-flex flex-column">
                 <h2>Расположение</h2>
-                <div class="d-flex mb-2">
-                    <label v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" for="name" class="col-form-label">Адрес</label>
-                    <label v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" for="name" class="col-form-label">Желаемый район</label>
-                    <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="mt-0" style="margin-left: 18%;">
+                <div class="d-flex-tel mb-2">
+                    <label v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" for="name" class="col-form-label width-blocks">Адрес</label>
+                    <label v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" for="name" class="col-form-label width-blocks">Желаемый район</label>
+                    <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="mt-0">
                         <input type="text" name="name" id="name" v-model="adres" class="form-control" aria-describedby="passwordHelpInline" placeholder="Улица и номер дома">
                         <div class="text-danger">@{{adres_error}}</div>
                     </div>
-                    <div v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" class="mt-0" style="margin-left: 11.7%;">
+                    <div v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" class="mt-0">
                         <input type="text" name="name" id="name" v-model="adres" class="form-control" aria-describedby="passwordHelpInline" placeholder="Улица и номер дома">
                         <div class="text-danger">@{{adres_error}}</div>
                     </div>
                 </div>
-                <div v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Продам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам'" class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Номер квартиры</label>
-                    <div class="mt-0" style="margin-left: 12%;">
+                <div v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Продам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Продам' || what_i_sell == 'Квартиры' && sell_and_buy == 'Сдам'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Номер квартиры</label>
+                    <div class="mt-0">
                         <input type="text" name="name" id="name" v-model="number_flat" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{number_flat_error}}</div>
                     </div>
                 </div>
                 <h2>Контакты</h2>
                 <div v-if="sell_and_buy == 'Продам' || sell_and_buy == 'Сдам'" class="d-flex flex-column mb-2">
-                    <div class="d-flex">
-                        <label for="name" class="col-form-label">Размещает объявление</label>
-                        <div class="d-flex flex-column" style="margin-left: 8.1%;">
+                    <div class="d-flex-tel">
+                        <label for="name" class="col-form-label width-blocks">Размещает объявление</label>
+                        <div class="d-flex flex-column">
                             <div class="mt-0 d-flex">
                                 <input type="radio" class="btn-check" name="who_add" value="Собственник" v-model="who_add" id="who_add1" autocomplete="off">
                                 <label class="btn btn-outline-secondary border-right-none" for="who_add1">Собственник</label>
@@ -79,36 +79,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <span for="name" class="col-form-label pt-0">Номер телефона</span>
-                    <div class="mt-0 d-flex" style="margin-left: 12%;">
+                <div class="d-flex-tel mb-2">
+                    <span for="name" class="col-form-label pt-0 width-blocks">Номер телефона</span>
+                    <div class="mt-0 d-flex">
                         <span class="fw-bold">{{auth()->user()->tel}}</span>
                     </div>
                 </div>
-                <div v-if="sell_and_buy == 'Продам' && what_i_sell != 'Земельные участки' || what_i_sell != 'Земельные участки' && sell_and_buy == 'Сдам'" class="d-flex mb-5">
-                    <label for="name" class="col-form-label">Онлайн-показ</label>
-                    <div class="mt-0 d-flex" style="margin-left: 13.5%;">
-                        <input type="radio" class="btn-check" name="online_display" value="Проведу" v-model="online_display" id="online_display1" autocomplete="off">
-                        <label class="btn btn-secondary border-right-none" for="online_display1">Проведу</label>
+                <div v-if="sell_and_buy == 'Продам' && what_i_sell != 'Земельные участки' && what_i_sell != 'Гаражи и машиноместа' || what_i_sell != 'Земельные участки' && sell_and_buy == 'Сдам' && what_i_sell != 'Гаражи и машиноместа'" class="d-flex-tel mb-5">
+                    <label for="name" class="col-form-label width-blocks">Онлайн-показ</label>
+                    <div class="mt-0 d-flex">
+                        <input type="radio" class="btn-check" name="online_display" value="Проведу" v-model="online_display" id="online_display1" checked autocomplete="off">
+                        <label class="btn btn-outline-secondary border-right-none" for="online_display1">Проведу</label>
                         <input type="radio" class="btn-check" name="online_display" value="Не хочу" v-model="online_display" id="online_display2" autocomplete="off">
                         <label class="btn btn-outline-secondary border-left-none" for="online_display2">Не хочу</label>
                     </div>
                 </div>
             </div>
-            <button v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Продам' || what_i_sell == 'Квартиры' && sell_and_buy == 'Сдам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Продам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_one()">Продолжить</button>
-            <button v-if="sell_and_buy == 'Куплю' || sell_and_buy == 'Сниму'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_one_buy()">Продолжить</button>
-            <button v-if="what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Продам' || what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Сдам' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Продам' ||  what_i_sell == 'Земельные участки' && sell_and_buy == 'Сдам'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_one_home()">Продолжить</button>
+            <button v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Продам' || what_i_sell == 'Квартиры' && sell_and_buy == 'Сдам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Продам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам'" class="btn btn-primary w-700" v-on:click="resume_one()">Продолжить</button>
+            <button v-if="sell_and_buy == 'Куплю' && what_i_sell != 'Земельные участки' && what_i_sell != 'Гаражи и машиноместа' || sell_and_buy == 'Сниму' && what_i_sell != 'Земельные участки' && what_i_sell != 'Гаражи и машиноместа'" class="btn btn-primary w-700" v-on:click="resume_one_buy()">Продолжить</button>
+            <button v-if="what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Продам' || what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Сдам' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Продам' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Сдам' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Куплю' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Сниму' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Продам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Сдам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Куплю' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Сниму'" class="btn btn-primary w-700" v-on:click="resume_one_home()">Продолжить</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Продам' || res_one == true && res_two != true && what_i_sell == 'Комнаты' && sell_and_buy == 'Продам'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
-            </div>
             <div class="d-flex flex-column mt-3">
                 <h2>О квартире</h2>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Тип жилья</label>
-                    <div class="d-flex flex-column" style="margin-left: 13.5%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Тип жилья</label>
+                    <div class="d-flex flex-column">
                         <div class="mt-0 d-flex">
                             <input type="radio" class="btn-check" name="type_residential" value="Квартира" v-model="type_residential" id="type_residential1" autocomplete="off">
                             <label class="btn btn-outline-secondary border-right-none" for="type_residential1">Квартира</label>
@@ -118,11 +114,11 @@
                         <div class="text-danger">@{{type_residential_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Этаж</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 17.3%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Этаж</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
-                            <select name="floor" v-model="floor" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <select v-model="floor" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -149,9 +145,9 @@
                         <div class="text-danger">@{{floor_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Количество комнат</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Количество комнат</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
@@ -172,40 +168,40 @@
                         <div class="text-danger">@{{count_rooms_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Площадь</label>
-                    <div class="mt-0" style="margin-left: 14.3%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Площадь</label>
+                    <div class="mt-0">
                         <input type="text" v-model="square" class="form-control" name="square" placeholder="0,0 м²">
                         <div class="text-danger">@{{square_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Жилая площадь</label>
-                    <div class="mt-0 d-flex" style="margin-left: 9.5%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Жилая площадь</label>
+                    <div class="mt-0 d-flex">
                         <input type="text" v-model="residential_square" class="form-control" name="residential_square" placeholder="0,0 м²">
                     </div>
                 </div>
                 <h2>О доме</h2>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Тип дома</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 14.2%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Тип дома</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="type_home" v-model="type_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
-                                <option value="1">Кирпичный</option>
-                                <option value="2">Панельный</option>
-                                <option value="3">Блочный</option>
-                                <option value="4">Монолитный</option>
-                                <option value="5">Монолитно-кирпичный</option>
-                                <option value="6">Деревянный</option>
+                                <option value="Кирпичный">Кирпичный</option>
+                                <option value="Панельный">Панельный</option>
+                                <option value="Блочный">Блочный</option>
+                                <option value="Монолитный">Монолитный</option>
+                                <option value="Монолитно-кирпичный">Монолитно-кирпичный</option>
+                                <option value="Деревянный">Деревянный</option>
                             </select>
                         </div>
                         <div class="text-danger">@{{type_home_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Этажей в доме</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 10.2%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Этажей в доме</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="floor_home" v-model="floor_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
@@ -234,18 +230,18 @@
                         <div class="text-danger">@{{floor_home_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Лифт</label>
-                    <div class="mt-0 d-flex" style="margin-left: 17.1%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Лифт</label>
+                    <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="elevator" value="true" v-model="elevator" id="elevator1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="elevator1">Есть</label>
                         <input type="radio" class="btn-check" name="elevator" value="false" v-model="elevator" id="elevator2" autocomplete="off">
                         <label class="btn btn-outline-secondary border-left-none" for="elevator2">Нет</label>
                     </div>
                 </div>
-                <div class="d-flex mb-3 mt-1">
-                    <label for="name" class="col-form-label fs-5">Двор</label>
-                    <div class="mt-0 d-flex flex-column" style="margin-left: 17.1%;">
+                <div class="d-flex-tel mb-3 mt-1">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Двор</label>
+                    <div class="mt-0 d-flex flex-column">
                         <div>
                             <input class="form-check-input me-2 mb-2" type="checkbox" v-model="closed_territory" id="closed_territory" value="Закрытая территория" aria-label="...">
                             <span>Закрытая территория</span>
@@ -260,9 +256,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex mb-5">
-                    <label for="name" class="col-form-label fs-5">Парковка</label>
-                    <div class="mt-0 d-flex" style="margin-left: 14%;">
+                <div class="d-flex-tel mb-5">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Парковка</label>
+                    <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="parking" value="true" v-model="parking" id="parking1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="parking1">Есть</label>
                         <input type="radio" class="btn-check" name="parking" value="false" v-model="parking" id="parking2" autocomplete="off">
@@ -270,13 +266,13 @@
                     </div>
                 </div>              
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two()">Продолжить</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_two()">Продолжить</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Дома, дачи, коттеджи'">
             <h2>О доме</h2>
-            <div v-if="sell_and_buy == 'Сдам'" class="d-flex mb-2">
-                <label for="name" class="col-form-label">Тип времени</label>
-                <div class="d-flex flex-column" style="margin-left: 13.6%;">
+            <div v-if="sell_and_buy == 'Сдам'" class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label width-blocks">Тип времени</label>
+                <div class="d-flex flex-column">
                     <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="type_time" value="Длительный срок" v-model="type_time" id="type_time1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="type_time1">Длительный срок</label>
@@ -286,9 +282,9 @@
                     <div class="text-danger">@{{type_time_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-3">
-                <label for="name" class="col-form-label">Вид объекта</label>
-                <div class="d-flex flex-column" style="margin-left: 14%;">
+            <div class="d-flex-tel mb-3">
+                <label for="name" class="col-form-label width-blocks">Вид объекта</label>
+                <div class="d-flex-tel flex-column">
                     <div class="mt-0 mb-3 d-flex">
                         <input type="radio" class="btn-check" name="parking" value="Дом" v-model="object_type" id="object_type1" checked autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="object_type1">Дом</label>
@@ -313,9 +309,9 @@
             </div>
             <div v-if="sell_and_buy != 'Куплю'" class="d-flex flex-column">
                 <div v-if="sell_and_buy != 'Сниму'" class="d-flex flex-column">
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Статус участка</label>
-                        <div class="d-flex flex-column mb-3" style="margin-left: 12.7%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Статус участка</label>
+                        <div class="d-flex flex-column mb-3">
                             <div class="mt-0 d-flex">
                                 <select v-model="plot_status" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                     <option value="" selected disabled></option>
@@ -328,15 +324,15 @@
                             <div class="text-danger">@{{plot_status_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Год постройки</label>
-                        <div class="mt-0" style="margin-left: 12.5%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Год постройки</label>
+                        <div class="mt-0">
                             <input type="text"   id="year_construction" v-model="year_construction" class="form-control" aria-describedby="passwordHelpInline">
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Материал стен</label>
-                        <div class="d-flex flex-column mb-3" style="margin-left: 12.5%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Материал стен</label>
+                        <div class="d-flex flex-column mb-3">
                             <select v-model="wall_material" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
                                 <option value="Кирпич">Кирпич</option>
@@ -352,9 +348,9 @@
                             <div class="text-danger">@{{wall_material_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Этажей в доме</label>
-                        <div class="d-flex flex-column mb-3" style="margin-left: 12.5%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Этажей в доме</label>
+                        <div class="d-flex flex-column mb-3">
                             <div class="mt-0 d-flex">
                                 <select v-model="floor_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                     <option value="" selected disabled></option>
@@ -383,9 +379,9 @@
                             <div class="text-danger">@{{floor_home_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Количество комнат</label>
-                        <div class="d-flex flex-column mb-3" style="margin-left: 9.9%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Количество комнат</label>
+                        <div class="d-flex flex-column mb-3">
                             <div class="mt-0 d-flex">
                                 <select v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                     <option value="" selected disabled></option>
@@ -410,23 +406,23 @@
                             </div>        
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Площадь дома</label>
-                        <div class="mt-0" style="margin-left: 12.4%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Площадь дома</label>
+                        <div class="mt-0">
                             <input type="text" v-model="square" class="form-control" name="text" placeholder="0,0 м²">
                             <div class="text-danger">@{{square_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Площадь участка</label>
-                        <div class="mt-0" style="margin-left: 11%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Площадь участка</label>
+                        <div class="mt-0">
                             <input type="text" v-model="square_region" class="form-control" name="text" placeholder="0 сот">
                             <div class="text-danger">@{{square_region_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Санузел</label>
-                        <div class="d-flex flex-column" style="margin-left: 16.2%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Санузел</label>
+                        <div class="d-flex flex-column">
                             <div class="mt-3">   
                                 <input class="form-check-input me-2 mb-2" type="checkbox" v-model="bathroom_home" id="bathroom_home" value="В доме" aria-label="...">
                                 <span>В доме</span>
@@ -438,9 +434,9 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="sell_and_buy == 'Сдам' || sell_and_buy == 'Сниму'" class="d-flex">
-                    <label for="name" class="col-form-label">Техника</label>
-                    <div class="mt-0 d-flex" style="margin-left: 16.2%; width: 600px;">
+                <div v-if="sell_and_buy == 'Сдам' || sell_and_buy == 'Сниму'" class="d-flex-tel">
+                    <label for="name" class="col-form-label width-blocks">Техника</label>
+                    <div class="mt-0 d-flex" style="width: 600px;">
                         <div class="d-flex flex-column mt-2">
                             <div>   
                                 <input class="form-check-input me-2 mb-3" type="checkbox" v-model="conditioner" id="conditioner" value="Кондиционер" aria-label="...">
@@ -481,9 +477,9 @@
                 </div>
                 <div v-if="sell_and_buy == 'Сдам' || sell_and_buy == 'Сниму'" class="d-flex flex-column">
                     <h2>Правила</h2>
-                    <div v-if="sell_and_buy == 'Сдам'" class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Максимум гостей</label>
-                        <div class="d-flex flex-column mb-3" style="margin-left: 10.8%;">
+                    <div v-if="sell_and_buy == 'Сдам'" class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Максимум гостей</label>
+                        <div class="d-flex flex-column mb-3">
                             <div class="mt-0 d-flex">
                                 <select name="max_guest" v-model="max_guest" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                     <option value="" selected disabled></option>
@@ -501,9 +497,9 @@
                         </div>
                     </div>
                     <div v-if="sell_and_buy == 'Сниму'" class="d-flex flex-column mb-3">
-                        <div class="d-flex mb-2">
-                            <label for="name" class="col-form-label">Количество кроватей</label>
-                            <div class="d-flex flex-column mb-3" style="margin-left: 8.6%;">
+                        <div class="d-flex-tel mb-2">
+                            <label for="name" class="col-form-label width-blocks">Количество кроватей</label>
+                            <div class="d-flex flex-column mb-3">
                                 <div class="mt-0 d-flex">
                                     <select v-model="count_bed" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                         <option value="" selected disabled></option>
@@ -520,9 +516,9 @@
                                 <div class="text-danger">@{{count_bed_error}}</div>
                             </div>
                         </div>
-                        <div class="d-flex mb-2">
-                            <label for="name" class="col-form-label">Количество спальных мест</label>
-                            <div class="d-flex flex-column mb-3" style="margin-left: 5.6%;">
+                        <div class="d-flex-tel mb-2">
+                            <label for="name" class="col-form-label width-blocks">Количество спальных мест</label>
+                            <div class="d-flex flex-column mb-3">
                                 <div class="mt-0 d-flex">
                                     <select v-model="count_sleeping_places" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                         <option value="" selected disabled></option>
@@ -548,9 +544,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Можно с детьми</label>
-                        <div class="d-flex flex-column" style="margin-left: 11.3%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Можно с детьми</label>
+                        <div class="d-flex flex-column">
                             <div class="mt-0 d-flex">
                                 <input type="radio" class="btn-check" name="may_children" value="true" v-model="may_children" id="may_children1" autocomplete="off">
                                 <label class="btn btn-outline-secondary border-right-none" for="may_children1">Да</label>
@@ -560,9 +556,9 @@
                             <div class="text-danger">@{{may_children_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label">Можно с животными</label>
-                        <div class="d-flex flex-column" style="margin-left: 8.7%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label width-blocks">Можно с животными</label>
+                        <div class="d-flex flex-column">
                             <div class="mt-0 d-flex">
                                 <input type="radio" class="btn-check" name="may_animal" value="true" v-model="may_animal" id="may_animal1" autocomplete="off">
                                 <label class="btn btn-outline-secondary border-right-none" for="may_animal1">Да</label>
@@ -572,9 +568,9 @@
                             <div class="text-danger">@{{may_animal_error}}</div>
                         </div>
                     </div>
-                    <div class="d-flex mb-5">
-                        <label for="name" class="col-form-label">Разрешено курить</label>
-                        <div class="mt-0 d-flex" style="margin-left: 10.4%;">
+                    <div class="d-flex-tel mb-5">
+                        <label for="name" class="col-form-label width-blocks">Разрешено курить</label>
+                        <div class="mt-0 d-flex">
                             <input type="radio" class="btn-check" name="allowed_smoke" value="true" v-model="allowed_smoke" id="allowed_smoke1" autocomplete="off">
                             <label class="btn btn-outline-secondary border-right-none" for="allowed_smoke1">Да</label>
                             <input type="radio" class="btn-check" name="allowed_smoke" value="false" v-model="allowed_smoke" id="allowed_smoke2" autocomplete="off">
@@ -583,13 +579,9 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_home()">Продолжить</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_two_home()">Продолжить</button>
         </div>
         <div v-if="res_two == true && sell_and_buy == 'Сдам' || res_two == true && sell_and_buy == 'Продам'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">О квартире, о доме</span>
-            </div>
             <div class="d-flex flex-column mt-3 mb-5">
                 <h2>Фотографии</h2>
                 <div class="row g-3 align-items-center mb-4">
@@ -612,20 +604,20 @@
                 </div>
                 <h2>Описание</h2>
                 <div class="d-flex flex-column mb-4">
-                    <textarea type="text" class="form-control" v-model="description" style="height: 250px; width: 700px" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
+                    <textarea type="text" class="form-control width-textarea" v-model="description" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
                     <div class="text-danger">@{{description_error}}</div>
                 </div>
                 <h2>Условия сделки</h2>
-                <div v-if="what_i_sell != 'Дома, дачи, коттеджи' && sell_and_buy != 'Продам' && what_i_sell != 'Земельные участки'" class="d-flex mt-2 mb-5">
-                    <label for="name" class="col-form-label fs-5">Способ продажи</label>
+                <div v-if="what_i_sell != 'Дома, дачи, коттеджи' && sell_and_buy != 'Продам' || what_i_sell != 'Земельные участки' || what_i_sell != 'Гаражи и машиноместа' || what_i_sell != 'Квартиры'" class="d-flex-tel mt-2 mb-5">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Способ продажи</label>
                     <div class="d-flex flex-column">
-                        <div class="mt-0 d-flex" style="margin-left: 14%;">
+                        <div class="mt-0 d-flex">
                             <input type="radio" class="btn-check" name="method_sale" value="Свободная" v-model="method_sale" id="method_sale1" autocomplete="off">
                             <label class="btn btn-outline-secondary border-right-none" for="method_sale1">Свободная</label>
                             <input type="radio" class="btn-check" name="method_sale" value="Альтернативная" v-model="method_sale" id="method_sale2" autocomplete="off">
                             <label class="btn btn-outline-secondary border-left-none" for="method_sale2">Альтернативная</label>
                         </div>
-                        <div class="d-flex flex-column mt-2" style="margin-left: 14%;">
+                        <div class="d-flex flex-column mt-2">
                             <div>   
                                 <input class="form-check-input me-2 mb-2" type="checkbox" v-model="mortgage" id="mortgage" value="Можно в ипотеку" aria-label="...">
                                 <span>Можно в ипотеку</span>
@@ -640,40 +632,47 @@
                             </div>
                         </div>
                     </div>
-                </div>    
-                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Продам' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Сдам'" class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Площадь</label>
-                    <div class="mt-0" style="margin-left: 9.8%;">
+                </div>
+                <div v-if="what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Продам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Сдам'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Тип гаража</label>
+                    <div class="mt-0">
+                        <select v-model="garage_type" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                            <option value="" selected disabled></option>
+                            <option value="Железобетонный">Железобетонный</option>
+                            <option value="Кирпичный">Кирпичный</option>
+                            <option value="Металлический">Металлический</option>
+                        </select>
+                    </div>
+                </div>   
+                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Продам' || what_i_sell == 'Земельные участки' && sell_and_buy == 'Сдам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Продам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Сдам'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Площадь</label>
+                    <div class="mt-0">
                         <input type="text" name="name" id="square" v-model="square" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{square_error}}</div>
                     </div>
                 </div> 
-                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Продам'" class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Цена</label>
-                    <div class="mt-0" style="margin-left: 12%;">
+                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Продам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Продам' || what_i_sell == 'Квартиры' && sell_and_buy == 'Продам' || what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Продам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Продам'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Цена</label>
+                    <div class="mt-0">
                         <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{price_error}}</div>
                     </div>
                 </div>
-                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Сдам'" class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Арендная плата</label>
-                    <div class="mt-0" style="margin-left: 6%;">
+                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Сдам' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Сдам' || what_i_sell == 'Квартиры' && sell_and_buy == 'Сдам' || what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Сдам' || what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Арендная плата</label>
+                    <div class="mt-0">
                         <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{price_error}}</div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_three()">Опубликовать</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_three()">Опубликовать</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Сдам'">
-            <div class="d-flex mb-3">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
-            </div>
             <h2>О квартире</h2>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Тип времени</label>
-                <div class="d-flex flex-column" style="margin-left: 11.7%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Тип времени</label>
+                <div class="d-flex flex-column">
                     <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="type_time" value="Длительный срок" v-model="type_time" id="type_time1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="type_time1">Длительный срок</label>
@@ -683,9 +682,9 @@
                     <div class="text-danger">@{{type_time_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Тип жилья</label>
-                <div class="d-flex flex-column" style="margin-left: 13.5%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Тип жилья</label>
+                <div class="d-flex flex-column">
                     <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="type_residential" value="Квартира" v-model="type_residential" id="type_residential1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="type_residential1">Квартира</label>
@@ -695,9 +694,9 @@
                     <div class="text-danger">@{{type_residential_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Этаж</label>
-                <div class="d-flex flex-column mb-3" style="margin-left: 17.3%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Этаж</label>
+                <div class="d-flex flex-column mb-3">
                     <div class="mt-0 d-flex">
                         <select name="floor" v-model="floor" class="form-select form-select-lg" aria-label=".form-select-lg example">
                             <option value="" selected disabled></option>
@@ -726,9 +725,9 @@
                     <div class="text-danger">@{{floor_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Количество комнат</label>
-                <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Количество комнат</label>
+                <div class="d-flex flex-column mb-3">
                     <div class="mt-0 d-flex">
                         <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
                             <option value="" selected disabled></option>
@@ -749,22 +748,22 @@
                     <div class="text-danger">@{{count_rooms_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Площадь</label>
-                <div class="mt-0" style="margin-left: 14.3%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Площадь</label>
+                <div class="mt-0">
                     <input type="text" v-model="square" class="form-control" name="square" placeholder="0,0 м²">
                     <div class="text-danger">@{{square_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Жилая площадь</label>
-                <div class="mt-0 d-flex" style="margin-left: 9.5%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Жилая площадь</label>
+                <div class="mt-0 d-flex">
                     <input type="text" v-model="residential_square" class="form-control" name="residential_square" placeholder="0,0 м²">
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Техника</label>
-                <div class="mt-0 d-flex" style="margin-left: 15.1%; width: 600px;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Техника</label>
+                <div class="mt-0 d-flex">
                     <div class="d-flex flex-column mt-2">
                         <div>   
                             <input class="form-check-input me-2 mb-3" type="checkbox" v-model="conditioner" id="conditioner" value="Кондиционер" aria-label="...">
@@ -803,9 +802,9 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Интернет и ТВ</label>
-                <div class="mt-0 d-flex" style="margin-left: 10.6%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Интернет и ТВ</label>
+                <div class="mt-0 d-flex">
                     <div class="d-flex flex-column mt-2">
                         <div>   
                             <input class="form-check-input me-2 mb-3" type="checkbox" v-model="wi_fi" id="wi_fi" value="Wi-Fi" aria-label="...">
@@ -819,26 +818,26 @@
                 </div>
             </div>
             <h2>О доме</h2>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Тип дома</label>
-                <div class="d-flex flex-column mb-3" style="margin-left: 14.2%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Тип дома</label>
+                <div class="d-flex flex-column mb-3">
                     <div class="mt-0 d-flex">
                         <select name="type_home" v-model="type_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                             <option value="" selected disabled></option>
-                            <option value="1">Кирпичный</option>
-                            <option value="2">Панельный</option>
-                            <option value="3">Блочный</option>
-                            <option value="4">Монолитный</option>
-                            <option value="5">Монолитно-кирпичный</option>
-                            <option value="6">Деревянный</option>
+                            <option value="Кирпичный">Кирпичный</option>
+                            <option value="Панельный">Панельный</option>
+                            <option value="Блочный">Блочный</option>
+                            <option value="Монолитный">Монолитный</option>
+                            <option value="Монолитно-кирпичный">Монолитно-кирпичный</option>
+                            <option value="Деревянный">Деревянный</option>
                         </select>
                     </div>
                     <div class="text-danger">@{{type_home_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Этажей в доме</label>
-                <div class="d-flex flex-column mb-3" style="margin-left: 10.2%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Этажей в доме</label>
+                <div class="d-flex flex-column mb-3">
                     <div class="mt-0 d-flex">
                         <select name="floor_home" v-model="floor_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                             <option value="" selected disabled></option>
@@ -867,18 +866,18 @@
                     <div class="text-danger">@{{floor_home_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Лифт</label>
-                <div class="mt-0 d-flex" style="margin-left: 17.1%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Лифт</label>
+                <div class="mt-0 d-flex">
                     <input type="radio" class="btn-check" name="elevator" value="true" v-model="elevator" id="elevator1" autocomplete="off">
                     <label class="btn btn-outline-secondary border-right-none" for="elevator1">Есть</label>
                     <input type="radio" class="btn-check" name="elevator" value="false" v-model="elevator" id="elevator2" autocomplete="off">
                     <label class="btn btn-outline-secondary border-left-none" for="elevator2">Нет</label>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Парковка</label>
-                <div class="mt-0 d-flex" style="margin-left: 14%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Парковка</label>
+                <div class="mt-0 d-flex">
                     <input type="radio" class="btn-check" name="parking" value="true" v-model="parking" id="parking1" autocomplete="off">
                     <label class="btn btn-outline-secondary border-right-none" for="parking1">Есть</label>
                     <input type="radio" class="btn-check" name="parking" value="false" v-model="parking" id="parking2" autocomplete="off">
@@ -886,9 +885,9 @@
                 </div>
             </div>
             <h2>Правила заселения</h2>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Максимум гостей</label>
-                <div class="d-flex flex-column mb-3" style="margin-left: 8.4%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Максимум гостей</label>
+                <div class="d-flex flex-column mb-3">
                     <div class="mt-0 d-flex">
                         <select name="max_guest" v-model="max_guest" class="form-select form-select-lg" aria-label=".form-select-lg example">
                             <option value="" selected disabled></option>
@@ -905,9 +904,9 @@
                     <div class="text-danger">@{{max_guest_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Можно с детьми</label>
-                <div class="d-flex flex-column" style="margin-left: 9%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Можно с детьми</label>
+                <div class="d-flex flex-column">
                     <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="may_children" value="true" v-model="may_children" id="may_children1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="may_children1">Да</label>
@@ -917,9 +916,9 @@
                     <div class="text-danger">@{{may_children_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-2">
-                <label for="name" class="col-form-label fs-5">Можно с животными</label>
-                <div class="d-flex flex-column" style="margin-left: 5.6%;">
+            <div class="d-flex-tel mb-2">
+                <label for="name" class="col-form-label fs-5 width-blocks">Можно с животными</label>
+                <div class="d-flex flex-column">
                     <div class="mt-0 d-flex">
                         <input type="radio" class="btn-check" name="may_animal" value="true" v-model="may_animal" id="may_animal1" autocomplete="off">
                         <label class="btn btn-outline-secondary border-right-none" for="may_animal1">Да</label>
@@ -929,27 +928,23 @@
                     <div class="text-danger">@{{may_animal_error}}</div>
                 </div>
             </div>
-            <div class="d-flex mb-5">
-                <label for="name" class="col-form-label fs-5">Разрешено курить</label>
-                <div class="mt-0 d-flex" style="margin-left: 7.7%;">
+            <div class="d-flex-tel mb-5">
+                <label for="name" class="col-form-label fs-5 width-blocks">Разрешено курить</label>
+                <div class="mt-0 d-flex">
                     <input type="radio" class="btn-check" name="allowed_smoke" value="true" v-model="allowed_smoke" id="allowed_smoke1" autocomplete="off">
                     <label class="btn btn-outline-secondary border-right-none" for="allowed_smoke1">Да</label>
                     <input type="radio" class="btn-check" name="allowed_smoke" value="false" v-model="allowed_smoke" id="allowed_smoke2" autocomplete="off">
                     <label class="btn btn-outline-secondary border-left-none" for="allowed_smoke2">Нет</label>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="apartment_rent_two()">Продолжить</button>
+            <button class="btn btn-primary w-700" v-on:click="apartment_rent_two()">Продолжить</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Куплю'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
-            </div>
             <div class="d-flex flex-column mt-3">
                 <h2>О квартире</h2>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Количество комнат</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Количество комнат</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
@@ -971,41 +966,40 @@
                     </div>
                 </div>         
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_buy()">Продолжить</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_two_buy()">Продолжить</button>
         </div>
         <div v-if="res_two == true && sell_and_buy == 'Куплю' || res_two == true && sell_and_buy == 'Сниму'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">О квартире, о доме</span>
-            </div>
             <div class="d-flex flex-column mt-3 mb-5">
                 <h2>Описание</h2>
                 <div class="d-flex flex-column mb-4">
-                    <textarea type="text" class="form-control" v-model="description" style="height: 250px; width: 700px" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
+                    <textarea type="text" class="form-control width-textarea" v-model="description" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
                     <div class="text-danger">@{{description_error}}</div>
                 </div>
                 <h2>Условия сделки</h2>     
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Цена</label>
-                    <div class="mt-0" style="margin-left: 12%;">
+                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy != 'Сниму' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Куплю' || what_i_sell == 'Квартиры' && sell_and_buy == 'Куплю' || what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Куплю'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Цена</label>
+                    <div class="mt-0">
+                        <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
+                        <div class="text-danger">@{{price_error}}</div>
+                    </div>
+                </div>
+                <div v-if="what_i_sell == 'Земельные участки' && sell_and_buy == 'Сниму' || what_i_sell == 'Гаражи и машиноместа' && sell_and_buy == 'Сниму' || what_i_sell == 'Квартиры' && sell_and_buy == 'Сниму' || what_i_sell == 'Дома, дачи, коттеджи' && sell_and_buy == 'Сниму' || what_i_sell == 'Комнаты' && sell_and_buy == 'Сниму'" class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Арендная плата</label>
+                    <div class="mt-0">
                         <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{price_error}}</div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_three()">Опубликовать</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_three()">Опубликовать</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Квартиры' && sell_and_buy == 'Сниму' || res_one == true && res_two != true && what_i_sell == 'Комнаты' && sell_and_buy == 'Сниму'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
-            </div>
             <div class="d-flex flex-column mt-3">
                 <div v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Сниму'" class="d-flex flex-column">
                     <h2>О квартире</h2>
-                    <div class="d-flex mb-2">
-                        <label for="name" class="col-form-label fs-5">Количество комнат</label>
-                        <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                    <div class="d-flex-tel mb-2">
+                        <label for="name" class="col-form-label fs-5 width-blocks">Количество комнат</label>
+                        <div class="d-flex flex-column mb-3">
                             <div class="mt-0 d-flex">
                                 <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                     <option value="" selected disabled></option>
@@ -1028,7 +1022,7 @@
                     </div>
                 </div>
                 <h2>Дополнительные параметры</h2>
-                <div class="d-flex" style="width: 500px;">
+                <div class="d-flex-tel" style="width: 500px;">
                     <div class="d-flex flex-column w-50">
                         <span class="mb-2">Количество кроватей</span>
                         <select name="count_bed" v-model="count_bed" class="form-select form-select-lg" aria-label=".form-select-lg example">
@@ -1115,19 +1109,15 @@
                     </div>
                 </div>
             </div>
-            <button v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Сниму'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_buy()">Продолжить</button>
-            <button v-if="what_i_sell == 'Комнаты' && sell_and_buy == 'Сниму'" class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_buy_room()">Продолжить</button>
+            <button v-if="what_i_sell == 'Квартиры' && sell_and_buy == 'Сниму'" class="btn btn-primary w-700" v-on:click="resume_two_buy()">Продолжить</button>
+            <button v-if="what_i_sell == 'Комнаты' && sell_and_buy == 'Сниму'" class="btn btn-primary w-700" v-on:click="resume_two_buy_room()">Продолжить</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Комнаты' && sell_and_buy == 'Сдам'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">Категория, расположение, контакты</span>
-            </div>
             <div class="d-flex flex-column mt-3">
                 <h2>Параметры</h2>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Тип жилья</label>
-                    <div class="d-flex flex-column" style="margin-left: 13.5%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Тип жилья</label>
+                    <div class="d-flex flex-column">
                         <div class="mt-0 d-flex">
                             <input type="radio" class="btn-check" name="type_residential" value="Квартира" v-model="type_residential" id="type_residential1" autocomplete="off">
                             <label class="btn btn-outline-secondary border-right-none" for="type_residential1">Комната</label>
@@ -1137,9 +1127,9 @@
                         <div class="text-danger">@{{type_residential_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Расположение</label>
-                    <div class="d-flex flex-column" style="margin-left: 10.7%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Расположение</label>
+                    <div class="d-flex flex-column">
                         <div>
                             <input class="form-check-input me-2 mb-3" name="location" type="radio" v-model="location" value="Квартира" aria-label="...">
                             <span>Квартира</span>
@@ -1154,9 +1144,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Количество комнат</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 7.1%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Количество комнат</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="count_rooms" v-model="count_rooms" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
@@ -1177,26 +1167,26 @@
                         <div class="text-danger">@{{count_rooms_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Тип дома</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 14.2%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Тип дома</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="type_home" v-model="type_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
-                                <option value="1">Кирпичный</option>
-                                <option value="2">Панельный</option>
-                                <option value="3">Блочный</option>
-                                <option value="4">Монолитный</option>
-                                <option value="5">Монолитно-кирпичный</option>
-                                <option value="6">Деревянный</option>
+                                <option value="Кирпичный">Кирпичный</option>
+                                <option value="Панельный">Панельный</option>
+                                <option value="Блочный">Блочный</option>
+                                <option value="Монолитный">Монолитный</option>
+                                <option value="Монолитно-кирпичный">Монолитно-кирпичный</option>
+                                <option value="Деревянный">Деревянный</option>
                             </select>
                         </div>
                         <div class="text-danger">@{{type_home_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Этаж</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 17.3%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Этаж</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="floor" v-model="floor" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
@@ -1225,9 +1215,9 @@
                         <div class="text-danger">@{{floor_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Этажей в доме</label>
-                    <div class="d-flex flex-column mb-3" style="margin-left: 10.2%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Этажей в доме</label>
+                    <div class="d-flex flex-column mb-3">
                         <div class="mt-0 d-flex">
                             <select name="floor_home" v-model="floor_home" class="form-select form-select-lg" aria-label=".form-select-lg example">
                                 <option value="" selected disabled></option>
@@ -1256,15 +1246,15 @@
                         <div class="text-danger">@{{floor_home_error}}</div>
                     </div>
                 </div>
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label fs-5">Площадь</label>
-                    <div class="mt-0" style="margin-left: 14.3%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label fs-5 width-blocks">Площадь</label>
+                    <div class="mt-0">
                         <input type="text" v-model="square" class="form-control" name="square" placeholder="0,0 м²">
                         <div class="text-danger">@{{square_error}}</div>
                     </div>
                 </div>
                 <h2>Дополнительные параметры</h2>
-                <div class="d-flex" style="width: 500px;">
+                <div class="d-flex-tel" style="width: 500px;">
                     <div class="d-flex flex-column w-50">
                         <span class="mb-2">Количество кроватей</span>
                         <select name="count_bed" v-model="count_bed" class="form-select form-select-lg" aria-label=".form-select-lg example">
@@ -1351,28 +1341,24 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_two_rent_room()">Продолжить</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_two_rent_room()">Продолжить</button>
         </div>
         <div v-if="res_one == true && res_two != true && what_i_sell == 'Комнаты' && sell_and_buy == 'Куплю'">
-            <div class="d-flex">
-                <button class="btn btn-outline-dark"><i class="bi bi-chevron-left"></i>Назад</button>
-                <span class="ms-4 fs-5">О квартире, о доме</span>
-            </div>
             <div class="d-flex flex-column mt-3 mb-5">
                 <h2>Описание</h2>
                 <div class="d-flex flex-column mb-4">
-                    <textarea type="text" class="form-control" v-model="description" style="height: 250px; width: 700px" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
+                    <textarea type="text" class="form-control width-textarea" v-model="description" placeholder="Расскажите, что есть в квартире и рядом с домом, в каком состоянии жильё. Покупателям интересно, сколько идти до магазинов и остановок транспорта, есть ли рядом торговые центры, парки и другая инфраструктура."></textarea>
                     <div class="text-danger">@{{description_error}}</div>
                 </div>   
-                <div class="d-flex mb-2">
-                    <label for="name" class="col-form-label">Цена</label>
-                    <div class="mt-0" style="margin-left: 12%;">
+                <div class="d-flex-tel mb-2">
+                    <label for="name" class="col-form-label width-blocks">Цена</label>
+                    <div class="mt-0">
                         <input type="text" name="name" id="price" v-model="price" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{price_error}}</div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 700px;" v-on:click="resume_three()">Опубликовать</button>
+            <button class="btn btn-primary w-700" v-on:click="resume_three()">Опубликовать</button>
         </div>
 
         <!-- Начало модального окна добавления фото -->
@@ -1460,6 +1446,7 @@
                     square_region: '',
                     bathroom_home: '',
                     bathroom_street: '',
+                    garage_type: '',
                     adres_error: '',
                     who_add_error: '',
                     number_flat_error: '',
@@ -1480,6 +1467,7 @@
                     square_region_error: '',    
                     res_one: false,
                     res_two: false,
+                    my_city: JSON.parse(localStorage.getItem("city")),
                 }
             },
             beforeMount(){
@@ -1523,12 +1511,7 @@
                         this.cs_newold = true
                     } else 
                     if(this.what_i_sell == 'Гаражи и машиноместа') {
-                        this.new_old.push(
-                            'Гараж'
-                        )
-                        this.new_old.push(
-                            'Машиноместо'
-                        )
+                        this.cs_newold = true
                     } else 
                     if(this.what_i_sell == 'Коммерческая недвижимость') {
                         this.new_old.push(
@@ -1733,10 +1716,11 @@
                                             sale_share: this.sale_share,
                                             auction: this.auction,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Сдам') {
@@ -1788,10 +1772,11 @@
                                             sale_share: this.sale_share,
                                             auction: this.auction,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Куплю') {
@@ -1809,10 +1794,11 @@
                                             count_rooms: this.count_rooms,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Сниму') {
@@ -1843,10 +1829,11 @@
                                             allowed_smoke: this.allowed_smoke,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 }
                             } else 
@@ -1885,10 +1872,11 @@
                                             sale_share: this.sale_share,
                                             auction: this.auction,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Сдам') {
@@ -1928,10 +1916,11 @@
                                             allowed_smoke: this.allowed_smoke,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Куплю') {
@@ -1948,10 +1937,11 @@
                                             adres: this.adres,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Сниму') {
@@ -1981,10 +1971,11 @@
                                             allowed_smoke: this.allowed_smoke,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 }
                             } else
@@ -2018,10 +2009,11 @@
                                             bathroom_street: this.bathroom_street,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Сдам') {
@@ -2066,10 +2058,11 @@
                                             allowed_smoke: this.allowed_smoke,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Куплю') {
@@ -2087,10 +2080,11 @@
                                             object_type: this.object_type,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 } else
                                 if(this.sell_and_buy == 'Сниму') {
@@ -2123,10 +2117,11 @@
                                             allowed_smoke: this.allowed_smoke,
                                             description: this.description,
                                             price: this.price,
+                                            city: this.my_city,
                                         },
                                     })
                                     .then(function (response) {
-                                        alert('Получилось')
+                                        window.location.href = '/cabinet'
                                     })
                                 }
                             } else 
@@ -2149,10 +2144,11 @@
                                                 description: this.description,
                                                 square: this.square,
                                                 price: this.price,
+                                                city: this.my_city,
                                             },
                                         })
                                         .then(function (response) {
-                                            alert('Получилось')
+                                            window.location.href = '/cabinet'
                                         })
                                     } else {
                                         this.square_error = 'Введите значение параметра'
@@ -2178,16 +2174,151 @@
                                                 description: this.description,
                                                 square: this.square,
                                                 price: this.price,
+                                                city: this.my_city,
                                             },
                                         })
                                         .then(function (response) {
-                                            alert('Получилось')
+                                            window.location.href = '/cabinet'
                                         })
                                     } else {
                                         this.square_error = 'Введите значение параметра'
                                         this.price_error = ''
                                         this.description_error = ''
                                     }
+                                } else 
+                                if(this.sell_and_buy == 'Куплю') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_land_plot_buy',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            description: this.description,
+                                            price: this.price,
+                                            city: this.my_city,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        window.location.href = '/cabinet'
+                                    })
+                                } else 
+                                if(this.sell_and_buy == 'Сниму') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_land_plot_type',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            description: this.description,
+                                            price: this.price,
+                                            city: this.my_city,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        window.location.href = '/cabinet'
+                                    })
+                                }
+                            } else
+                            if(this.what_i_sell == 'Гаражи и машиноместа') {
+                                if(this.sell_and_buy == 'Продам') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_garage',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            who_add: this.who_add,
+                                            garage_type: this.garage_type,
+                                            square: this.square,
+                                            description: this.description,
+                                            price: this.price,
+                                            city: this.my_city,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        window.location.href = '/cabinet'
+                                    })
+                                } else 
+                                if(this.sell_and_buy == 'Сдам') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_garage_rent',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            who_add: this.who_add,
+                                            garage_type: this.garage_type,
+                                            square: this.square,
+                                            description: this.description,
+                                            price: this.price,
+                                            city: this.my_city,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        window.location.href = '/cabinet'
+                                    }) 
+                                } else
+                                if(this.sell_and_buy == 'Куплю') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_garage_buy',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            description: this.description,
+                                            price: this.price,
+                                            city: this.my_city,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        window.location.href = '/cabinet'
+                                    }) 
+                                } else
+                                if(this.sell_and_buy == 'Сниму') {
+                                    this.price_error = ''
+                                    this.description_error = ''
+                                    
+                                    axios({
+                                        method: 'post',
+                                        url: '/add_garage_take',
+                                        responseType: 'json',
+                                        data: {
+                                            what_i_sell: this.what_i_sell,
+                                            sell_and_buy: this.sell_and_buy,
+                                            adres: this.adres,
+                                            description: this.description,
+                                            price: this.price,
+                                            city: this.my_city,
+                                        },
+                                    })
+                                    .then(function (response) {
+                                        window.location.href = '/cabinet'
+                                    }) 
                                 }
                             }
                         } else {
@@ -2383,19 +2514,59 @@
                         }
                     } else
                     if(this.what_i_sell == 'Земельные участки') {
-                        if(this.adres != '') {
-                            if(this.who_add != ''){
-                                this.who_add_error = ''
+                        if(this.sell_and_buy == 'Продам' || this.sell_and_buy == 'Сдам') {
+                            if(this.adres != '') {
+                                if(this.who_add != ''){
+                                    this.who_add_error = ''
+                                    this.adres_error = ''
+
+                                    this.res_one = true
+                                    this.res_two = true
+                                } else {
+                                    this.who_add_error = 'Выберите право собственности'
+                                    this.adres_error = ''
+                                }
+                            } else {
+                                this.adres_error = 'Укажите адрес'
+                            }
+                        } else 
+                        if(this.sell_and_buy == 'Куплю' || this.sell_and_buy == 'Сниму') {
+                            if(this.adres != '') {
                                 this.adres_error = ''
 
                                 this.res_one = true
                                 this.res_two = true
                             } else {
-                                this.who_add_error = 'Выберите право собственности'
-                                this.adres_error = ''
+                                this.adres_error = 'Укажите адрес'
                             }
-                        } else {
-                            this.adres_error = 'Укажите адрес'
+                        }
+                    } else
+                    if(this.what_i_sell == 'Гаражи и машиноместа') {
+                        if(this.sell_and_buy == 'Продам' || this.sell_and_buy == 'Сдам') {
+                            if(this.adres != '') {
+                                if(this.who_add != ''){
+                                    this.who_add_error = ''
+                                    this.adres_error = ''
+    
+                                    this.res_one = true
+                                    this.res_two = true
+                                } else {
+                                    this.who_add_error = 'Выберите право собственности'
+                                    this.adres_error = ''
+                                }
+                            } else {
+                                this.adres_error = 'Укажите адрес'
+                            }
+                        } else 
+                        if(this.sell_and_buy == 'Куплю' || this.sell_and_buy == 'Сниму') {
+                            if(this.adres != '') {
+                                this.adres_error = ''
+
+                                this.res_one = true
+                                this.res_two = true
+                            } else {
+                                this.adres_error = 'Укажите адрес'
+                            }
                         }
                     }
                 },

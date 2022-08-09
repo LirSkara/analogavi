@@ -24,6 +24,15 @@ use App\Models\HomesRent;
 use App\Models\HomesBuy;
 use App\Models\HomesTake;
 use App\Models\LandPlot;
+use App\Models\LandPlotRent;
+use App\Models\LandPlotBuy;
+use App\Models\LandPlotType;
+use App\Models\Garages;
+use App\Models\GaragesRent;
+use App\Models\GaragesBuy;
+use App\Models\GaragesTake;
+use App\Models\JobsImage;
+use App\Models\JobsResume;
 
 class AddEditController extends Controller
 {
@@ -54,7 +63,11 @@ class AddEditController extends Controller
         return view('cars');
     }
     public function add_job(){
-        return view('job');
+        if(Auth()->check()){
+            return view('add_job');
+        } else {
+            return redirect()->route('login');
+        }
     }
     public function edit_job(){
         return view('job');
@@ -134,6 +147,7 @@ class AddEditController extends Controller
                 $images = $images.$item->image.',';
             }
             $items->images = rtrim($images, ",");
+            $items->city = $data->input('city');
             $items->status = 0;
             $items->save();
 
@@ -204,7 +218,6 @@ class AddEditController extends Controller
     }
     public function add_cars_post(Request $data){
         $valid = $data->validate([
-            'name' => ['required'],
             'state' => ['required'],
             'description' => ['required'],
             'price' => ['required'],
@@ -218,7 +231,6 @@ class AddEditController extends Controller
         if(CarsImage::where('user', '=', auth()->user()->id)->count() != 0) {
             $cars = new Cars();
             $cars->user = auth()->user()->id;
-            $cars->name = $data->input('name');
             $cars->state = $data->input('state');
             $cars->description = $data->input('description');
             $cars->price = $data->input('price');
@@ -250,6 +262,7 @@ class AddEditController extends Controller
             }
             $cars->vin = $data->input('vin');
             $cars->ctc = $data->input('ctc');
+            $cars->city = $data->input('city');
             $cars->status = 0;
             $cars->save();
 
@@ -326,9 +339,9 @@ class AddEditController extends Controller
             foreach($realty_image as $item) {
                 $images = $images.$item->image.',';
             }
-            $realty->realty_images = rtrim($images, ",");
+            $realty->images = rtrim($images, ",");
         } else {
-            $realty->realty_images = null;
+            $realty->images = null;
         }
 
         $realty->description = $data['description'];
@@ -338,7 +351,7 @@ class AddEditController extends Controller
         $realty->auction = $data['auction'];
         $realty->price = $data['price'];
         
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -394,9 +407,9 @@ class AddEditController extends Controller
             foreach($realty_image as $item) {
                 $images = $images.$item->image.',';
             }
-            $realty->realty_images = rtrim($images, ",");
+            $realty->images = rtrim($images, ",");
         } else {
-            $realty->realty_images = null;
+            $realty->images = null;
         }
 
         $realty->description = $data['description'];
@@ -406,7 +419,7 @@ class AddEditController extends Controller
         $realty->auction = $data['auction'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -427,7 +440,7 @@ class AddEditController extends Controller
         $realty->description = $data['description'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -459,7 +472,7 @@ class AddEditController extends Controller
         $realty->description = $data['description'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -500,9 +513,9 @@ class AddEditController extends Controller
             foreach($realty_image as $item) {
                 $images = $images.$item->image.',';
             }
-            $realty->realty_images = rtrim($images, ",");
+            $realty->images = rtrim($images, ",");
         } else {
-            $realty->realty_images = null;
+            $realty->images = null;
         }
 
         $realty->description = $data['description'];
@@ -512,7 +525,7 @@ class AddEditController extends Controller
         $realty->auction = $data['auction'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -520,7 +533,9 @@ class AddEditController extends Controller
 
         return view('add_estate');
     }
-    public function add_room_rent(Request $data){        
+    public function add_room_rent(Request $data){
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+
         $realty = new RoomRents();
         $realty->user = auth()->user()->id;
         $realty->tel = auth()->user()->tel;
@@ -552,11 +567,24 @@ class AddEditController extends Controller
         $realty->may_children = $data['may_children'];
         $realty->may_animal = $data['may_animal'];
         $realty->allowed_smoke = $data['allowed_smoke'];
+
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
         $realty->description = $data['description'];
         $realty->price = $data['price'];
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
 
         return view('add_estate');
     }
@@ -571,7 +599,7 @@ class AddEditController extends Controller
         $realty->adres = $data['adres'];
         $realty->description = $data['description'];
         $realty->price = $data['price'];
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -601,7 +629,7 @@ class AddEditController extends Controller
         $realty->allowed_smoke = $data['allowed_smoke'];
         $realty->description = $data['description'];
         $realty->price = $data['price'];
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -648,7 +676,7 @@ class AddEditController extends Controller
         $realty->description = $data['description'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -708,7 +736,7 @@ class AddEditController extends Controller
         $realty->description = $data['description'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -729,7 +757,7 @@ class AddEditController extends Controller
         $realty->description = $data['description'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -761,7 +789,7 @@ class AddEditController extends Controller
         $realty->description = $data['description'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -794,7 +822,7 @@ class AddEditController extends Controller
         $realty->square = $data['square'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
@@ -829,12 +857,246 @@ class AddEditController extends Controller
         $realty->square = $data['square'];
         $realty->price = $data['price'];
 
-        $realty->city = 'Дербент';
+        $realty->city = $data['city'];
         $realty->status = 0;
         $realty->save();
 
         RealtyImage::where('user', '=', auth()->user()->id)->delete();
 
         return view('add_estate');
+    }
+    public function add_land_plot_buy(Request $data){                
+        $realty = new LandPlotBuy();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = $data['city'];
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_land_plot_type(Request $data){                
+        $realty = new LandPlotType();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = $data['city'];
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_garage(Request $data){        
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new Garages();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->who_add = $data['who_add'];
+
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->garage_type = $data['garage_type'];
+        $realty->square = $data['square'];
+        $realty->price = $data['price'];
+
+        $realty->city = $data['city'];
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_garage_rent(Request $data){        
+        $realty_image = RealtyImage::where('user', '=', auth()->user()->id)->get();
+        
+        $realty = new GaragesRent();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+        $realty->who_add = $data['who_add'];
+
+        if(RealtyImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($realty_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $realty->images = rtrim($images, ",");
+        } else {
+            $realty->images = null;
+        }
+
+        $realty->description = $data['description'];
+        $realty->garage_type = $data['garage_type'];
+        $realty->square = $data['square'];
+        $realty->price = $data['price'];
+
+        $realty->city = $data['city'];
+        $realty->status = 0;
+        $realty->save();
+
+        RealtyImage::where('user', '=', auth()->user()->id)->delete();
+
+        return view('add_estate');
+    }
+    public function add_garage_buy(Request $data){                
+        $realty = new GaragesBuy();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = $data['city'];
+        $realty->status = 0;
+        $realty->save();
+
+        return view('add_estate');
+    }
+    public function add_garage_take(Request $data){                
+        $realty = new GaragesTake();
+        $realty->user = auth()->user()->id;
+        $realty->tel = auth()->user()->tel;
+        $realty->name_user = auth()->user()->name;
+        $realty->what_i_sell = $data['what_i_sell'];
+        $realty->sell_and_buy = $data['sell_and_buy'];
+
+        $realty->adres = $data['adres'];
+
+        $realty->description = $data['description'];
+        $realty->price = $data['price'];
+
+        $realty->city = $data['city'];
+        $realty->status = 0;
+        $realty->save();
+
+        return redirect()->route('login');
+    }
+    public function img_add_job(Request $data){
+        if(!empty($data->image)) {
+            if(JobsImage::where('user', '=', auth()->user()->id)->count() <= 4) {
+                $job_image = new JobsImage();
+                $file = $data->file('image');
+                $upload_folder = 'public/jobs_image/'.auth()->user()->id;
+                $filename = rand().'_'.$file->getClientOriginalName();
+                $job_image->image = $filename;
+                $job_image->user = auth()->user()->id;
+                Storage::putFileAs($upload_folder, $file, $filename);
+                $job_image->save();
+                $items = array(
+                    "id" => $job_image->id,
+                    "image" => $job_image->image,
+                );
+                return $items;
+            }
+        }
+    }
+    public function all_img_job(){
+        $jobs_image_count = JobsImage::where('user', '=', auth()->user()->id)->count();
+        if($jobs_image_count != 0) {
+            $jobs_image = JobsImage::where('user', '=', auth()->user()->id)->get();
+            return $jobs_image;
+        } else {
+            return 0;
+        }
+    }
+    public function img_delete_job($id){
+        $jobs_image = JobsImage::find($id);
+        $upload_folder = 'public/jobs_image/'.auth()->user()->id;
+        Storage::delete($upload_folder . '/' . $jobs_image->image);
+        JobsImage::find($id)->delete();
+    }
+    public function add_job_resume(Request $data){        
+        $jobs_image = JobsImage::where('user', '=', auth()->user()->id)->get();
+        
+        $jobs = new JobsResume();
+        $jobs->user = auth()->user()->id;
+        $jobs->tel = auth()->user()->tel;
+        $jobs->name_user = auth()->user()->name;
+        $jobs->type_job = $data['type_job'];
+
+        $jobs->desired_position = $data['desired_position'];
+        $jobs->work_schedule = $data['work_schedule'];
+        $jobs->work_experience = $data['work_experience'];
+        $jobs->education = $data['education'];
+        $jobs->gender = $data['gender'];
+        $jobs->day_birth = $data['day_birth'];
+        $jobs->month_birth = $data['month_birth'];
+        $jobs->year_birth = $data['year_birth'];
+        $jobs->read_trips = $data['read_trips'];
+        $jobs->move = $data['move'];
+        $jobs->citizenship = $data['citizenship'];
+        $jobs->company_name = $data['company_name'];
+        $jobs->post = $data['post'];
+        $jobs->month_getting_started = $data['month_getting_started'];
+        $jobs->year_getting_started = $data['year_getting_started'];
+        $jobs->month_end_work = $data['month_end_work'];
+        $jobs->year_end_work = $data['year_end_work'];
+        $jobs->until_now = $data['until_now'];
+        $jobs->responsibilities = $data['responsibilities'];
+        $jobs->specialization = $data['specialization'];
+        $jobs->year_graduation = $data['year_graduation'];
+        $jobs->knowledge_languages = $data['knowledge_languages'];
+
+        if(JobsImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($jobs_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $jobs->images = rtrim($images, ",");
+        } else {
+            $jobs->images = null;
+        }
+
+        $jobs->description = $data['description'];
+        $jobs->price = $data['price'];
+        $jobs->adres = $data['adres'];
+
+        $jobs->city = $data['city'];
+        $jobs->status = 0;
+        $jobs->save();
+
+        JobsImage::where('user', '=', auth()->user()->id)->delete();
     }
 }

@@ -10,18 +10,9 @@
                 <h1 class="fs-3 mb-5">Параметры</h1>
                 <div class="row g-3 align-items-center mb-4">
                     <div class="col-12 col-lg-4 mt-0">
-                        <label for="name" class="col-form-label">Название объявления</label>
-                    </div>
-                    <div class="col-auto mt-0">
-                        <input type="text" name="name" id="name" v-model="name" class="form-control" aria-describedby="passwordHelpInline">
-                        <div class="text-danger">@{{name_error}}</div>
-                    </div>
-                </div>
-                <div class="row g-3 align-items-center mb-4">
-                    <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Состояние</label>
                     </div>
-                    <div class="col-auto mt-0">
+                    <div class="col-12 col-lg-auto mt-0">
                         <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
                         <select v-model="state" name="state" class="form-select" id="inlineFormSelectPref">
                             <option value="" selected disabled>Выберите состояние</option>
@@ -35,7 +26,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Описание</label>
                     </div>
-                    <div class="col-auto mt-0">
+                    <div class="col-12 col-lg-auto mt-0">
                         <textarea name="description" id="name" v-model="description" class="form-control" aria-describedby="passwordHelpInline"></textarea>
                         <div class="text-danger">@{{description_error}}</div>
                     </div>
@@ -44,7 +35,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Марка</label>
                     </div>
-                    <div class="col-4 mt-0">
+                    <div class="col-12 col-lg-4 mt-0">
                         <div class="input-marka" data-bs-toggle="modal" data-bs-target="#choice_marka"><span v-if="car_selected == false">Выберите марку</span><span v-if="car_selected == true">Марка выбрана</span><i class="bi bi-chevron-down ms-auto"></i></div>
                         <div class="text-danger">@{{mark_error}}</div>
                     </div>
@@ -53,7 +44,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Цена</label>
                     </div>
-                    <div class="col-auto mt-0 mb-3">
+                    <div class="col-12 col-lg-auto mt-0 mb-3">
                         <div class="input-group">
                             <input name="price" v-model="price" style="border-right: 0;width:100px;" type="text" class="form-control"
                                 aria-label="Цена" aria-describedby="basic-addon2">
@@ -101,9 +92,9 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Тип документа</label>
                     </div>
-                    <div class="col-auto mt-0">
+                    <div class="col-auto d-flex flex-wrap mt-0 gap-2">
                         <input type="radio" class="btn-check" name="type_doc" value="Оригинал/Электронный ПТС" v-model="type_doc" id="type_doc1" autocomplete="off">
-                        <label class="btn btn-outline-secondary me-2 btn-out" for="type_doc1">Оригинал/Электронный ПТС</label>
+                        <label class="btn btn-outline-secondary btn-out" for="type_doc1">Оригинал/Электронный ПТС</label>
                         <input type="radio" class="btn-check" name="type_doc" value="Дубликат" v-model="type_doc" id="type_doc2" autocomplete="off">
                         <label class="btn btn-outline-secondary btn-out" for="type_doc2">Дубликат</label>
                         <div class="text-danger">@{{type_doc_error}}</div>
@@ -111,13 +102,13 @@
                     <div class="col-12 col-lg-4 mt-3">
                         <label for="name" class="col-form-label">Какой ты владелец?</label>
                     </div>
-                    <div class="col-auto mt-3">
+                    <div class="col-auto d-flex flex-wrap gap-2 mt-3">
                         <input type="radio" class="btn-check" name="owner_count" value="Первый" v-model="owner_count" id="owner_count1" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-out me-2" for="owner_count1">Первый</label>
+                        <label class="btn btn-outline-secondary btn-out" for="owner_count1">Первый</label>
                         <input type="radio" class="btn-check" name="owner_count" value="Второй" v-model="owner_count" id="owner_count2" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-out me-2" for="owner_count2">Второй</label>
+                        <label class="btn btn-outline-secondary btn-out" for="owner_count2">Второй</label>
                         <input type="radio" class="btn-check" name="owner_count" value="Третий" v-model="owner_count" id="owner_count3" autocomplete="off">
-                        <label class="btn btn-outline-secondary btn-out me-2" for="owner_count3">Третий</label>
+                        <label class="btn btn-outline-secondary btn-out" for="owner_count3">Третий</label>
                         <input type="radio" class="btn-check" name="owner_count" value="Четвертый и более" v-model="owner_count" id="owner_count4" autocomplete="off">
                         <label class="btn btn-outline-secondary btn-out" for="owner_count4">Четвертый или более</label>
                         <div class="text-danger">@{{owner_count_error}}</div>
@@ -125,7 +116,7 @@
                     <div class="col-12 col-lg-4 mt-0">
                         <label for="name" class="col-form-label">Когда был куплен автомобиль?</label>
                     </div>
-                    <div class="col-auto col-lg-6 d-flex mt-3">
+                    <div class="col-12 col-lg-6 d-flex mt-3">
                         <select name="when_pur_year" class="form-select form-select-lg mb-3 me-2" aria-label=".form-select-lg example">
                             <option value="" selected disabled>Год</option>
                             <option v-for="(item, id) in when_car" :key="item" :value="Number(year)+Number(id)">@{{Number(year)+Number(id)}}</option>
@@ -219,6 +210,7 @@
                         Автомобиль не на учете в РФ
                     </label>
                 </div>
+                <input type="hidden" name="city" v-model="my_city">
                 <button class="btn btn-primary w-100" v-on:click="add_cars()">Сохранить и опубликовать</button>
             </form>
             <div class="col-12 col-lg-4"></div>
@@ -435,7 +427,6 @@
         const AddCars = {
             data() {
                 return {
-                    name: '',
                     state: '',
                     description: '',
                     price: '',
@@ -443,7 +434,6 @@
                     owner_count: '',
                     state_number: '',
                     car_no_reg: false,
-                    name_error: '',
                     state_error: '',
                     description_error: '',
                     price_error: '',
@@ -496,6 +486,7 @@
                     when_car: '',
                     yyyy: '',
                     garant: false,
+                    my_city: JSON.parse(localStorage.getItem("city")),
                 }
             },
             beforeMount(){
@@ -606,88 +597,73 @@
                 },
                 add_cars() {
                     event.preventDefault();
-                    if(this.name != '') {
-                        if(this.state != '') {
-                            if(this.description != '') {
-                                if(this.car_selected == true) {
-                                    if(this.price != '') {
-                                        if(this.cars_images.length != 0) {
-                                            if(this.type_doc != '') {
-                                                if(this.owner_count != '') {
-                                                    if(this.garant == false) {
-                                                        if(this.state_number != '' || this.car_no_reg == true) {
-                                                            this.state_number_error = ''
-                                                            this.owner_count_error = ''
-                                                            this.type_doc_error = ''
-                                                            this.cars_images_error = ''
-                                                            this.price_error = ''
-                                                            this.mark_error = ''
-                                                            this.description_error = ''
-                                                            this.state_error = ''
-                                                            this.name_error = ''
-            
-                                                            var form_cars = new FormData($("#form_cars")[0]);
-            
-                                                            axios({
-                                                                method: 'post',
-                                                                url: '/add_cars',
-                                                                responseType: 'json',
-                                                                data: form_cars,
-                                                            })
-                                                            .then(function (response) {
-                                                                window.location.href = '/cabinet'
-                                                            })
-                                                        } else {
-                                                            this.state_number_error = 'Это поле обязательно'
-                                                            this.owner_count_error = ''
-                                                            this.type_doc_error = ''
-                                                            this.cars_images_error = ''
-                                                            this.mark_error = ''
-                                                            this.price_error = ''
-                                                            this.description_error = ''
-                                                            this.state_error = ''
-                                                            this.name_error = ''
-                                                        }
+                    if(this.state != '') {
+                        if(this.description != '') {
+                            if(this.car_selected == true) {
+                                if(this.price != '') {
+                                    if(this.cars_images.length != 0) {
+                                        if(this.type_doc != '') {
+                                            if(this.owner_count != '') {
+                                                if(this.garant == false) {
+                                                    if(this.state_number != '' || this.car_no_reg == true) {
+                                                        this.state_number_error = ''
+                                                        this.owner_count_error = ''
+                                                        this.type_doc_error = ''
+                                                        this.cars_images_error = ''
+                                                        this.price_error = ''
+                                                        this.mark_error = ''
+                                                        this.description_error = ''
+                                                        this.state_error = ''
+        
+                                                        var form_cars = new FormData($("#form_cars")[0]);
+        
+                                                        axios({
+                                                            method: 'post',
+                                                            url: '/add_cars',
+                                                            responseType: 'json',
+                                                            data: form_cars,
+                                                        })
+                                                        .then(function (response) {
+                                                            window.location.href = '/cabinet'
+                                                        })
                                                     } else {
-                                                        if(this.year_graduation != '') {
-                                                            if(this.month_graduation != '') {
-                                                                if(this.state_number != '' || this.car_no_reg == true) {
-                                                                    this.state_number_error = ''
-                                                                    this.error_graduation = ''
-                                                                    this.owner_count_error = ''
-                                                                    this.type_doc_error = ''
-                                                                    this.cars_images_error = ''
-                                                                    this.price_error = ''
-                                                                    this.mark_error = ''
-                                                                    this.description_error = ''
-                                                                    this.state_error = ''
-                                                                    this.name_error = ''
-                    
-                                                                    var form_cars = new FormData($("#form_cars")[0]);
-                    
-                                                                    axios({
-                                                                        method: 'post',
-                                                                        url: '/add_cars',
-                                                                        responseType: 'json',
-                                                                        data: form_cars,
-                                                                    })
-                                                                    .then(function (response) {
-                                                                        window.location.href = '/cabinet'
-                                                                    })
-                                                                } else {
-                                                                    this.state_number_error = 'Это поле обязательно'
-                                                                    this.error_graduation = ''
-                                                                    this.owner_count_error = ''
-                                                                    this.type_doc_error = ''
-                                                                    this.cars_images_error = ''
-                                                                    this.mark_error = ''
-                                                                    this.price_error = ''
-                                                                    this.description_error = ''
-                                                                    this.state_error = ''
-                                                                    this.name_error = ''
-                                                                }
+                                                        this.state_number_error = 'Это поле обязательно'
+                                                        this.owner_count_error = ''
+                                                        this.type_doc_error = ''
+                                                        this.cars_images_error = ''
+                                                        this.mark_error = ''
+                                                        this.price_error = ''
+                                                        this.description_error = ''
+                                                        this.state_error = ''
+                                                    }
+                                                } else {
+                                                    if(this.year_graduation != '') {
+                                                        if(this.month_graduation != '') {
+                                                            if(this.state_number != '' || this.car_no_reg == true) {
+                                                                this.state_number_error = ''
+                                                                this.error_graduation = ''
+                                                                this.owner_count_error = ''
+                                                                this.type_doc_error = ''
+                                                                this.cars_images_error = ''
+                                                                this.price_error = ''
+                                                                this.mark_error = ''
+                                                                this.description_error = ''
+                                                                this.state_error = ''
+                
+                                                                var form_cars = new FormData($("#form_cars")[0]);
+                
+                                                                axios({
+                                                                    method: 'post',
+                                                                    url: '/add_cars',
+                                                                    responseType: 'json',
+                                                                    data: form_cars,
+                                                                })
+                                                                .then(function (response) {
+                                                                    window.location.href = '/cabinet'
+                                                                })
                                                             } else {
-                                                                this.error_graduation = 'Укажите месяц'
+                                                                this.state_number_error = 'Это поле обязательно'
+                                                                this.error_graduation = ''
                                                                 this.owner_count_error = ''
                                                                 this.type_doc_error = ''
                                                                 this.cars_images_error = ''
@@ -695,10 +671,9 @@
                                                                 this.price_error = ''
                                                                 this.description_error = ''
                                                                 this.state_error = ''
-                                                                this.name_error = ''
                                                             }
                                                         } else {
-                                                            this.error_graduation = 'Укажите год'
+                                                            this.error_graduation = 'Укажите месяц'
                                                             this.owner_count_error = ''
                                                             this.type_doc_error = ''
                                                             this.cars_images_error = ''
@@ -706,61 +681,60 @@
                                                             this.price_error = ''
                                                             this.description_error = ''
                                                             this.state_error = ''
-                                                            this.name_error = ''
                                                         }
+                                                    } else {
+                                                        this.error_graduation = 'Укажите год'
+                                                        this.owner_count_error = ''
+                                                        this.type_doc_error = ''
+                                                        this.cars_images_error = ''
+                                                        this.mark_error = ''
+                                                        this.price_error = ''
+                                                        this.description_error = ''
+                                                        this.state_error = ''
                                                     }
-                                                } else {
-                                                    this.owner_count_error = 'Выберите один из пунктов'
-                                                    this.type_doc_error = ''
-                                                    this.cars_images_error = ''
-                                                    this.mark_error = ''
-                                                    this.price_error = ''
-                                                    this.description_error = ''
-                                                    this.state_error = ''
-                                                    this.name_error = ''
                                                 }
                                             } else {
-                                                this.type_doc_error = 'Укажите тип документа'
+                                                this.owner_count_error = 'Выберите один из пунктов'
+                                                this.type_doc_error = ''
                                                 this.cars_images_error = ''
                                                 this.mark_error = ''
                                                 this.price_error = ''
                                                 this.description_error = ''
                                                 this.state_error = ''
-                                                this.name_error = ''
                                             }
                                         } else {
-                                            this.cars_images_error = 'Добавьте фото'
+                                            this.type_doc_error = 'Укажите тип документа'
+                                            this.cars_images_error = ''
                                             this.mark_error = ''
                                             this.price_error = ''
                                             this.description_error = ''
                                             this.state_error = ''
-                                            this.name_error = ''
                                         }
                                     } else {
-                                        this.price_error = 'Это поле обязательно'
+                                        this.cars_images_error = 'Добавьте фото'
                                         this.mark_error = ''
+                                        this.price_error = ''
                                         this.description_error = ''
                                         this.state_error = ''
-                                        this.name_error = ''
                                     }
                                 } else {
-                                    this.mark_error = 'Укажите марку'
+                                    this.price_error = 'Это поле обязательно'
+                                    this.mark_error = ''
                                     this.description_error = ''
                                     this.state_error = ''
-                                    this.name_error = ''
                                 }
                             } else {
-                                this.description_error = 'Это поле обязательно'
+                                this.mark_error = 'Укажите марку'
+                                this.description_error = ''
                                 this.state_error = ''
-                                this.name_error = ''
                             }
                         } else {
-                            this.state_error = 'Это поле обязательно'
-                            this.name_error = ''
-                        }                  
+                            this.description_error = 'Это поле обязательно'
+                            this.state_error = ''
+                        }
                     } else {
-                        this.name_error = 'Это поле обязательно'
-                    }
+                        this.state_error = 'Это поле обязательно'
+                    }             
                 },
                 add_images_cars() {
                     event.preventDefault();

@@ -51,7 +51,7 @@ return new class extends Migration
             $table->text('may_children');
             $table->text('may_animal');
             $table->text('allowed_smoke')->nullable();
-            $table->text('realty_images')->nullable();
+            $table->text('images')->nullable();
             $table->text('description');
             $table->text('method_sale')->nullable();
             $table->text('mortgage')->nullable();

@@ -18,23 +18,55 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="http://yastatic.net/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Yandex Api -->
+    <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
 </head>
 <body>
-    <nav class="bg-primary">
+    <nav class="bg-primary" id="city">
         <div class="container d-flex flex-wrap small">
-          <ul class="nav me-auto">
-            <li class="nav-item"><a href="/" class="nav-link link-light px-2 active" aria-current="page"><i class="material-icons align-middle me-1 text-light">pin_drop</i>Дербент</a></li>
-          </ul>
-          <ul class="nav">
-            @if(Auth()->check())
-            <li class="nav-item"><a href="/cabinet" class="nav-link link-light px-2"><i class="material-icons align-middle">person</i> {{auth()->user()->name}}</a></li>
-            <li class="nav-item"><a href="/exit" class="nav-link link-light px-2"><i class="material-icons align-middle">login</i> Выход</a></li>
-            @else
-            <li class="nav-item"><a href="/login" class="nav-link link-light px-2"><i class="material-icons align-middle">login</i> Войти</a></li>
-            <li class="nav-item"><a href="/reg" class="nav-link link-light px-2"><i class="material-icons align-middle">how_to_reg</i> Регистрация</a></li>
-            @endif
-        </ul>
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#choice_city" class="nav-link link-light px-2 active" aria-current="page"><i class="material-icons align-middle me-1 text-light">pin_drop</i>@{{my_city}}</a></li>
+            </ul>
+            <ul class="nav">
+                @if(Auth()->check())
+                    <li class="nav-item"><a href="/cabinet" class="nav-link link-light px-2"><i class="material-icons align-middle">person</i> {{auth()->user()->name}}</a></li>
+                    <li class="nav-item"><a href="/exit" class="nav-link link-light px-2"><i class="material-icons align-middle">login</i> Выход</a></li>
+                @else
+                    <li class="nav-item"><a href="/login" class="nav-link link-light px-2"><i class="material-icons align-middle">login</i> Войти</a></li>
+                    <li class="nav-item"><a href="/reg" class="nav-link link-light px-2"><i class="material-icons align-middle">how_to_reg</i> Регистрация</a></li>
+                @endif
+            </ul>
         </div>
+        <!-- Начало модального окна выбора города -->
+        <div class="modal fade" id="choice_city" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="exampleModalLabel">Выбор города</h5>
+                        <button type="button" class="btn-close" id="close_city" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 600px;">
+                        <div class="d-flex flex-column">
+                            <input type="text" v-on:input="poisk_city()" v-model="search_city" id="input_city" class="form-control form-control-lg border-primary" placeholder="Город">
+                            <div v-if="city_success == ''" class="d-flex flex-column gap-2 mt-3">
+                                <div v-for="item in city" v-on:click="choose_city(item.city)" class="ps-2 btn-city">
+                                    <span class="fs-5">@{{item.city}},</span>
+                                    <span class="fs-5 text-muted ms-2">@{{item.region}}</span>
+                                </div>
+                            </div>
+                            <div v-if="city_success != ''" class="d-flex flex-column gap-2 mt-3">
+                                <div v-for="item in city_success" v-on:click="choose_city(item.city)" class="ps-2 btn-city">
+                                    <span class="fs-5">@{{item.city}},</span>
+                                    <span class="fs-5 text-muted ms-2">@{{item.region}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Конец модального окна выбора города -->
     </nav>
     <div class="container my-3">
         <div class="d-flex flex-wrap">
@@ -95,6 +127,77 @@
         </div>
         </div>
     </div>
+
+    <script>
+        const City = {
+            data() {
+                return {
+                    city: [],
+                    city_success: [],
+                    search_city: '',
+                    my_city: JSON.parse(localStorage.getItem("city")),
+                }
+            },
+            beforeMount() {
+                this.all();
+            },
+            methods: {
+                all() {
+                    var city = this.city
+                    $(function(){
+                        $.getJSON("/russia.json",function(data){
+                            $.each(data,function(index, value){
+                                city.push({
+                                    region: value['region'],
+                                    city: value['city'],
+                                })
+                            });
+                        })
+                    });
+                    if(this.my_city == '') {
+                        window.onload = function () {
+                            localStorage.setItem("city", JSON.stringify('Москва'));
+                        }
+                    } 
+                },
+                poisk_city() {
+                    if(this.search_city != '') {
+                        input_city.classList.add('border-primary')
+                        this.city_success = this.city,
+                        searchString = this.search_city;
+
+                        if(!searchString){
+                            if(searchString != ''){
+                                return city_success;
+                            }
+                        }
+
+                        searchString = searchString.trim().toLowerCase();
+                        this.city_success = this.city_success.filter(function(item){
+                            if(item.city.toLowerCase().indexOf(searchString) !== -1){
+                                return item;
+                            } else
+                            if(item.region.toLowerCase().indexOf(searchString) !== -1) {
+                                return item;
+                            }
+                        })
+
+                        return this.city_success
+                    } else {
+                        this.city_success = [];
+                    }
+                },
+                choose_city(city) {
+                    this.search_city = city
+                    input_city.classList.remove('border-primary')
+                    localStorage.setItem("city", JSON.stringify(city));
+                    this.my_city = city
+                    close_city.click()
+                }
+            }
+        }
+        Vue.createApp(City).mount('#city')
+    </script>
   
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
