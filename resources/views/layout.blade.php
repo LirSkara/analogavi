@@ -107,19 +107,19 @@
             <div class="modal-body">
                 <div class="row row-cols-2 row-cols-lg-4 pb-3">
                     <a href="/add_estate" class="col p-2 text-center text-decoration-none text-dark">
-                        <img src="https://www.Khalif.st/s/app/visual_shortcuts/light/228x192/cat_4.png" class="w-75" alt="">
+                        <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_4.png" class="w-75" alt="">
                         <div class="small-c">Недвижимость</div>
                     </a>
                     <a href="/add_cars" class="col p-2 text-center text-decoration-none text-dark">
-                        <img src="https://www.Khalif.st/s/app/visual_shortcuts/light/228x192/cat_1.png" class="w-75" alt="">
+                        <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_1.png" class="w-75" alt="">
                         <div class="small-c">Транспорт</div>
                     </a>
                     <a href="/add_job" class="col p-2 text-center text-decoration-none text-dark">
-                        <img src="https://www.Khalif.st/s/app/visual_shortcuts/light/228x192/cat_110.png" class="w-75" alt="">
+                        <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_110.png" class="w-75" alt="">
                         <div class="small-c">Работа</div>
                     </a>
                     <a href="/add_items" class="col p-2 text-center text-decoration-none text-dark">
-                        <img src="https://www.Khalif.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
+                        <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
                         <div class="small-c">Личные вещи</div>
                     </a>
                 </div>
