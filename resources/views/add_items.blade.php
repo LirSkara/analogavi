@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title')
-    Avito - Добавление личных вещей
+    Khalif - Добавление личных вещей
 @endsection
 @section('content')
     <div class="container" id="additems">

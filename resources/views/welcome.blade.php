@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title')Avito - Главная страница@endsection
+@section('title')Khalif - Главная страница@endsection
 @section('content')
 <div class="container">
     <div class="row">

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title')Avito - Регистрация@endsection
+@section('title')Khalif - Регистрация@endsection
 @section('content')
 <div class="container">
     <div class="">

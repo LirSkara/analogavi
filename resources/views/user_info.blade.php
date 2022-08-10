@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title')
-    Avito - Личный кабинет
+    Khalif - Личный кабинет
 @endsection
 @section('content')
     <div class="container py-lg-5">
