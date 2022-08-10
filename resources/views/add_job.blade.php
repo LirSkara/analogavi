@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title')
-    Avito - Добавление недвижимости
+    Khalif - Добавление недвижимости
 @endsection
 @section('content')
     

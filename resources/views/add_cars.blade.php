@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title')
-    Avito - Добавление машин
+    Khalif - Добавление машин
 @endsection
 @section('content')
     <div class="container" id="addcars">

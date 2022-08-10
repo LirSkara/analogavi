@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title')Avito - Личные вещи@endsection
+@section('title')Khalif - Личные вещи@endsection
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-center">

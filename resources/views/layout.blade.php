@@ -70,17 +70,17 @@
     </nav>
     <div class="container my-3">
         <div class="d-flex flex-wrap">
-            <div class="p-2 me-4 logo">
+            <div class="px-1 pt-1 me-4 logo">
                 <!-- <span class="fs-4 fw-bold text-logo">LOGO DESC</span> -->
-                <a class="mx-auto" href="/"><img class="logo-img" src="/assets/khalif.png" alt=""></a>
+                <a class="mx-auto fs-1 text-decoration-none fw-bold text-dark" href="/"><img class="logo-img" src="https://khalifmarket.com/apple-touch-icon.png" alt="Khalif" style="width:44px;height:44px;position:relative;bottom:4px;">Khalif</a>
             </div>
-            <div class="p-2 flex-grow-1 main-search">
+            <div class="p-2 flex-grow-1 main-search mt-2">
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-white" id="basic-addon1"><i class="material-icons">search</i></span>
                     <input type="text" class="form-control" placeholder="Поиск по объявлениям" aria-label="Username" aria-describedby="basic-addon1">
                 </div>                  
             </div>
-            <div class="p-2 btn-main"><a class="btn btn-primary btn-custom" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons align-middle fs-6 pb-1 me-1">add</i>Разместить объявление</a></div>
+            <div class="p-2 btn-main mt-2"><a class="btn btn-primary btn-custom" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons align-middle fs-6 pb-1 me-1">add</i>Разместить объявление</a></div>
         </div>
     </div>
     @yield('content')
@@ -93,7 +93,7 @@
             <li class="nav-item"><a href="/job" class="nav-link px-2 text-muted">Работа</a></li>
             <li class="nav-item"><a href="items" class="nav-link px-2 text-muted">Личные вещи</a></li>
           </ul>
-          <p class="text-center text-muted">© 2022 Аналог Авито, Inc</p>
+          <p class="text-center text-muted">© 2022 Khalif</p>
         </footer>
     </div>
     <!-- Modal -->

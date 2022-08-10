@@ -34,6 +34,7 @@ use App\Models\GaragesTake;
 use App\Models\JobsImage;
 use App\Models\JobsResume;
 use App\Models\JobsOpenings;
+use App\Models\Favourites;
 
 class AddEditController extends Controller
 {
@@ -1140,5 +1141,34 @@ class AddEditController extends Controller
         $jobs->save();
 
         JobsImage::where('user', '=', auth()->user()->id)->delete();
+    }
+    public function add_favourites($type, $what_i_sell, $sell_and_buy, $id){
+        if($type == 'Недвижимость') {
+            if($what_i_sell == 'Квартиры') {
+                if($sell_and_buy == 'Продам') {
+                    $item = Realty::find($id);
+                    if($item->count_rooms == 'Студия') {
+                        $item_name = 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                    } else {
+                        $item_name = $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                    }
+                }
+            }
+        }
+        $item_price = $item->price;
+        $item_city = $item->city;
+        $item_images = $item->images;
+
+        $favourite = new Favourites;
+        $favourite->user = auth()->user()->id;
+        $favourite->type = $type;
+        $favourite->what_i_sell = $what_i_sell;
+        $favourite->sell_and_buy = $sell_and_buy;
+        $favourite->id_adv = $id;
+        $favourite->name = $item_name;
+        $favourite->price = $item_price;
+        $favourite->city = $item_city;
+        $favourite->images = $item_images;
+        $favourite->save();
     }
 }

@@ -1,5 +1,9 @@
 @extends('layout')
+<<<<<<< HEAD
 @section('title')Avito - Транспорт@endsection
+=======
+@section('title')Khalif - Недвижимость@endsection
+>>>>>>> 2579c78dd01a0e4f8bc1c48716f211b5ffb6b8e7
 @section('content')
 <div class="container">
     <div class="d-flex flex-column w-100">

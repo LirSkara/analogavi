@@ -62,6 +62,7 @@ Route::post('/img_add_job', [AddEditController::class, 'img_add_job']);
 Route::get('/img_delete_job/{id}', [AddEditController::class, 'img_delete_job']);
 Route::post('/add_job_openings', [AddEditController::class, 'add_job_openings']);
 Route::get('/job_detailed/{id}/{job}', [HomeController::class, 'job_detailed']);
+Route::get('/add_favourites/{type}/{what_i_sell}/{sell_and_buy}/{id}', [AddEditController::class, 'add_favourites']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/reg', [AuthController::class, 'reg']);

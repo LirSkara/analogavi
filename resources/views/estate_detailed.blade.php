@@ -1,7 +1,7 @@
 @extends('layout')
-@section('title')Avito - Недвижимость@endsection
+@section('title')Khalif - Недвижимость@endsection
 @section('content')
-<div class="container">
+<div class="container" id="estate">
     <div class="d-flex flex-column w-100">
         <nav aria-label="breadcrumb" class="d-tel-none">
             <ol class="breadcrumb">
@@ -100,7 +100,7 @@
                 @endif
                 <div class="d-flex-button">
                     <button class="btn btn-success mt-2 btn-width">{{$realty->tel}}</button>
-                    <button class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                    <button v-on:click="add_favourites({{$realty->id}}, '{{$realty->what_i_sell}}', '{{$realty->sell_and_buy}}')" class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
                 </div>
                 <h3 class="mt-3">Описание:</h3>
                 <p>{{$realty->description}}</p>
@@ -321,4 +321,29 @@
         </div>
     </div>
 </div>
+
+<script>
+    const Estate = {
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            add_favourites(id, what_i_sell, sell_and_buy) {
+                console.log(id, what_i_sell, sell_and_buy)
+                var type = 'Недвижимость'
+                axios({
+                    method: 'get',
+                    url: `/add_favourites/${type}/${what_i_sell}/${sell_and_buy}/${id}`,
+                    responseType: 'json',
+                })
+                .then(function (response) {
+                    alert(44)
+                })
+            }
+        }
+    }
+    Vue.createApp(Estate).mount('#estate')
+</script>
 @endsection
