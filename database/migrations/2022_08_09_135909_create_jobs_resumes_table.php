@@ -38,6 +38,7 @@ return new class extends Migration
             $table->text('year_end_work')->nullable();
             $table->text('until_now')->nullable();
             $table->text('responsibilities')->nullable();
+            $table->text('name_institution')->nullable();
             $table->text('specialization')->nullable();
             $table->text('year_graduation')->nullable();
             $table->text('knowledge_languages')->nullable();

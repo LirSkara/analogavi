@@ -11,6 +11,22 @@
                 <li class="breadcrumb-item active" aria-current="page">Избранное</li>
             </ol>
         </nav>
-        123
+        <div class="d-flex justify-content-center">
+            <h3>Избранное</h3>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+            <div class="cards shadow-sm bg-white border rounded-3 mt-2">
+                <img src="/no_photo.png" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
+                <div class="text-dark px-3 pt-2">
+                    <div class="mb-3">
+                        <a href="#" class="text-decoration-none link-dark yes-wrap">
+                            <div class="fs-5 mb-1" style="height: 60px;">Название</div>
+                            <p class="mb-2 fw-bold">1 000 000 ₽</p>
+                            <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> Дербент</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

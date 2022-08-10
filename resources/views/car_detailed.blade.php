@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title')Avito - Недвижимость@endsection
+@section('title')Avito - Транспорт@endsection
 @section('content')
 <div class="container">
     <div class="d-flex flex-column w-100">

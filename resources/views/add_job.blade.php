@@ -50,12 +50,12 @@
                 <h2 class="width-blocks">Категория</h2>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mt-1">
-                        <li class="breadcrumb-item fs-4"><a href="#" v-on:click="back_category()" class="text-decoration-none">@{{job}}</a></li>
-                        <li class="breadcrumb-item active fs-4" aria-current="page">@{{type_job}}</li>
+                        <li class="breadcrumb-item fs-category"><a href="#" v-on:click="back_category()" class="text-decoration-none">@{{job}}</a></li>
+                        <li class="breadcrumb-item active fs-category" aria-current="page">@{{type_job}}</li>
                     </ol>
                 </nav>
             </div>
-            <div class="d-flex flex-column">
+            <div v-if="job == 'Резюме'" class="d-flex flex-column">
                 <h2>Параметры</h2>
                 <div class="d-flex-tel-job mb-2">
                     <label class="col-form-label width-blocks">Желаемая должность</label>
@@ -417,6 +417,141 @@
                 </div>
                 <button class="btn btn-primary w-700 mt-3" v-on:click="add_job">Опубликовать</button>
             </div>
+            <div v-if="job == 'Вакансии'" class="d-flex flex-column">
+                <h2>Параметры</h2>
+                <div class="d-flex-tel-job mb-2">
+                    <label class="col-form-label width-blocks">Название объявления</label>
+                    <div class="mt-0">
+                        <input type="text" class="form-control" v-model="desired_position" aria-describedby="passwordHelpInline">
+                        <div class="text-muted" v-if="desired_position_error == ''">Например, «Продавец-консультант в магазин одежды» или «Водитель такси».</div>
+                        <div class="text-danger">@{{desired_position_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex-tel-job mb-2">
+                    <label class="col-form-label width-blocks">График работы</label>
+                    <div class="d-flex flex-column mb-3">
+                        <div class="mt-0 d-flex">
+                            <select v-model="work_schedule" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="Вихтовый метод">Вихтовый метод</option>
+                                <option value="Неполный день">Неполный день</option>
+                                <option value="Полный день">Полный день</option>
+                                <option value="Свободный график">Свободный график</option>
+                                <option value="Сменный график">Сменный график</option>
+                                <option value="Удалённая работа">Удалённая работа</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{work_schedule_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex-tel-job mb-2">
+                    <label class="col-form-label width-blocks">Зарплата</label>
+                    <div class="d-flex flex-column mb-3">
+                        <div class="mt-0 d-flex w-423">
+                            <input type="text" class="form-control border-right-none" v-model="from_price" placeholder="От" aria-describedby="passwordHelpInline">
+                            <input type="text" class="form-control border-left-none border-right-none" v-model="before_price" placeholder="До" aria-describedby="passwordHelpInline">
+                            <select class="form-select form-select-lg border-left-none" v-model="when_price" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="в месяц">В месяц</option>
+                                <option value="в неделю">В неделю</option>
+                                <option value="за смену">За смену</option>
+                                <option value="за час">За час</option>
+                                <option value="сдельная оплата">Сдельная оплата</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex-tel-job mb-2">
+                    <label class="col-form-label width-blocks">Частота выплат</label>
+                    <div class="d-flex flex-column mb-3">
+                        <div class="mt-0 d-flex">
+                            <select v-model="frequency_payments" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="Почасовая оплата">Почасовая оплата</option>
+                                <option value="Каждый день">Каждый день</option>
+                                <option value="Дважды в месяц">Дважды в месяц</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex-tel-job mb-4">
+                    <label class="col-form-label width-blocks">Где предстоит работать</label>
+                    <div class="mt-0">
+                        <input type="text" class="form-control" v-model="where_work" aria-describedby="passwordHelpInline">
+                    </div>
+                </div>
+                <div class="d-flex-tel-job mb-4 w-700">
+                    <label class="col-form-label width-blocks">Описание вакансии и компании</label>
+                    <div class="d-flex flex-column">
+                        <div class="form-floating w-423">
+                            <textarea class="form-control" v-model="description" placeholder="Чтобы побудить работодателя пригласить именно вас, укажите свои деловые качества и профессиональные навыки. Расскажите про ваши достижения. Напишите, чем вы можете быть полезны компании на этой должности" style="height: 120px"></textarea>
+                        </div>
+                        <div class="text-danger">@{{description_error}}</div>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center mb-4">
+                    <div class="col-12 col-lg-4 mt-0">
+                        <label class="col-form-label">Логотип или фотография <span class="text-muted small">(Максимум
+                                5)</span></label>
+                    </div>
+                    <div class="col-auto mt-3">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addimage"><span>+</span> Добавить фото</button>
+                        <div class="mt-3">
+                            <span v-for="(item, id) in images" key="id" style="width:100px;display:inline-block;">
+                                <img width="100"
+                                    :src="'/storage/jobs_image/{{auth()->user()->id}}/' + item.image"
+                                    alt="">
+                                <span class="bg-danger pt-2 text-white px-1" style="position: relative;bottom:28px;cursor:pointer;" v-on:click="delete_images_job(id)"><i class="material-icons">delete</i></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <h2>Место работы</h2>
+                <input type="text" v-model="adres" class="form-control mt-2 w-700" aria-describedby="passwordHelpInline" placeholder="Введите адрес">
+                <div class="text-danger mb-3">@{{adres_error}}</div>
+                <h2>Требования к кандидату</h2>
+                <div class="d-flex-tel-job mb-2 mt-2">
+                    <label class="col-form-label width-blocks">Опыт работы</label>
+                    <div class="d-flex flex-column mb-3">
+                        <div class="mt-0 d-flex">
+                            <select v-model="work_experience" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                <option value="" selected disabled></option>
+                                <option value="Не имеет значения">Не имеет значения</option>
+                                <option value="Более 1 года">Более 1 года</option>
+                                <option value="Более 3 лет">Более 3 лет</option>
+                                <option value="Более 5 лет">Более 5 лет</option>
+                                <option value="Более 10 лет">Более 10 лет</option>
+                            </select>
+                        </div>
+                        <div class="text-danger">@{{work_experience_error}}</div>
+                    </div>
+                </div>
+                <div class="d-flex-tel mb-3 mt-1">
+                    <label for="name" class="col-form-label width-blocks">В том числе для кандидатов</label>
+                    <div class="mt-0 d-flex flex-column">
+                        <div>
+                            <input class="form-check-input me-2 mb-2" type="checkbox" v-model="over_years_old" id="over_years_old" aria-label="...">
+                            <span>Старше 45 лет</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2 mb-2" type="checkbox" v-model="from_years_old" id="from_years_old" aria-label="...">
+                            <span>От 14 лет</span>
+                        </div>
+                        <div>
+                            <input class="form-check-input me-2" type="checkbox" v-model="with_violation_health" id="with_violation_health" aria-label="...">
+                            <span>С нарушениями здоровья</span>
+                        </div>
+                    </div>
+                </div>
+                <h2>Контакты</h2>
+                <div class="d-flex-tel mb-2">
+                    <span for="name" class="col-form-label pt-0 width-blocks">Номер телефона</span>
+                    <div class="mt-0 d-flex">
+                        <span class="fw-bold">{{auth()->user()->tel}}</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary w-700 mt-3" v-on:click="add_job">Опубликовать</button>
+            </div>
         </div>
 
           <!-- Начало модального окна добавления фото -->
@@ -488,6 +623,14 @@
                     images: [],
                     images_error: '',
                     file_job_error: '',
+                    from_price: '',
+                    before_price: '',
+                    when_price: '',
+                    frequency_payments: '',
+                    where_work: '',
+                    over_years_old: '',
+                    from_years_old: '',
+                    with_violation_health: '',
                     my_city: JSON.parse(localStorage.getItem("city")),
                 }
             },
@@ -527,51 +670,123 @@
                     this.type_job = ''
                 },
                 add_job() {
-                    if(this.desired_position != '') {
-                        if(this.work_schedule != '') {
-                            if(this.gender != '') {
-                                if(this.citizenship != '') {
-                                    if(this.description != '') {
-                                        if(this.adres != '') {
-                                            this.adres_error = ''
-                                            this.description_error = ''
+                    if(this.job == 'Резюме') {
+                        if(this.desired_position != '') {
+                            if(this.work_schedule != '') {
+                                if(this.gender != '') {
+                                    if(this.citizenship != '') {
+                                        if(this.description != '') {
+                                            if(this.adres != '') {
+                                                this.adres_error = ''
+                                                this.description_error = ''
+                                                this.citizenship_error = ''
+                                                this.gender_error = ''
+                                                this.work_schedule_error = ''
+                                                this.desired_position_error = ''
+    
+                                                axios({
+                                                    method: 'post',
+                                                    url: '/add_job_resume',
+                                                    responseType: 'json',
+                                                    data: {
+                                                        type_job: this.type_job,
+                                                        desired_position: this.desired_position,
+                                                        work_schedule: this.work_schedule,
+                                                        work_experience: this.work_experience,
+                                                        education: this.education,
+                                                        gender: this.gender,
+                                                        day_birth: this.day_birth,
+                                                        month_birth: this.month_birth,
+                                                        year_birth: this.year_birth,
+                                                        read_trips: this.read_trips,
+                                                        move: this.move,
+                                                        citizenship: this.citizenship,
+                                                        company_name: this.company_name,
+                                                        post: this.post,
+                                                        month_getting_started: this.month_getting_started,
+                                                        year_getting_started: this.year_getting_started,
+                                                        month_end_work: this.month_end_work,
+                                                        year_end_work: this.year_end_work,
+                                                        until_now: this.until_now,
+                                                        responsibilities: this.responsibilities,
+                                                        name_institution: this.name_institution,
+                                                        specialization: this.specialization,
+                                                        year_graduation: this.year_graduation,
+                                                        knowledge_languages: this.knowledge_languages,
+                                                        description: this.description,
+                                                        price: this.price,
+                                                        adres: this.adres,
+                                                        city: this.my_city,
+                                                    },
+                                                })
+                                                .then(function (response) {
+                                                    window.location.href = '/cabinet'
+                                                })
+                                            } else {
+                                                this.adres_error = 'Введите значение параметра'
+                                                this.description_error = ''
+                                                this.citizenship_error = ''
+                                                this.gender_error = ''
+                                                this.work_schedule_error = ''
+                                                this.desired_position_error = ''
+                                            }
+                                        } else {
+                                            this.description_error = 'Пожалуйста, заполните описание'
                                             this.citizenship_error = ''
                                             this.gender_error = ''
+                                            this.work_schedule_error = ''
+                                            this.desired_position_error = ''
+                                        }
+                                    } else {
+                                        this.citizenship_error = 'Укажите гражданство'
+                                        this.gender_error = ''
+                                        this.work_schedule_error = ''
+                                        this.desired_position_error = ''
+                                    }
+                                } else {
+                                    this.gender_error = 'Выберите значение из списка'
+                                    this.work_schedule_error = ''
+                                    this.desired_position_error = ''
+                                }
+                            } else {
+                                this.work_schedule_error = 'Введите значение из списка'
+                                this.desired_position_error = ''
+                            }
+                        } else {
+                            this.desired_position_error = 'Введите название объявления'
+                        }
+                    } else
+                    if(this.job == 'Вакансии') {
+                        if(this.desired_position != '') {
+                            if(this.work_schedule != '') {
+                                if(this.description != '') {
+                                    if(this.adres != '') {
+                                        if(this.work_experience != '') {
+                                            this.work_experience_error = ''
+                                            this.adres_error = ''
+                                            this.description_error = ''
                                             this.work_schedule_error = ''
                                             this.desired_position_error = ''
 
                                             axios({
                                                 method: 'post',
-                                                url: '/add_job_resume',
+                                                url: '/add_job_openings',
                                                 responseType: 'json',
                                                 data: {
                                                     type_job: this.type_job,
                                                     desired_position: this.desired_position,
                                                     work_schedule: this.work_schedule,
-                                                    work_experience: this.work_experience,
-                                                    education: this.education,
-                                                    gender: this.gender,
-                                                    day_birth: this.day_birth,
-                                                    month_birth: this.month_birth,
-                                                    year_birth: this.year_birth,
-                                                    read_trips: this.read_trips,
-                                                    move: this.move,
-                                                    citizenship: this.citizenship,
-                                                    company_name: this.company_name,
-                                                    post: this.post,
-                                                    month_getting_started: this.month_getting_started,
-                                                    year_getting_started: this.year_getting_started,
-                                                    month_end_work: this.month_end_work,
-                                                    year_end_work: this.year_end_work,
-                                                    until_now: this.until_now,
-                                                    responsibilities: this.responsibilities,
-                                                    name_institution: this.name_institution,
-                                                    specialization: this.specialization,
-                                                    year_graduation: this.year_graduation,
-                                                    knowledge_languages: this.knowledge_languages,
+                                                    frequency_payments: this.frequency_payments,
+                                                    where_work: this.where_work,
                                                     description: this.description,
-                                                    price: this.price,
+                                                    from_price: this.from_price,
+                                                    before_price: this.before_price,
+                                                    when_price: this.when_price,
                                                     adres: this.adres,
+                                                    work_experience: this.work_experience,
+                                                    over_years_old: this.over_years_old,
+                                                    from_years_old: this.from_years_old,
+                                                    with_violation_health: this.with_violation_health,
                                                     city: this.my_city,
                                                 },
                                             })
@@ -579,37 +794,30 @@
                                                 window.location.href = '/cabinet'
                                             })
                                         } else {
-                                            this.adres_error = 'Введите значение параметра'
+                                            this.work_experience_error = 'Выберите значение из списка'
+                                            this.adres_error = ''
                                             this.description_error = ''
-                                            this.citizenship_error = ''
-                                            this.gender_error = ''
                                             this.work_schedule_error = ''
                                             this.desired_position_error = ''
                                         }
                                     } else {
-                                        this.description_error = 'Пожалуйста, заполните описание'
-                                        this.citizenship_error = ''
-                                        this.gender_error = ''
+                                        this.adres_error = 'Введите значение параметра'
+                                        this.description_error = ''
                                         this.work_schedule_error = ''
                                         this.desired_position_error = ''
                                     }
                                 } else {
-                                    this.citizenship_error = 'Укажите гражданство'
-                                    this.gender_error = ''
+                                    this.description_error = 'Пожалуйста, заполните описание'
                                     this.work_schedule_error = ''
                                     this.desired_position_error = ''
                                 }
                             } else {
-                                this.gender_error = 'Выберите значение из списка'
-                                this.work_schedule_error = ''
+                                this.work_schedule_error = 'Введите значение из списка'
                                 this.desired_position_error = ''
                             }
                         } else {
-                            this.work_schedule_error = 'Введите значение из списка'
-                            this.desired_position_error = ''
+                            this.desired_position_error = 'Введите название объявления'
                         }
-                    } else {
-                        this.desired_position_error = 'Введите название объявления'
                     }
                 },
                 add_images_job() {

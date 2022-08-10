@@ -141,6 +141,9 @@
     height: 250px;
     width: 700px
 }
+.fs-category {
+    font-size: 1.5rem !important;
+}
 @media (min-width: 1400px) {
     .cards {
         width: 24.5% !important;
@@ -218,6 +221,9 @@
     }
     .w-423 {
         width: 100%;
+    }
+    .fs-category {
+        font-size: 1.25rem !important;
     }
 }
 @media (min-width: 767.5px) {

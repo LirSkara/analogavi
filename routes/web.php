@@ -60,6 +60,8 @@ Route::post('/add_job_resume', [AddEditController::class, 'add_job_resume']);
 Route::get('/all_img_job', [AddEditController::class, 'all_img_job']);
 Route::post('/img_add_job', [AddEditController::class, 'img_add_job']);
 Route::get('/img_delete_job/{id}', [AddEditController::class, 'img_delete_job']);
+Route::post('/add_job_openings', [AddEditController::class, 'add_job_openings']);
+Route::get('/job_detailed/{id}/{job}', [HomeController::class, 'job_detailed']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/reg', [AuthController::class, 'reg']);

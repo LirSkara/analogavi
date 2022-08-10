@@ -33,6 +33,7 @@ use App\Models\GaragesBuy;
 use App\Models\GaragesTake;
 use App\Models\JobsImage;
 use App\Models\JobsResume;
+use App\Models\JobsOpenings;
 
 class AddEditController extends Controller
 {
@@ -1075,6 +1076,7 @@ class AddEditController extends Controller
         $jobs->year_end_work = $data['year_end_work'];
         $jobs->until_now = $data['until_now'];
         $jobs->responsibilities = $data['responsibilities'];
+        $jobs->name_institution = $data['name_institution'];
         $jobs->specialization = $data['specialization'];
         $jobs->year_graduation = $data['year_graduation'];
         $jobs->knowledge_languages = $data['knowledge_languages'];
@@ -1092,6 +1094,46 @@ class AddEditController extends Controller
         $jobs->description = $data['description'];
         $jobs->price = $data['price'];
         $jobs->adres = $data['adres'];
+
+        $jobs->city = $data['city'];
+        $jobs->status = 0;
+        $jobs->save();
+
+        JobsImage::where('user', '=', auth()->user()->id)->delete();
+    }
+    public function add_job_openings(Request $data){        
+        $jobs_image = JobsImage::where('user', '=', auth()->user()->id)->get();
+        
+        $jobs = new JobsOpenings();
+        $jobs->user = auth()->user()->id;
+        $jobs->tel = auth()->user()->tel;
+        $jobs->name_user = auth()->user()->name;
+        $jobs->type_job = $data['type_job'];
+
+        $jobs->desired_position = $data['desired_position'];
+        $jobs->work_schedule = $data['work_schedule'];
+        $jobs->frequency_payments = $data['frequency_payments'];
+        $jobs->where_work = $data['where_work'];
+
+        if(JobsImage::where('user', '=', auth()->user()->id)->count() != 0) {
+            $images = '';
+            foreach($jobs_image as $item) {
+                $images = $images.$item->image.',';
+            }
+            $jobs->images = rtrim($images, ",");
+        } else {
+            $jobs->images = null;
+        }
+
+        $jobs->description = $data['description'];
+        $jobs->from_price = $data['from_price'];
+        $jobs->before_price = $data['before_price'];
+        $jobs->when_price = $data['when_price'];
+        $jobs->adres = $data['adres'];
+        $jobs->work_experience = $data['work_experience'];
+        $jobs->over_years_old = $data['over_years_old'];
+        $jobs->from_years_old = $data['from_years_old'];
+        $jobs->with_violation_health = $data['with_violation_health'];
 
         $jobs->city = $data['city'];
         $jobs->status = 0;
