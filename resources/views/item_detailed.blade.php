@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title')Khalif - Недвижимость@endsection
 @section('content')
-<div class="container">
+<div class="container" id="item">
     <div class="d-flex flex-column w-100">
         <nav aria-label="breadcrumb" class="d-tel-none">
             <ol class="breadcrumb">
@@ -38,7 +38,7 @@
                             </button>
                         </div>
                     @else
-                        <img class="carousel-img" src="/storage/realty_image/{{$item->user}}/{{$item->images}}" alt="...">
+                        <img class="carousel-img" src="/storage/items_image/{{$item->user}}/{{$item->images}}" alt="...">
                     @endif
                 @else
                     <img class="carousel-img" src="/no_photo.png" alt="...">
@@ -48,7 +48,15 @@
                 <h2 class="realty-price">{{$item->price}} ₽</h2>
                 <div class="d-flex-button">
                     <button class="btn btn-success mt-2 btn-width">{{$item->tel}}</button>
-                    <button class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                    @if(Auth::check())
+                        @if($favourites == 0)
+                            <button v-on:click="add_favourites({{$item->id}})" id="btn_add_fav_item" class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                        @else
+                            <button class="btn btn-dis mt-2 btn-width">В избранном</button>
+                        @endif
+                    @else
+                        <button class="btn btn-primary mt-2 btn-width" data-bs-toggle="modal" data-bs-target="#no_favourites">Добавить в избранное</button>
+                    @endif
                 </div>
                 <h3 class="mt-3">Описание:</h3>
                 <p>{{$item->description}}</p>
@@ -56,4 +64,41 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="no_favourites" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                Для того, чтобы добавить в избранное, нужно зарегистрироваться
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const Item = {
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            add_favourites(id) {
+                var type = 'Личные вещи'
+                axios({
+                    method: 'get',
+                    url: `/add_favourites_item/${type}/${id}`,
+                    responseType: 'json',
+                })
+                .then(function (response) {
+                    btn_add_fav_item.classList.remove('btn-primary')
+                    btn_add_fav_item.classList.add('btn-dis')
+                    document.getElementById('btn_add_fav_item').innerHTML = 'В избранном'
+                })
+            }
+        }
+    }
+    Vue.createApp(Item).mount('#item')
+</script>
 @endsection

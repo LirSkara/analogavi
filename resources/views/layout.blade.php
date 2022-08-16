@@ -68,7 +68,7 @@
         </div>
         <!-- Конец модального окна выбора города -->
     </nav>
-    <div class="container my-3">
+    <div class="container my-3" id="ads_search">
         <div class="d-flex flex-wrap">
             <div class="px-1 pt-1 me-4 logo">
                 <!-- <span class="fs-4 fw-bold text-logo">LOGO DESC</span> -->
@@ -76,9 +76,24 @@
             </div>
             <div class="p-2 flex-grow-1 main-search mt-2">
                 <div class="input-group mb-3">
-                    <span class="input-group-text bg-white" id="basic-addon1"><i class="material-icons">search</i></span>
-                    <input type="text" class="form-control" placeholder="Поиск по объявлениям" aria-label="Username" aria-describedby="basic-addon1">
-                </div>                  
+                    <input type="text" v-on:input="search()" v-model="search_input" id="poisk_input" class="form-control" placeholder="Поиск по объявлениям" aria-label="Username" aria-describedby="basic-addon1">
+                    <button v-on:click="btn_search()" class="d-flex align-items-center btn btn-primary text-white" id="btn_poisk"><i class="material-icons fs-6 me-1">search</i> Найти</button>
+                </div>
+                <div id="platform_search" class="d-none div-success">
+                    <div class="w-100 bg-white border border-1 border-top-0 d-flex flex-column">
+                        <div v-if="ads_success.length != 0" class="my-2 d-flex flex-column">
+                            <a v-for="item in ads_success" :href="item.link" class="py-2 px-3 d-flex text-decoration-none w-100">
+                                <i class="bi bi-search me-2 text-muted"></i>
+                                <span class="text-dark">@{{item.name}}</span>
+                            </a>
+                        </div>
+                        <div v-if="ads_success.length == 0" class="my-2 d-flex">
+                            <a class="py-2 px-3 d-flex text-decoration-none w-100">
+                                <span class="text-dark">По ващему запросу ничего не найдено</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>         
             </div>
             <div class="p-2 btn-main mt-2"><a class="btn btn-primary btn-custom" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons align-middle fs-6 pb-1 me-1">add</i>Разместить объявление</a></div>
         </div>
@@ -127,7 +142,7 @@
         </div>
         </div>
     </div>
-
+    
     <script>
         const City = {
             data() {
@@ -158,7 +173,7 @@
                         window.onload = function () {
                             localStorage.setItem("city", JSON.stringify('Москва'));
                         }
-                    } 
+                    }
                 },
                 poisk_city() {
                     if(this.search_city != '') {
@@ -193,10 +208,84 @@
                     localStorage.setItem("city", JSON.stringify(city));
                     this.my_city = city
                     close_city.click()
-                }
+                },
             }
         }
         Vue.createApp(City).mount('#city')
+
+        const AdsSearch = {
+            data() {
+                return {
+                    ads: [],
+                    ads_success: [],
+                    search_input: '',
+                }
+            },
+            beforeMount() {
+                this.all();
+            },
+            methods: {
+                all() {
+                    axios({
+                        method: 'get',
+                        url: `/all_ads`,
+                        responseType: 'json',
+                    })
+                    .then(function (response) {
+                        response.data.forEach(elem => {
+                            this.ads.push({
+                                name: elem['name'],
+                                link: elem['link'],
+                                images: elem['images'],
+                                city: elem['city'],
+                                price: elem['price'],
+                                user: elem['user'],
+                                type: elem['type'],
+                                what_i_sell: elem['what_i_sell'],
+                                sell_and_buy: elem['sell_and_buy'],
+                            })
+                        });
+                    }.bind(this))
+                },
+                search() {
+                    if(this.search_input != '') {
+                        platform_search.classList.remove('d-none')
+                        poisk_input.classList.add('border-bottom-left-none')
+                        btn_poisk.classList.add('border-bottom-right-none')
+                        
+                        this.ads_success = this.ads,
+                        searchString = this.search_input;
+
+                        if(!searchString){
+                            if(searchString != ''){
+                                return ads_success;
+                            }
+                        }
+
+                        searchString = searchString.trim().toLowerCase();
+                        this.ads_success = this.ads_success.filter(function(item){
+                            if(item.name.toLowerCase().indexOf(searchString) !== -1){
+                                return item;
+                            }
+                        })
+                        
+                        return this.ads_success
+                    } else {
+                        platform_search.classList.add('d-none')
+                        poisk_input.classList.remove('border-bottom-left-none')
+                        btn_poisk.classList.remove('border-bottom-right-none')
+                    }
+                },
+                btn_search() {
+                    if(this.search_input != '') {
+                        localStorage.setItem("ads_success", JSON.stringify(this.ads_success));
+                        localStorage.setItem("search_input", JSON.stringify(this.search_input));
+                        window.location.href = '/success_search'
+                    }
+                }
+            }
+        }
+        Vue.createApp(AdsSearch).mount('#ads_search')
     </script>
   
     <!-- JavaScript Bundle with Popper -->

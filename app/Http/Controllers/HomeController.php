@@ -15,6 +15,7 @@ use App\Models\Garages;
 use App\Models\ApartmentTake;
 use App\Models\ApartmentBuy;
 use App\Models\ApartmentRent;
+use App\Models\Favourites;
 use App\Models\HomesTake;
 use App\Models\HomesBuy;
 use App\Models\HomesRent;
@@ -819,111 +820,114 @@ class HomeController extends Controller
         if($what_i_sell == 'Квартиры') {
             if($sell_and_buy == 'Продам') {
                 $realty = Realty::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сдам') {
                 $realty = ApartmentRent::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Куплю') {
                 $realty = ApartmentBuy::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сниму') {
                 $realty = ApartmentTake::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             }
         } else
         if($what_i_sell == 'Комнаты') {
             if($sell_and_buy == 'Продам') {
                 $realty = Rooms::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сдам') {
                 $realty = RoomRents::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Куплю') {
                 $realty = RoomBuy::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else 
             if($sell_and_buy == 'Сниму') {
                 $realty = RoomTake::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             }
         } else
         if($what_i_sell == 'Дома, дачи, коттеджи') {
             if($sell_and_buy == 'Продам') {
                 $realty = Homes::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сдам') {
                 $realty = HomesRent::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Куплю') {
                 $realty = HomesBuy::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сниму') {
                 $realty = HomesTake::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             }
         } else
         if($what_i_sell == 'Земельные участки') {
             if($sell_and_buy == 'Продам') {
                 $realty = LandPlot::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сдам') {
                 $realty = LandPlotRent::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Куплю') {
                 $realty = LandPlotBuy::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сниму') {
                 $realty = LandPlotType::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             }
         } else
         if($what_i_sell == 'Гаражи и машиноместа') {
             if($sell_and_buy == 'Продам') {
                 $realty = Garages::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сдам') {
                 $realty = GaragesRent::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Куплю') {
                 $realty = GaragesBuy::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             } else
             if($sell_and_buy == 'Сниму') {
                 $realty = GaragesTake::find($id);
-                return view('estate_detailed', ['realty' => $realty]);
             }
+        }
+        if(auth()->user() != null) {
+            $favourites = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', 'Недвижимость'], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+            return view('estate_detailed', ['realty' => $realty, 'favourites' => $favourites]);
+        } else {
+            return view('estate_detailed', ['realty' => $realty]);
         }
     }
     public function item_detailed($id) {
         $item = Items::find($id);
-        return view('item_detailed', ['item' => $item]);
+        if(auth()->user() != null) {
+            $favourites = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', 'Личные вещи']])->count();
+            return view('item_detailed', ['item' => $item, 'favourites' => $favourites]);
+        } else {
+            return view('item_detailed', ['item' => $item]);
+        }
     }
     public function car_detailed($id) {
         $car = Cars::find($id);
         $marka = Mark::find($car->marka);
-        return view('car_detailed', ['car' => $car, 'marka' => $marka]);
+        if(auth()->user() != null) {
+            $favourites = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', 'Транспорт']])->count(); 
+            return view('car_detailed', ['car' => $car, 'marka' => $marka, 'favourites' => $favourites]);
+        } else {
+            return view('car_detailed', ['car' => $car, 'marka' => $marka]);
+        }
     }
     public function job_detailed($id, $job) {
         if($job == 'Резюме') {
             $job_detailed = JobsResume::find($id);
-            return view('job_detailed', ['job_detailed' => $job_detailed, 'job' => $job]);
         } else
         if($job == 'Вакансии') {
             $job_detailed = JobsOpenings::find($id);
+        }
+        if(auth()->user() != null) {
+            $favourites = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', 'Работа'], ['what_i_sell', '=', $job]])->count();
+            return view('job_detailed', ['job_detailed' => $job_detailed, 'job' => $job, 'favourites' => $favourites]);
+        } else {
             return view('job_detailed', ['job_detailed' => $job_detailed, 'job' => $job]);
         }
+    }
+    public function success_search() {
+        return view('success_search');
     }
 }

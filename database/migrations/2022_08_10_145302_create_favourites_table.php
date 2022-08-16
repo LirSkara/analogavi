@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('user');
             $table->text('type');
-            $table->text('what_i_sell');
-            $table->text('sell_and_buy');
+            $table->text('what_i_sell')->nullable();
+            $table->text('sell_and_buy')->nullable();
             $table->string('id_adv');
             $table->text('name');
             $table->text('price');
             $table->text('city');
-            $table->text('images');
+            $table->text('images')->nullable();
             $table->timestamps();
         });
     }

@@ -1146,29 +1146,984 @@ class AddEditController extends Controller
         if($type == 'Недвижимость') {
             if($what_i_sell == 'Квартиры') {
                 if($sell_and_buy == 'Продам') {
-                    $item = Realty::find($id);
-                    if($item->count_rooms == 'Студия') {
-                        $item_name = 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
-                    } else {
-                        $item_name = $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = Realty::find($id);
+                        if($item->count_rooms == 'Студия') {
+                            $item_name = 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                        } else {
+                            $item_name = $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                        }
+                    }
+                } else
+                if($sell_and_buy == 'Сдам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = ApartmentRent::find($id);
+                        if($item->count_rooms == 'Студия') {
+                            $item_name = 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                        } else {
+                            $item_name = $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                        }
+                    }
+                } else
+                if($sell_and_buy == 'Куплю') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = ApartmentBuy::find($id);
+                        $item_name = $item->count_rooms.'-к. квартира';
+                    }
+                } else
+                if($sell_and_buy == 'Сниму') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = ApartmentTake::find($id);
+                        $item_name = $item->count_rooms.'-к. квартира';
+                    }
+                }
+            } else
+            if($what_i_sell == 'Комнаты') {
+                if($sell_and_buy == 'Продам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = Rooms::find($id);
+                        if($item->count_rooms == 'Студия') {
+                            $item_name = 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                        } else {
+                            $item_name = 'Комната '.$item->square.' м² в '.$item->count_rooms.'-k., '.$item->floor.'/'.$item->floor_home.' эт.';
+                        }
+                    }
+                } else
+                if($sell_and_buy == 'Сдам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = RoomRents::find($id);
+                        if($item->count_rooms == 'Студия') {
+                            $item_name = 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.';
+                        } else {
+                            $item_name = 'Комната '.$item->square.' м² в '.$item->count_rooms.'-k., '.$item->floor.'/'.$item->floor_home.' эт.';
+                        }
+                    }
+                } else
+                if($sell_and_buy == 'Куплю') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = RoomBuy::find($id);
+                        $item_name = 'Комната';
+                    }
+                } else
+                if($sell_and_buy == 'Сниму') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = RoomTake::find($id);
+                        $item_name = 'Комната';
+                    }
+                }
+            } else 
+            if($what_i_sell == 'Дома, дачи, коттеджи') {
+                if($sell_and_buy == 'Продам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = Homes::find($id);
+                        $item_name = $item->object_type.' '.$item->square.' м² на участке '.$item->square_region.' сот.';
+                    }
+                } else
+                if($sell_and_buy == 'Сдам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = HomesRent::find($id);
+                        $item_name = $item->object_type.' '.$item->square.' м² на участке '.$item->square_region.' сот.';
+                    }
+                } else
+                if($sell_and_buy == 'Куплю') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = HomesBuy::find($id);
+                        $item_name = $item->object_type;
+                    }
+                } else
+                if($sell_and_buy == 'Сниму') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = HomesTake::find($id);
+                        $item_name = $item->object_type;
+                    }
+                }
+            } else
+            if($what_i_sell == 'Земельные участки') {
+                if($sell_and_buy == 'Продам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = LandPlot::find($id);
+                        $item_name = 'Участок '.$item->square.' сот.';
+                    }
+                } else
+                if($sell_and_buy == 'Сдам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = LandPlotRent::find($id);
+                        $item_name = 'Участок '.$item->square.' сот.';
+                    }
+                } else
+                if($sell_and_buy == 'Куплю') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = LandPlotBuy::find($id);
+                        $item_name = 'Участок';
+                    }
+                } else
+                if($sell_and_buy == 'Сниму') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = LandPlotType::find($id);
+                        $item_name = 'Участок';
+                    }
+                }
+            } else
+            if($what_i_sell == 'Гаражи и машиноместа') {
+                if($sell_and_buy == 'Продам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = Garages::find($id);
+                        $item_name = 'Гараж, '.$item->square.' м²';
+                    }
+                } else
+                if($sell_and_buy == 'Сдам') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = GaragesRent::find($id);
+                        $item_name = 'Гараж, '.$item->square.' м²';
+                    }
+                } else
+                if($sell_and_buy == 'Куплю') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = GaragesBuy::find($id);
+                        $item_name = 'Гараж';
+                    }
+                } else
+                if($sell_and_buy == 'Сниму') {
+                    $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $what_i_sell], ['sell_and_buy', '=', $sell_and_buy]])->count();
+                    if($count == 0) {
+                        $item = GaragesTake::find($id);
+                        $item_name = 'Гараж';
                     }
                 }
             }
         }
-        $item_price = $item->price;
-        $item_city = $item->city;
-        $item_images = $item->images;
+        if($count == 0) {
+            if($item->sell_and_buy == 'Продам' || $item->sell_and_buy == 'Куплю') {
+                $item_price = $item->price.' ₽';
+            } else
+            if($item->sell_and_buy == 'Сдам' || $item->sell_and_buy == 'Сниму') {
+                if($item->type_time == 'Сутки') {
+                    $item_price = $item->price.' ₽ в сутки';
+                } else {
+                    $item_price = $item->price.' ₽ в месяц';
+                }
+            }
+            $item_city = $item->city;
+            $item_images = $item->images;
+    
+            $favourite = new Favourites;
+            $favourite->user = auth()->user()->id;
+            $favourite->type = $type;
+            $favourite->what_i_sell = $what_i_sell;
+            $favourite->sell_and_buy = $sell_and_buy;
+            $favourite->id_adv = $id;
+            $favourite->name = $item_name;
+            $favourite->price = $item_price;
+            $favourite->city = $item_city;
+            $favourite->images = $item_images;
+            $favourite->save();
+        }
+    }
+    public function add_favourites_item($type, $id){
+        if($type == 'Личные вещи') {
+            $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type]])->count();
+            if($count == 0) {
+                $item = Items::find($id);
+                $item_name = $item->name;
+            }
+        }
+        if($count == 0) {
+            $item_price = $item->price;
+            $item_city = $item->city;
+            $item_images = $item->images;
 
-        $favourite = new Favourites;
-        $favourite->user = auth()->user()->id;
-        $favourite->type = $type;
-        $favourite->what_i_sell = $what_i_sell;
-        $favourite->sell_and_buy = $sell_and_buy;
-        $favourite->id_adv = $id;
-        $favourite->name = $item_name;
-        $favourite->price = $item_price;
-        $favourite->city = $item_city;
-        $favourite->images = $item_images;
-        $favourite->save();
+            $favourite = new Favourites;
+            $favourite->user = auth()->user()->id;
+            $favourite->type = $type;
+            $favourite->id_adv = $id;
+            $favourite->name = $item_name;
+            $favourite->price = $item_price;
+            $favourite->city = $item_city;
+            $favourite->images = $item_images;
+            $favourite->save();
+        }
+    }
+    public function add_favourites_car($type, $id){
+        if($type == 'Транспорт') {
+            $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type]])->count();
+            if($count == 0) {
+                $item = Cars::find($id);
+                $marka = Mark::find($item->marka);
+                $item_name = $marka->marka.' '.$marka->model.', '.$marka->year;
+            }
+        }
+        if($count == 0) {
+            $item_price = $item->price.' ₽';
+            $item_city = $item->city;
+            $item_images = $item->images;
+
+            $favourite = new Favourites;
+            $favourite->user = auth()->user()->id;
+            $favourite->type = $type;
+            $favourite->id_adv = $id;
+            $favourite->name = $item_name;
+            $favourite->price = $item_price;
+            $favourite->city = $item_city;
+            $favourite->images = $item_images;
+            $favourite->save();
+        }
+    }
+    public function add_favourites_job($type, $job, $id){
+        if($type == 'Работа') {
+            if($job == 'Резюме') {
+                $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $job]])->count();
+                if($count == 0) {
+                    $item = JobsResume::find($id);
+                    $item_name = $item->desired_position;
+                    $item_price = $item->price.' ₽';
+                    $item_what_i_sell = 'Резюме';
+                    $item_city = $item->city;
+                    $item_images = $item->images;
+                }
+            } else
+            if($job == 'Вакансии') {
+                $count = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', $type], ['what_i_sell', '=', $job]])->count();
+                if($count == 0) {
+                    $item = JobsOpenings::find($id);
+                    $item_name = $item->desired_position;
+                    if($item['from_price'] != '' && $item['before_price'] == '' && $item['when_price'] == '') {
+                        $item_price = 'от '.$item['from_price'].' ₽';
+                    } else
+                    if($item['from_price'] == '' && $item['before_price'] != '' && $item['when_price'] == '') {
+                        $item_price = 'до '.$item['before_price'].' ₽';
+                    } else
+                    if($item['from_price'] != '' && $item['before_price'] != '' && $item['when_price'] == '') {
+                        $item_price = $item['from_price'].' - '.$item['before_price'].' ₽';
+                    } else
+                    if($item['from_price'] != '' && $item['before_price'] != '' && $item['when_price'] != '') {
+                        $item_price = $item['from_price'].' - '.$item['before_price'].' ₽ '.$item['when_price'];
+                    } else
+                    if($item['from_price'] == '' && $item['before_price'] == '' && $item['when_price'] == '') {
+                        $item_price = $item->price;
+                    } else
+                    if($item['from_price'] != '' && $item['before_price'] == '' && $item['when_price'] != '') {
+                        $item_price = $item->price;
+                    } else
+                    if($item['from_price'] == '' && $item['before_price'] != '' && $item['when_price'] != '') {
+                        $item_price = $item->price;
+                    }
+                    $item_what_i_sell = 'Вакансии';
+                    $item_city = $item->city;
+                    $item_images = $item->images;
+                }
+            }
+        }
+
+        if($count == 0) {
+            $favourite = new Favourites;
+            $favourite->user = auth()->user()->id;
+            $favourite->type = $type;
+            $favourite->id_adv = $id;
+            $favourite->name = $item_name;
+            $favourite->what_i_sell = $item_what_i_sell;
+            $favourite->price = $item_price;
+            $favourite->city = $item_city;
+            $favourite->images = $item_images;
+            $favourite->save();
+        }
+    }
+    public function delete_favourites($id) {
+        Favourites::find($id)->delete();
+        return redirect()->route('favorites');
+    }
+    public function all_ads() {
+        $realty = Realty::all();
+        $rooms = Rooms::all();
+        $homes = Homes::all();
+        $land_plotes = LandPlot::all();
+        $garages = Garages::all();
+        $apartment_take = ApartmentTake::all();
+        $apartment_buy = ApartmentBuy::all();
+        $apartment_rent = ApartmentRent::all();
+        $homes_take = HomesTake::all();
+        $homes_buy = HomesBuy::all();
+        $homes_rent = HomesRent::all();
+        $room_take = RoomTake::all();
+        $room_buy = RoomBuy::all();
+        $room_rent = RoomRents::all();
+        $land_plot_take = LandPlotType::all();
+        $land_plot_buy = LandPlotBuy::all();
+        $land_plot_rent = LandPlotRent::all();
+        $garages_rent = GaragesRent::all();
+        $garages_buy = GaragesBuy::all();
+        $garages_take = GaragesTake::all();
+        $cars = Cars::all();
+        $marks = Mark::all();
+        $items = Items::all();
+        $jobs_resume = JobsResume::all();
+        $jobs_openings = JobsOpenings::all();
+
+        $ads = [];
+
+        foreach($homes as $item) {
+            $ads[] = array(
+                "name" => $item->object_type.' '.$item->square.' м² на участке '.$item->square_region.' сот.',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($realty as $item) {
+            if($item->count_rooms == 'Студия') {
+                $ads[] = array(
+                    "name" => 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price,
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price,
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($rooms as $item) {
+            if($item->count_rooms == 'Студия') {
+                $ads[] = array(
+                    "name" => 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price,
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => 'Комната '.$item->square.' м² в '.$item->count_rooms.'-k., '.$item->floor.'/'.$item->floor_home.' эт.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price,
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($land_plotes as $item) {
+            $ads[] = array(
+                "name" => 'Участок '.$item->square.' сот.',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($garages as $item) {
+            $ads[] = array(
+                "name" => 'Гараж, '.$item->square.' м²',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($apartment_rent as $item) {
+            if($item->count_rooms == 'Студия') {
+                if($item->type_time == 'Сутки') {
+                    $ads[] = array(
+                        "name" => 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в сутки',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                } else {
+                    $ads[] = array(
+                        "name" => 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в месяц',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                }
+            } else {
+                if($item->type_time == 'Сутки') {
+                    $ads[] = array(
+                        "name" => $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в сутки',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                } else {
+                    $ads[] = array(
+                        "name" => $item->count_rooms.'-к. квартира, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в месяц',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                }
+            }
+        };
+
+        foreach($apartment_buy as $item) {
+            $ads[] = array(
+                "name" => $item->count_rooms.'-к. квартира',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($apartment_take as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => $item->count_rooms.'-к. квартира',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => $item->count_rooms.'-к. квартира',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($homes_rent as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => $item->object_type.' '.$item->square.' м² на участке '.$item->square_region.' сот.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => $item->object_type.' '.$item->square.' м² на участке '.$item->square_region.' сот.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($homes_buy as $item) {
+            $ads[] = array(
+                "name" => $item->object_type,
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($homes_take as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => $item->object_type,
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => $item->object_type,
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($room_rent as $item) {
+            if($item->count_rooms == 'Студия') {
+                if($item->type_time == 'Сутки') {
+                    $ads[] = array(
+                        "name" => 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в сутки',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                } else {
+                    $ads[] = array(
+                        "name" => 'Комната-студия, '.$item->square.' м², '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в месяц',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                }
+            } else {
+                if($item->type_time == 'Сутки') {
+                    $ads[] = array(
+                        "name" => 'Комната '.$item->square.' м² в '.$item->count_rooms.'-k., '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в сутки',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                } else {
+                    $ads[] = array(
+                        "name" => 'Комната '.$item->square.' м² в '.$item->count_rooms.'-k., '.$item->floor.'/'.$item->floor_home.' эт.',
+                        "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                        "images" => $item->images,
+                        "city" => $item->city,
+                        "price" => $item->price.' ₽ в месяц',
+                        "user" => $item->user,
+                        "type" => 'Недвижимость',
+                        "what_i_sell" => $item->what_i_sell,
+                        "sell_and_buy" => $item->sell_and_buy,
+                    );
+                }
+            }
+        };
+
+        foreach($room_buy as $item) {
+            $ads[] = array(
+                "name" => 'Комната',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($room_take as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => 'Комната',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => 'Комната',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($land_plot_rent as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => 'Участок '.$item->square.' сот.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => 'Участок '.$item->square.' сот.',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($land_plot_buy as $item) {
+            $ads[] = array(
+                "name" => 'Участок',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($land_plot_take as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => 'Участок',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => 'Участок',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($garages_rent as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => 'Гараж, '.$item->square.' м²',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => 'Гараж, '.$item->square.' м²',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        
+        foreach($garages_buy as $item) {
+            $ads[] = array(
+                "name" => 'Гараж',
+                "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price,
+                "user" => $item->user,
+                "type" => 'Недвижимость',
+                "what_i_sell" => $item->what_i_sell,
+                "sell_and_buy" => $item->sell_and_buy,
+            );
+        };
+
+        foreach($garages_take as $item) {
+            if($item->type_time == 'Сутки') {
+                $ads[] = array(
+                    "name" => 'Гараж',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в сутки',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            } else {
+                $ads[] = array(
+                    "name" => 'Гараж',
+                    "link" => '/estate_detailed/'.$item->id.'/'.$item->what_i_sell.'/'.$item->sell_and_buy,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽ в месяц',
+                    "user" => $item->user,
+                    "type" => 'Недвижимость',
+                    "what_i_sell" => $item->what_i_sell,
+                    "sell_and_buy" => $item->sell_and_buy,
+                );
+            }
+        };
+
+        foreach($cars as $item) {
+            foreach($marks->where('id', '=', $item->marka) as $marka) {
+                $ads[] = array(
+                    "name" => $marka->marka.' '.$marka->model.', '.$marka->year,
+                    "link" => '/car_detailed/'.$item->id,
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->price.' ₽',
+                    "user" => $item->user,
+                    "type" => 'Транспорт',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            }
+        };
+
+        foreach($items as $item) {
+            $ads[] = array(
+                "name" => $item->name,
+                "link" => '/item_detailed/'.$item->id,
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price.' ₽',
+                "user" => $item->user,
+                "type" => 'Личные вещи',
+                "what_i_sell" => '',
+                "sell_and_buy" => '',
+                "what_i_sell" => '',
+                "sell_and_buy" => '',
+            );
+        };
+
+        foreach($jobs_resume as $item) {
+            $ads[] = array(
+                "name" => $item->desired_position,
+                "link" => '/job_detailed/'.$item->id.'/Резюме',
+                "images" => $item->images,
+                "city" => $item->city,
+                "price" => $item->price.' ₽',
+                "user" => $item->user,
+                "type" => 'Работа',
+                "what_i_sell" => '',
+                "sell_and_buy" => '',
+            );
+        };
+
+        foreach($jobs_openings as $item) {
+            if($item->from_price != '' && $item->before_price == '' && $item->when_price == '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => 'от '.$item->from_price.' ₽',
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            } else
+            if($item->from_price == '' && $item->before_price != '' && $item->when_price == '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => 'до '.$item->before_price.' ₽',
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            } else
+            if($item->from_price != '' && $item->before_price != '' && $item->when_price == '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->from_price.' - '.$item->before_price.' ₽',
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            } else 
+            if($item->from_price != '' && $item->before_price != '' && $item->when_price != '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => $item->from_price.' - '.$item->before_price.' ₽ '.$item->when_price,
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            } else
+            if($item->from_price == '' && $item->before_price == '' && $item->when_price == '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => 'Зарплата не указана',
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            } else
+            if($item->from_price != '' && $item->before_price == '' && $item->when_price != '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => 'от '.$item->from_price.' ₽ '.$item->when_price,
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            } else
+            if($item->from_price == '' && $item->before_price != '' && $item->when_price != '') {
+                $ads[] = array(
+                    "name" => $item->desired_position,
+                    "link" => '/job_detailed/'.$item->id.'/Вакансии',
+                    "images" => $item->images,
+                    "city" => $item->city,
+                    "price" => 'до '.$item->before_price.' ₽ '.$item->when_price,
+                    "user" => $item->user,
+                    "type" => 'Работа',
+                    "what_i_sell" => '',
+                    "sell_and_buy" => '',
+                );
+            }
+        };
+
+        return $ads;
     }
 }

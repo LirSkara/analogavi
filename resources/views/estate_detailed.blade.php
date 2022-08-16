@@ -100,7 +100,15 @@
                 @endif
                 <div class="d-flex-button">
                     <button class="btn btn-success mt-2 btn-width">{{$realty->tel}}</button>
-                    <button v-on:click="add_favourites({{$realty->id}}, '{{$realty->what_i_sell}}', '{{$realty->sell_and_buy}}')" class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                    @if(Auth::check())
+                        @if($favourites == 0)
+                            <button v-on:click="add_favourites({{$realty->id}}, '{{$realty->what_i_sell}}', '{{$realty->sell_and_buy}}')" id="btn_add_fav_estate" class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                        @else
+                            <button class="btn btn-dis mt-2 btn-width">В избранном</button>
+                        @endif
+                    @else
+                        <button class="btn btn-primary mt-2 btn-width" data-bs-toggle="modal" data-bs-target="#no_favourites">Добавить в избранное</button>
+                    @endif
                 </div>
                 <h3 class="mt-3">Описание:</h3>
                 <p>{{$realty->description}}</p>
@@ -322,6 +330,18 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="no_favourites" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                Для того, чтобы добавить в избранное, нужно зарегистрироваться
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     const Estate = {
         data() {
@@ -331,7 +351,6 @@
         },
         methods: {
             add_favourites(id, what_i_sell, sell_and_buy) {
-                console.log(id, what_i_sell, sell_and_buy)
                 var type = 'Недвижимость'
                 axios({
                     method: 'get',
@@ -339,7 +358,9 @@
                     responseType: 'json',
                 })
                 .then(function (response) {
-                    alert(44)
+                    btn_add_fav_estate.classList.remove('btn-primary')
+                    btn_add_fav_estate.classList.add('btn-dis')
+                    document.getElementById('btn_add_fav_estate').innerHTML = 'В избранном'
                 })
             }
         }

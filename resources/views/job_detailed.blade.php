@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title')Avito - Работа@endsection
 @section('content')
-<div class="container">
+<div class="container" id="job">
     <div class="d-flex flex-column w-100">
         <nav aria-label="breadcrumb" class="d-tel-none">
             <ol class="breadcrumb">
@@ -66,7 +66,15 @@
                 @endif
                 <div class="d-flex-button">
                     <button class="btn btn-success mt-2 btn-width">{{$job_detailed->tel}}</button>
-                    <button class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                    @if(Auth::check())
+                        @if($favourites == 0)
+                            <button v-on:click="add_favourites({{$job_detailed->id}}, '{{$job}}')" id="btn_add_fav_job" class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                        @else
+                            <button class="btn btn-dis mt-2 btn-width">В избранном</button>
+                        @endif
+                    @else
+                        <button class="btn btn-primary mt-2 btn-width" data-bs-toggle="modal" data-bs-target="#no_favourites">Добавить в избранное</button>
+                    @endif
                 </div>
                 <h3 class="mt-3">Описание:</h3>
                 <p>{{$job_detailed->description}}</p>
@@ -233,4 +241,41 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="no_favourites" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                Для того, чтобы добавить в избранное, нужно зарегистрироваться
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const Job = {
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            add_favourites(id, job) {
+                var type = 'Работа'
+                axios({
+                    method: 'get',
+                    url: `/add_favourites_job/${type}/${job}/${id}`,
+                    responseType: 'json',
+                })
+                .then(function (response) {
+                    btn_add_fav_job.classList.remove('btn-primary')
+                    btn_add_fav_job.classList.add('btn-dis')
+                    document.getElementById('btn_add_fav_job').innerHTML = 'В избранном'
+                })
+            }
+        }
+    }
+    Vue.createApp(Job).mount('#job')
+</script>
 @endsection

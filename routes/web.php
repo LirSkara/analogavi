@@ -63,6 +63,13 @@ Route::get('/img_delete_job/{id}', [AddEditController::class, 'img_delete_job'])
 Route::post('/add_job_openings', [AddEditController::class, 'add_job_openings']);
 Route::get('/job_detailed/{id}/{job}', [HomeController::class, 'job_detailed']);
 Route::get('/add_favourites/{type}/{what_i_sell}/{sell_and_buy}/{id}', [AddEditController::class, 'add_favourites']);
+Route::get('/add_favourites_item/{type}/{id}', [AddEditController::class, 'add_favourites_item']);
+Route::get('/add_favourites_car/{type}/{id}', [AddEditController::class, 'add_favourites_car']);
+Route::get('/add_favourites_job/{type}/{job}/{id}', [AddEditController::class, 'add_favourites_job']);
+Route::get('/delete_favourites/{id}', [AddEditController::class, 'delete_favourites']);
+Route::get('/all_ads', [AddEditController::class, 'all_ads']);
+Route::post('/poisk_ads', [HomeController::class, 'poisk_ads']);
+Route::get('/success_search', [HomeController::class, 'success_search'])->name('success_search');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/reg', [AuthController::class, 'reg']);
@@ -72,5 +79,5 @@ Route::get('/cabinet', [AuthController::class, 'cabinet'])->name('cabinet');
 Route::get('/user_info', [AuthController::class, 'user_info']);
 Route::post('/user_info', [AuthController::class, 'user_info_p']);
 Route::get('/my_adv', [AuthController::class, 'my_adv']);
-Route::get('/favorites', [AuthController::class, 'favorites']);
+Route::get('/favorites', [AuthController::class, 'favorites'])->name('favorites');
 Route::get('/exit', [AuthController::class, 'exit']);

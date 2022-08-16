@@ -1,11 +1,7 @@
 @extends('layout')
-<<<<<<< HEAD
 @section('title')Avito - Транспорт@endsection
-=======
-@section('title')Khalif - Недвижимость@endsection
->>>>>>> 2579c78dd01a0e4f8bc1c48716f211b5ffb6b8e7
 @section('content')
-<div class="container">
+<div class="container" id="car">
     <div class="d-flex flex-column w-100">
         <nav aria-label="breadcrumb" class="d-tel-none">
             <ol class="breadcrumb">
@@ -52,7 +48,15 @@
                 <h2 class="realty-price">{{$car->price}} ₽</h2>
                 <div class="d-flex-button">
                     <button class="btn btn-success mt-2 btn-width">{{$car->tel}}</button>
-                    <button class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                    @if(Auth::check())
+                        @if($favourites == 0)
+                            <button v-on:click="add_favourites({{$car->id}})" id="btn_add_fav" class="btn btn-primary mt-2 btn-width">Добавить в избранное</button>
+                        @else
+                            <button class="btn btn-dis mt-2 btn-width">В избранном</button>
+                        @endif
+                    @else
+                        <button class="btn btn-primary mt-2 btn-width" data-bs-toggle="modal" data-bs-target="#no_favourites">Добавить в избранное</button>
+                    @endif
                 </div>
                 <h3 class="mt-3">Описание:</h3>
                 <p>{{$car->description}}</p>
@@ -115,4 +119,41 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="no_favourites" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                Для того, чтобы добавить в избранное, нужно зарегистрироваться
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const Car = {
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            add_favourites(id) {
+                var type = 'Транспорт'
+                axios({
+                    method: 'get',
+                    url: `/add_favourites_car/${type}/${id}`,
+                    responseType: 'json',
+                })
+                .then(function (response) {
+                    btn_add_fav.classList.remove('btn-primary')
+                    btn_add_fav.classList.add('btn-dis')
+                    document.getElementById('btn_add_fav').innerHTML = 'В избранном'
+                })
+            }
+        }
+    }
+    Vue.createApp(Car).mount('#car')
+</script>
 @endsection

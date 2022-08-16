@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favourites;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -90,7 +91,8 @@ class AuthController extends Controller
 
     public function favorites()
     {
-        return view('favorites');
+        $favourites = Favourites::orderBy('id', 'DESC')->get();
+        return view('favorites', ['favourites' => $favourites]);
     }
 
     public function exit()
