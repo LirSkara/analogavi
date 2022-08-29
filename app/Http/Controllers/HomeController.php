@@ -30,35 +30,36 @@ use App\Models\GaragesBuy;
 use App\Models\GaragesTake;
 use App\Models\JobsOpenings;
 use App\Models\JobsResume;
+use App\Models\Tour;
 
 class HomeController extends Controller
 {
     public function welcome(){
-        $items = Items::all();
-        $cars = Cars::all();
-        $marks = Mark::all();
-        $realty = Realty::all();
-        $rooms = Rooms::all();
-        $homes = Homes::all();
-        $land_plotes = LandPlot::all();
-        $garages = Garages::all();
-        $apartment_take = ApartmentTake::all();
-        $apartment_buy = ApartmentBuy::all();
-        $apartment_rent = ApartmentRent::all();
-        $homes_take = HomesTake::all();
-        $homes_buy = HomesBuy::all();
-        $homes_rent = HomesRent::all();
-        $room_take = RoomTake::all();
-        $room_buy = RoomBuy::all();
-        $room_rent = RoomRents::all();
-        $land_plot_take = LandPlotType::all();
-        $land_plot_buy = LandPlotBuy::all();
-        $land_plot_rent = LandPlotRent::all();
-        $garages_rent = GaragesRent::all();
-        $garages_buy = GaragesBuy::all();
-        $garages_take = GaragesTake::all();
-        $jobs_resume = JobsResume::all();
-        $jobs_opening = JobsOpenings::all();
+        $items = Items::where('status', '=', 1)->get();
+        $cars = Cars::where('status', '=', 1)->get();
+        $marks = Mark::where('status', '=', 1)->get();
+        $realty = Realty::where('status', '=', 1)->get();
+        $rooms = Rooms::where('status', '=', 1)->get();
+        $homes = Homes::where('status', '=', 1)->get();
+        $land_plotes = LandPlot::where('status', '=', 1)->get();
+        $garages = Garages::where('status', '=', 1)->get();
+        $apartment_take = ApartmentTake::where('status', '=', 1)->get();
+        $apartment_buy = ApartmentBuy::where('status', '=', 1)->get();
+        $apartment_rent = ApartmentRent::where('status', '=', 1)->get();
+        $homes_take = HomesTake::where('status', '=', 1)->get();
+        $homes_buy = HomesBuy::where('status', '=', 1)->get();
+        $homes_rent = HomesRent::where('status', '=', 1)->get();
+        $room_take = RoomTake::where('status', '=', 1)->get();
+        $room_buy = RoomBuy::where('status', '=', 1)->get();
+        $room_rent = RoomRents::where('status', '=', 1)->get();
+        $land_plot_take = LandPlotType::where('status', '=', 1)->get();
+        $land_plot_buy = LandPlotBuy::where('status', '=', 1)->get();
+        $land_plot_rent = LandPlotRent::where('status', '=', 1)->get();
+        $garages_rent = GaragesRent::where('status', '=', 1)->get();
+        $garages_buy = GaragesBuy::where('status', '=', 1)->get();
+        $garages_take = GaragesTake::where('status', '=', 1)->get();
+        $jobs_resume = JobsResume::where('status', '=', 1)->get();
+        $jobs_opening = JobsOpenings::where('status', '=', 1)->get();
 
         $estate = [];
 
@@ -419,26 +420,26 @@ class HomeController extends Controller
         return view('welcome', ['items' => $items, 'cars' => $cars, 'marks' => $marks, 'estate' => $estate, 'jobs' => $jobs]);
     }
     public function estate(){
-        $realty = Realty::all();
-        $rooms = Rooms::all();
-        $homes = Homes::all();
-        $land_plotes = LandPlot::all();
-        $garages = Garages::all();
-        $apartment_take = ApartmentTake::all();
-        $apartment_buy = ApartmentBuy::all();
-        $apartment_rent = ApartmentRent::all();
-        $homes_take = HomesTake::all();
-        $homes_buy = HomesBuy::all();
-        $homes_rent = HomesRent::all();
-        $room_take = RoomTake::all();
-        $room_buy = RoomBuy::all();
-        $room_rent = RoomRents::all();
-        $land_plot_take = LandPlotType::all();
-        $land_plot_buy = LandPlotBuy::all();
-        $land_plot_rent = LandPlotRent::all();
-        $garages_rent = GaragesRent::all();
-        $garages_buy = GaragesBuy::all();
-        $garages_take = GaragesTake::all();
+        $realty = Realty::where('status', '=', 1)->get();
+        $rooms = Rooms::where('status', '=', 1)->get();
+        $homes = Homes::where('status', '=', 1)->get();
+        $land_plotes = LandPlot::where('status', '=', 1)->get();
+        $garages = Garages::where('status', '=', 1)->get();
+        $apartment_take = ApartmentTake::where('status', '=', 1)->get();
+        $apartment_buy = ApartmentBuy::where('status', '=', 1)->get();
+        $apartment_rent = ApartmentRent::where('status', '=', 1)->get();
+        $homes_take = HomesTake::where('status', '=', 1)->get();
+        $homes_buy = HomesBuy::where('status', '=', 1)->get();
+        $homes_rent = HomesRent::where('status', '=', 1)->get();
+        $room_take = RoomTake::where('status', '=', 1)->get();
+        $room_buy = RoomBuy::where('status', '=', 1)->get();
+        $room_rent = RoomRents::where('status', '=', 1)->get();
+        $land_plot_take = LandPlotType::where('status', '=', 1)->get();
+        $land_plot_buy = LandPlotBuy::where('status', '=', 1)->get();
+        $land_plot_rent = LandPlotRent::where('status', '=', 1)->get();
+        $garages_rent = GaragesRent::where('status', '=', 1)->get();
+        $garages_buy = GaragesBuy::where('status', '=', 1)->get();
+        $garages_take = GaragesTake::where('status', '=', 1)->get();
 
         $estate = [];
 
@@ -767,13 +768,13 @@ class HomeController extends Controller
         return view('estate', ['estate' => $estate]);
     }
     public function cars(){
-        $cars = Cars::all();
+        $cars = Cars::where('status', '=', 1)->orderBy('id', 'DESC')->get();
         $marks = Mark::all();
         return view('cars', ['cars' => $cars, 'marks' => $marks]);
     }
     public function job(){
-        $jobs_resume = JobsResume::all();
-        $jobs_opening = JobsOpenings::all();
+        $jobs_resume = JobsResume::where('status', '=', 1)->get();
+        $jobs_opening = JobsOpenings::where('status', '=', 1)->get();
 
         $jobs = [];
 
@@ -810,7 +811,7 @@ class HomeController extends Controller
         return view('job', ['jobs' => $jobs]);
     }
     public function items(){
-        $items = Items::all();
+        $items = Items::where('status', '=', 1)->orderBy('id', 'DESC')->get();
         return view('items', ['items' => $items]);
     }
     public function sotr(){
@@ -929,5 +930,18 @@ class HomeController extends Controller
     }
     public function success_search() {
         return view('success_search');
+    }
+    public function tours(){
+        $items = Tour::where('status', '=', 1)->orderBy('id', 'DESC')->get();
+        return view('tours', ['items' => $items]);
+    }
+    public function tour_detailed($id) {
+        $item = Tour::find($id);
+        if(auth()->user() != null) {
+            $favourites = Favourites::where([['user', '=', auth()->user()->id], ['id_adv', '=', $id], ['type', '=', 'Туризм']])->count();
+            return view('tour_detailed', ['item' => $item, 'favourites' => $favourites]);
+        } else {
+            return view('tour_detailed', ['item' => $item]);
+        }
     }
 }

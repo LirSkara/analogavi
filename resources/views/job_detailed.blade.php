@@ -16,14 +16,14 @@
                     @if(trim(strstr($job_detailed->images, ',', true)) != '')
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner carousel-img">
-                                <div class="carousel-job_detailed active">
+                                <div class="carousel-item active">
                                     <img class="carousel-img" src="/storage/jobs_image/{{$job_detailed->user}}/{{trim(strstr($job_detailed->images, ',', true))}}" alt="...">
                                 </div>
                                 <?php
                                     $images = explode(',', trim(strstr($job_detailed->images, ','), ', '));
                                 ?>
                                 @foreach($images as $img)
-                                    <div class="carousel-job_detailed">
+                                    <div class="carousel-item">
                                         <img class="carousel-img" src="/storage/jobs_image/{{$job_detailed->user}}/{{$img}}" alt="...">
                                     </div>
                                 @endforeach
@@ -107,7 +107,7 @@
                 @endif
                 @if($job_detailed->gender != '')
                     <div class="pe-text">
-                        <span class="fs-specifications text-muted">Лошадиных сил:</span>
+                        <span class="fs-specifications text-muted">Пол:</span>
                         <span class="fs-specifications ms-2">{{$job_detailed->gender}}</span>
                     </div>
                 @endif
@@ -139,12 +139,6 @@
                     <div class="pe-text">
                         <span class="fs-specifications text-muted">Знание языков:</span>
                         <span class="fs-specifications ms-2">{{$job_detailed->knowledge_languages}}</span>
-                    </div>
-                @endif
-                @if($job_detailed->frequency_payments != '')
-                    <div class="pe-text">
-                        <span class="fs-specifications text-muted">Частота выплат:</span>
-                        <span class="fs-specifications ms-2">{{$job_detailed->frequency_payments}}</span>
                     </div>
                 @endif
                 @if($job_detailed->frequency_payments != '')

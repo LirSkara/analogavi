@@ -205,7 +205,7 @@
                     </div>
                 </div>
                 <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" v-on:click="car_no_register()" value="true" v-model="car_no_reg" id="flexCheckDefaultcarno">
+                    <input class="form-check-input" name="car_no_reg" type="checkbox" v-on:click="car_no_register()" value="true" v-model="car_no_reg" id="flexCheckDefaultcarno">
                     <label class="form-check-label" for="flexCheckDefaultcarno">
                         Автомобиль не на учете в РФ
                     </label>
@@ -649,7 +649,7 @@
                                                                 this.mark_error = ''
                                                                 this.description_error = ''
                                                                 this.state_error = ''
-                
+                                                                
                                                                 var form_cars = new FormData($("#form_cars")[0]);
                 
                                                                 axios({

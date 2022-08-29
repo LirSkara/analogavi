@@ -13,18 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favourites', function (Blueprint $table) {
+        Schema::create('tour_images', function (Blueprint $table) {
             $table->id();
             $table->string('user');
-            $table->text('type');
-            $table->text('what_i_sell')->nullable();
-            $table->text('sell_and_buy')->nullable();
-            $table->string('id_adv');
-            $table->string('user_adv');
-            $table->text('name');
-            $table->text('price');
-            $table->text('city');
-            $table->text('images')->nullable();
+            $table->text('image');
             $table->timestamps();
         });
     }
@@ -36,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favourites');
+        Schema::dropIfExists('tour_images');
     }
 };

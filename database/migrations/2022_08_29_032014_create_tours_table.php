@@ -13,27 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('tours', function (Blueprint $table) {
             $table->id();
             $table->string('user');
-            $table->string('state');
+            $table->text('name');
             $table->text('description');
             $table->text('price');
             $table->text('tel');
             $table->text('name_user');
             $table->text('images')->nullable();
-            $table->text('marka');
-            $table->text('type_doc');
-            $table->text('owner_count');
-            $table->text('when_pur_year')->nullable();
-            $table->text('when_pur_month')->nullable();
-            $table->text('year_graduation')->nullable();
-            $table->text('month_graduation')->nullable();
-            $table->text('state_number')->nullable();            
-            $table->string('vin')->nullable();
-            $table->string('ctc')->nullable();
-            $table->string('car_no_reg')->nullable();
-            $table->text('city');
+            $table->string('city');
             $table->string('status');
             $table->timestamps();
         });
@@ -46,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('tours');
     }
 };

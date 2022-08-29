@@ -21,6 +21,10 @@
                     <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
                     <div class="small-c">Личные вещи</div>
                 </a>
+                <a href="/tours" class="card p-2 text-center">
+                    <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
+                    <div class="small-c">Туризм</div>
+                </a>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title')
-    Khalif - Добавление недвижимости
+    Khalif - Добавление работы
 @endsection
 @section('content')
     

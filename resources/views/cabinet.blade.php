@@ -20,7 +20,7 @@
                     <ul class="dropdown-menu small w-100 py-0" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item border-bottom py-2" href="/user_info"><i class="bi bi-person-fill"></i>
                                 Мой профиль</a></li>
-                        @if (auth()->user()->id == 1)
+                        @if(auth()->user()->status == 9 || auth()->user()->status == 6)
                             <li><a class="dropdown-item border-bottom py-2" href="/control_panel"><i
                                         class="bi bi-gear-fill"></i>
                                     Панель управления</a></li>
@@ -38,14 +38,14 @@
                         <a href="/my_adv" class="small px-3 text-center text-decoration-none text-dark">
                             <i class="bi bi-file-earmark-richtext fs-1 text-primary d-block"></i>
                             Объявления
-                            <span class="small text-muted d-block">Всего моих: 0</span>
+                            <span class="small text-muted d-block">Всего моих: {{$ads_count}}</span>
                         </a>
                     </div>
                     <div class="col">
                         <a href="/favorites" class="small px-3 text-center text-decoration-none text-dark">
                             <i class="bi bi-bookmark-heart fs-1 text-danger d-block"></i>
                             Избранное
-                            <span class="small text-muted d-block">Всего: 0</span>
+                            <span class="small text-muted d-block">Всего: {{$favourites_count}}</span>
                         </a>
                     </div>
                     <div class="col">

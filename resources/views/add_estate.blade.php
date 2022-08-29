@@ -13,7 +13,6 @@
                 <button v-on:click="choose_realty('Дома, дачи, коттеджи')" class="btn btn-outline-primary w-100 mb-2">Дома, дачи, коттеджи</button>
                 <button v-on:click="choose_realty('Земельные участки')" class="btn btn-outline-primary w-100 mb-2">Земельные участки</button>
                 <button v-on:click="choose_realty('Гаражи и машиноместа')" class="btn btn-outline-primary w-100 mb-2">Гаражи и машиноместа</button>
-                <button v-on:click="choose_realty('Коммерческая недвижимость')" class="btn btn-outline-primary w-100 mb-2">Коммерческая недвижимость</button>
             </div>
             <div v-if="what_i_sell != '' && sell_and_buy == ''" class="d-flex flex-column">
                 <div class="d-flex mb-3">

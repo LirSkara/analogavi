@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('price');
             $table->text('tel');
             $table->text('name_user');
-            $table->text('images');
+            $table->text('images')->nullable();
             $table->string('city');
             $table->string('status');
             $table->timestamps();

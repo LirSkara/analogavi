@@ -3,7 +3,7 @@
     Khalif - Редактирование личных вещей
 @endsection
 @section('content')
-    <div class="container" id="edit_items">
+    <div class="container" id="edit_tours">
         <div class="row mx-auto">
             <form id="edit_form_personal" class="col">
             @csrf
@@ -15,20 +15,6 @@
                     <div class="col-12 col-lg-auto mt-0">
                         <input type="text" name="name" id="name" v-model="name" class="form-control" aria-describedby="passwordHelpInline">
                         <div class="text-danger">@{{name_error}}</div>
-                    </div>
-                </div>
-                <div class="row g-3 align-items-center mb-4">
-                    <div class="col-12 col-lg-4 mt-0">
-                        <label for="name" class="col-form-label">Состояние</label>
-                    </div>
-                    <div class="col-12 col-lg-auto mt-0">
-                        <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                        <select v-model="state" name="state" class="form-select" id="inlineFormSelectPref">
-                            <option value="" selected disabled>Выберите состояние</option>
-                            <option value="1">Новое</option>
-                            <option value="2">Б/у</option>
-                        </select>
-                        <div class="text-danger">@{{state_error}}</div>
                     </div>
                 </div>
                 <div class="row g-3 align-items-center mb-4">
@@ -78,11 +64,10 @@
     </div>
 
     <script>
-        const EditItems = {
+        const EditTours = {
             data() {
                 return {
                     name: '{{$item->name}}',
-                    state: '{{$item->state}}',
                     description: '{{$item->description}}',
                     price: '{{$item->price}}',
                     name_error: '',
@@ -97,47 +82,39 @@
                 edit_personal() {
                     event.preventDefault();
                     if(this.name != '') {
-                        if(this.state != '') {
-                            if(this.description != '') {
-                                if(this.price != '') {
-                                    this.personal_images_error = ''
-                                    this.price_error = ''
-                                    this.description_error = ''
-                                    this.state_error = ''
-                                    this.name_error = ''
+                        if(this.description != '') {
+                            if(this.price != '') {
+                                this.personal_images_error = ''
+                                this.price_error = ''
+                                this.description_error = ''
+                                this.name_error = ''
 
-                                    var form_personal = new FormData($("#edit_form_personal")[0]);
+                                var form_personal = new FormData($("#edit_form_personal")[0]);
 
-                                    axios({
-                                        method: 'post',
-                                        url: '/edit_items/{{$item->id}}',
-                                        responseType: 'json',
-                                        data: form_personal,
-                                    })
-                                    .then(function (response) {
-                                        window.location.href = '/my_adv'
-                                    })
-                                } else {
-                                    this.price_error = 'Это поле обязательно'
-                                    this.description_error = ''
-                                    this.state_error = ''
-                                    this.name_error = ''
-                                }
+                                axios({
+                                    method: 'post',
+                                    url: '/edit_tours/{{$item->id}}',
+                                    responseType: 'json',
+                                    data: form_personal,
+                                })
+                                .then(function (response) {
+                                    window.location.href = '/my_adv'
+                                })
                             } else {
-                                this.description_error = 'Это поле обязательно'
-                                this.state_error = ''
+                                this.price_error = 'Это поле обязательно'
+                                this.description_error = ''
                                 this.name_error = ''
                             }
                         } else {
-                            this.state_error = 'Это поле обязательно'
+                            this.description_error = 'Это поле обязательно'
                             this.name_error = ''
-                        }                  
+                        }
                     } else {
                         this.name_error = 'Это поле обязательно'
                     }
                 },
             }
         }
-        Vue.createApp(EditItems).mount('#edit_items')
+        Vue.createApp(EditTours).mount('#edit_tours')
     </script>
 @endsection

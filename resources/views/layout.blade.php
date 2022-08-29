@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/style.css">
     <meta name="theme-color" content="#0d6efd">
-
     <!-- Vue js -->
     <script pt src="https://unpkg.com/vue@next"></script>
     <!-- Axios -->
@@ -71,7 +70,6 @@
     <div class="container my-3" id="ads_search">
         <div class="d-flex flex-wrap">
             <div class="px-1 pt-1 me-4 logo">
-                <!-- <span class="fs-4 fw-bold text-logo">LOGO DESC</span> -->
                 <a class="mx-auto fs-1 text-decoration-none fw-bold text-dark" href="/"><img class="logo-img" src="https://khalifmarket.com/apple-touch-icon.png" alt="Khalif" style="width:44px;height:44px;position:relative;bottom:4px;">Khalif</a>
             </div>
             <div class="p-2 flex-grow-1 main-search mt-2">
@@ -98,6 +96,20 @@
             <div class="p-2 btn-main mt-2"><a class="btn btn-primary btn-custom" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons align-middle fs-6 pb-1 me-1">add</i>Разместить объявление</a></div>
         </div>
     </div>
+    <!-- <header id="header" class="d-flex align-items-center mb-3">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="fw-bold mt-2"><img class="logo-img" src="https://khalifmarket.com/apple-touch-icon.png" alt="Khalif" style="width:44px;height:44px;position:relative;bottom:4px;margin-right:-8px;"> <a class="text-dark text-decoration-none" href="/">Khalif</a></h1>
+            
+            <div class="logo mx-auto"> -->
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            <!-- </div>
+            <input type="search" placeholder="Введите в поиск" class="form-control me-0 py-2 px-4 w-50">
+            <div class="p-2 btn-main"><a class="btn btn-primary btn-custom" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons align-middle fs-6 pb-1 me-1">add</i>Разместить объявление</a></div>
+
+        </div>
+    </header> -->
     @yield('content')
     <div class="container">
         <footer class="py-3 my-4">
@@ -136,6 +148,10 @@
                     <a href="/add_items" class="col p-2 text-center text-decoration-none text-dark">
                         <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
                         <div class="small-c">Личные вещи</div>
+                    </a>
+                    <a href="/add_tourism" class="col p-2 text-center text-decoration-none text-dark">
+                        <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
+                        <div class="small-c">Туризм</div>
                     </a>
                 </div>
             </div>
