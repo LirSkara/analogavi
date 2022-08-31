@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/style.css">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Khalif</title>
+
     <meta name="theme-color" content="#0d6efd">
+    
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    
+    <!-- Google Fonts -->
+    <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
     <!-- Vue js -->
     <script pt src="https://unpkg.com/vue@next"></script>
     <!-- Axios -->
@@ -20,7 +40,9 @@
     <script src="http://yastatic.net/jquery/2.1.1/jquery.min.js"></script>
     <!-- Yandex Api -->
     <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <link rel="stylesheet" href="/assets/style.css">
 </head>
+
 <body>
     <nav class="bg-primary" id="city">
         <div class="container d-flex flex-wrap small">
@@ -37,6 +59,53 @@
                 @endif
             </ul>
         </div>
+        <!-- Начало модального окна выбора города -->
+        <div class="modal fade" id="choice_city" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="exampleModalLabel">Выбор города</h5>
+                        <button type="button" class="btn-close" id="close_city" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 600px;">
+                        <div class="d-flex flex-column">
+                            <input type="text" v-on:input="poisk_city()" v-model="search_city" id="input_city" class="form-control form-control-lg border-primary" placeholder="Город">
+                            <div v-if="city_success == ''" class="d-flex flex-column gap-2 mt-3">
+                                <div v-for="item in city" v-on:click="choose_city(item.city)" class="ps-2 btn-city">
+                                    <span class="fs-5">@{{item.city}},</span>
+                                    <span class="fs-5 text-muted ms-2">@{{item.region}}</span>
+                                </div>
+                            </div>
+                            <div v-if="city_success != ''" class="d-flex flex-column gap-2 mt-3">
+                                <div v-for="item in city_success" v-on:click="choose_city(item.city)" class="ps-2 btn-city">
+                                    <span class="fs-5">@{{item.city}},</span>
+                                    <span class="fs-5 text-muted ms-2">@{{item.region}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Конец модального окна выбора города -->
+    </nav>
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center">
+
+            <div class="cust-logo">
+                <h1 class="fw-bold mt-2"><img class="logo-img" src="https://khalifmarket.com/apple-touch-icon.png" alt="Khalif" style="width:44px;height:44px;position:relative;bottom:4px;margin-right:-8px;"> <a class="text-dark" href="/">Khalif</a></h1>
+            </div>
+            <nav id="navbar" class="navbar order-last order-lg-0 ms-auto">
+                <ul class="px-3">
+                    <input type="search" placeholder="Введите в поиск" class="form-control py-2 px-4">
+                    <li class="nav-item scrollto"><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" class="">+ Разместить объявление</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+            
+        </div>
+    </header><!-- End Header -->
         <!-- Начало модального окна выбора города -->
         <div class="modal fade" id="choice_city" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -111,18 +180,34 @@
         </div>
     </header> -->
     @yield('content')
-    <div class="container">
-        <footer class="py-3 my-4">
-          <ul class="nav justify-content-center pb-3 mb-3">
-            <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Главная</a></li>
-            <li class="nav-item"><a href="/estate" class="nav-link px-2 text-muted">Недвижимость</a></li>
-            <li class="nav-item"><a href="/cars" class="nav-link px-2 text-muted">Транспорт</a></li>
-            <li class="nav-item"><a href="/job" class="nav-link px-2 text-muted">Работа</a></li>
-            <li class="nav-item"><a href="items" class="nav-link px-2 text-muted">Личные вещи</a></li>
-          </ul>
-          <p class="text-center text-muted">© 2022 Khalif</p>
-        </footer>
-    </div>
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="container d-md-flex py-4">
+
+            <div class="me-md-auto text-center text-md-start">
+                <div class="copyright">
+                    &copy; <strong><span>Khalif 2022</span></strong><br>Все права защищены
+                </div>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -160,6 +245,9 @@
     </div>
     
     <script>
+        if(localStorage.getItem("city") == null){
+            localStorage.setItem("city", JSON.stringify('Москва'));
+        }
         const City = {
             data() {
                 return {

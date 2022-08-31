@@ -1,203 +1,85 @@
 @extends('layout')
-@section('title')Khalif - Главная страница@endsection
+@section('title')Khalif - Регистрация@endsection
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-lg-4">
-            <div class="scrolling-wrapper scroll-none pb-3">
-                <a href="/estate" class="card p-2 text-center">
-                    <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_4.png" class="w-75" alt="">
-                    <div class="small-c">Недвижимость</div>
-                </a>
-                <a href="/cars" class="card p-2 text-center">
-                    <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_1.png" class="w-75" alt="">
-                    <div class="small-c">Транспорт</div>
-                </a>
-                <a href="/job" class="card p-2 text-center">
-                    <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_110.png" class="w-75" alt="">
-                    <div class="small-c">Работа</div>
-                </a>
-                <a href="/items" class="card p-2 text-center">
-                    <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
-                    <div class="small-c">Личные вещи</div>
-                </a>
-                <a href="/tours" class="card p-2 text-center">
-                    <img src="https://www.avito.st/s/app/visual_shortcuts/light/228x192/cat_5.png" class="w-75" alt="">
-                    <div class="small-c">Туризм</div>
-                </a>
-            </div>
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex flex-column justify-content-center align-items-center bg-image">
+        <div class="container text-center text-md-left" data-aos="fade-up">
+            <div class="mb-3"><img class="logo-img" src="https://khalifmarket.com/apple-touch-icon.png" alt="Khalif" style="width:94px;height:94px;position:relative;bottom:4px;margin-right:-8px;border-radius:10px;"><br><span style="font-size:40pt;" class="text-white">Khalif</span></div>
+            <h1>Добро пожаловать</h1>
+            <h2>Тут вы можете найти или продать что угодно.</h2>
         </div>
-    </div>
-</div>
+    </section>
+    <!-- End Hero -->
 
-<div class="container mt-3">
-    <div class="fs-4">Недвижимость</div>
-</div>
-<div class="container px-0">
-    <div class="scrolling-wrapper scroll-none pb-2 px-2">
+    <main id="main">
 
-        @foreach($estate as $item)
-            <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-                @if($item['images'] != '')
-                    <img src="/storage/realty_image/{{$item['user']}}/{{explode(',', $item['images'])[0]}}" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-                @else
-                    <img src="/no_photo.png" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-                @endif                
-                <div class="text-dark px-3 pt-2">
-                    <div class="mb-3">
-                        <a href="/estate_detailed/{{$item['id']}}/{{$item['what_i_sell']}}/{{$item['sell_and_buy']}}" class="text-decoration-none link-dark yes-wrap">
-                            @if($item['what_i_sell'] == 'Дома, дачи, коттеджи')
-                                @if($item['sell_and_buy'] == 'Продам' || $item['sell_and_buy'] == 'Сдам')
-                                    <div class="fs-5 mb-1" style="height: 60px;">{{$item['object_type']}} {{$item['square']}} м² на участке {{$item['square_region']}} сот.</div>
-                                @elseif($item['sell_and_buy'] == 'Куплю' || $item['sell_and_buy'] == 'Сниму')
-                                    <div class="fs-5 mb-1" style="height: 60px;">{{$item['object_type']}}</div>
-                                @endif
-                            @elseif($item['what_i_sell'] == 'Квартиры')
-                                @if($item['sell_and_buy'] == 'Продам' || $item['sell_and_buy'] == 'Сдам')
-                                    @if($item['count_rooms'] == 'Студия')
-                                        <div class="fs-5 mb-1" style="height: 60px;">Комната-студия, {{$item['square']}} м², {{$item['floor']}}/{{$item['floor_home']}} эт.</div>
-                                    @else
-                                        <div class="fs-5 mb-1" style="height: 60px;">{{$item['count_rooms']}}-к. квартира, {{$item['square']}} м², {{$item['floor']}}/{{$item['floor_home']}} эт.</div>
-                                    @endif
-                                @elseif($item['sell_and_buy'] == 'Куплю' || $item['sell_and_buy'] == 'Сниму')
-                                    <div class="fs-5 mb-1" style="height: 60px;">{{$item['count_rooms']}}-к. квартира</div>
-                                @endif
-                            @elseif($item['what_i_sell'] == 'Комнаты')
-                                @if($item['sell_and_buy'] == 'Продам' || $item['sell_and_buy'] == 'Сдам')
-                                    @if($item['count_rooms'] == 'Студия')
-                                        <div class="fs-5 mb-1" style="height: 60px;">Комната-студия, {{$item['square']}} м², {{$item['floor']}}/{{$item['floor_home']}} эт.</div>
-                                    @else
-                                        <div class="fs-5 mb-1" style="height: 60px;">Комната {{$item['square']}} м² в {{$item['count_rooms']}}-k., {{$item['floor']}}/{{$item['floor_home']}} эт.</div>
-                                    @endif
-                                @elseif($item['sell_and_buy'] == 'Куплю' || $item['sell_and_buy'] == 'Сниму')
-                                    <div class="fs-5 mb-1" style="height: 60px;">Комната</div>
-                                @endif
-                            @elseif($item['what_i_sell'] == 'Земельные участки')
-                                @if($item['sell_and_buy'] == 'Продам' || $item['sell_and_buy'] == 'Сдам')
-                                    <div class="fs-5 mb-1" style="height: 60px;">Участок {{$item['square']}} сот.</div>
-                                @elseif($item['sell_and_buy'] == 'Куплю' || $item['sell_and_buy'] == 'Сниму')
-                                    <div class="fs-5 mb-1" style="height: 60px;">Участок</div>
-                                @endif
-                            @elseif($item['what_i_sell'] == 'Гаражи и машиноместа')
-                                @if($item['square'] != '')
-                                    <div class="fs-5 mb-1" style="height: 60px;">Гараж, {{$item['square']}} м²</div>
-                                @else
-                                    <div class="fs-5 mb-1" style="height: 60px;">Гараж</div>
-                                @endif
-                            @endif
-                            @if($item['sell_and_buy'] == 'Продам' || $item['sell_and_buy'] == 'Куплю')
-                                <p class="mb-2 fw-bold">{{$item['price']}} ₽</p>
-                            @elseif($item['sell_and_buy'] == 'Сдам' || $item['sell_and_buy'] == 'Сниму')
-                                @if($item['type_time'] == 'Сутки')
-                                    <p class="mb-2 fw-bold">{{$item['price']}} ₽ в сутки</p>
-                                @else
-                                    <p class="mb-2 fw-bold">{{$item['price']}} ₽ в месяц</p>
-                                @endif
-                            @endif
-                            <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> {{$item['city']}}</p>
-                        </a>
-                    </div>
+        <!-- ======= What We Do Section ======= -->
+        <section id="what-we-do" class="what-we-do">
+            <div class="container">
+
+                <div class="section-title mt-5">
+                    <h2>Категории сайта</h2>
                 </div>
-            </div>
-        @endforeach
 
-    </div>
-</div>
-
-
-<div class="container mt-3">
-    <div class="fs-4">Транспорт</div>
-</div>
-<div class="container px-0">
-    <div class="scrolling-wrapper scroll-none pb-2 px-2">
-        
-        @foreach($cars as $item)
-            @foreach($marks->where('id', $item->marka) as $marka)
-                <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-                    <img src="/storage/cars_image/{{$item->user}}/{{explode(',', $item->images)[0]}}" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-                    <div class="text-dark px-3 pt-2">
-                        <div class="mb-3">
-                            <a href="/car_detailed/{{$item->id}}" class="text-decoration-none link-dark yes-wrap">
-                                <div class="fs-5 mb-1" style="height: 60px;">{{$marka->marka}} {{$marka->model}}, {{$marka->year}}</div>
-                                <p class="mb-2 fw-bold">{{$item->price}} ₽</p>
-                                <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> {{$item->city}}</p>
+                <div class="row row-cols-2 row-cols-lg-5">
+                    <div class="col d-flex align-items-stretch">
+                        <div class="icon-box cus">
+                            <a href="/estate">
+                                <img class="w-50 mb-3"
+                                    src="/001.svg"
+                                    alt="">
+                                <h4>Недвижимость</h4>
                             </a>
+                            <p>Khalif позволяет легко просматривать дома. Когда вы будете готовы, вы также можете связаться с владельцем.</p>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        @endforeach
 
-    </div>
-</div>
-
-<div class="container mt-3">
-    <div class="fs-4">Работа</div>
-</div>
-<div class="container px-0">
-    <div class="scrolling-wrapper scroll-none pb-2 px-2">
-
-        @foreach($jobs as $item)
-            <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-                @if($item['images'] != '')
-                    <img src="/storage/jobs_image/{{$item['user']}}/{{explode(',', $item['images'])[0]}}" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-                @else
-                    <img src="/no_photo.png" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-                @endif                 
-                <div class="text-dark px-3 pt-2">
-                    <div class="mb-3">
-                        <a href="/job_detailed/{{$item['id']}}/{{$item['job']}}" class="text-decoration-none link-dark yes-wrap">
-                            <div class="fs-5 mb-1" style="height: 60px;">{{$item['desired_position']}}</div>
-                            @if($item['job'] == 'Резюме')
-                                <p class="mb-2 fw-bold">{{$item['price']}} ₽</p>
-                            @elseif($item['job'] == 'Вакансии')
-                                @if($item['from_price'] != '' && $item['before_price'] == '' && $item['when_price'] == '')
-                                    <p class="mb-2 fw-bold">от {{$item['from_price']}} ₽</p>
-                                @elseif($item['from_price'] == '' && $item['before_price'] != '' && $item['when_price'] == '')
-                                    <p class="mb-2 fw-bold">до {{$item['before_price']}} ₽</p>
-                                @elseif($item['from_price'] != '' && $item['before_price'] != '' && $item['when_price'] == '')
-                                    <p class="mb-2 fw-bold">{{$item['from_price']}} - {{$item['before_price']}} ₽</p>
-                                @elseif($item['from_price'] != '' && $item['before_price'] != '' && $item['when_price'] != '')
-                                    <p class="mb-2 fw-bold">{{$item['from_price']}} - {{$item['before_price']}} ₽ {{$item['when_price']}}</p>
-                                @elseif($item['from_price'] == '' && $item['before_price'] == '' && $item['when_price'] == '')
-                                    <p class="mb-2 fw-bold">Зарплата не указана</p>
-                                @elseif($item['from_price'] != '' && $item['before_price'] == '' && $item['when_price'] != '')
-                                    <p class="mb-2 fw-bold">от {{$item['from_price']}} ₽ {{$item['when_price']}}</p>
-                                @elseif($item['from_price'] == '' && $item['before_price'] != '' && $item['when_price'] != '')
-                                    <p class="mb-2 fw-bold">до {{$item['before_price']}} ₽ {{$item['when_price']}}</p>
-                                @endif
-                            @endif
-                            <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> {{$item['city']}}</p>
-                        </a>
+                    <div class="col d-flex align-items-stretch">
+                        <div class="icon-box cus">
+                            <a href="/cars">
+                                <img class="w-50 mb-3" src="/002.svg" alt="">
+                                <h4>Автомобили</h4>
+                            </a>
+                            <p>Выбрать для себя новый автомобиль или продать свой, теперь на нашем сайте сделать это гораздо проще.</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        @endforeach
 
-    </div>
-</div>
-
-<div class="container mt-3">
-    <div class="fs-4">Личные вещи</div>
-</div>
-<div class="container px-0">
-    <div class="scrolling-wrapper scroll-none pb-2 px-2">
-
-        @foreach($items as $item)
-            <div style="display: inline-block;vertical-align: top;width: 300px;" class="shadow-sm bg-white border rounded-3 mt-2 me-2">
-                <img src="/storage/items_image/{{$item->user}}/{{explode(',', $item->images)[0]}}" class="img-fluid rounded-top img-cover w-100" alt="Дербенту придали особый статус">
-                <div class="text-dark px-3 pt-2">
-                    <div class="mb-3">
-                        <a href="/item_detailed/{{$item->id}}" class="text-decoration-none link-dark yes-wrap">
-                            <div class="fs-5 mb-1" style="height: 60px;">{{$item->name}}</div>
-                            <p class="mb-2 fw-bold">{{$item->price}} ₽</p>
-                            <p class="display-6 fs-6 text-muted"><i class="bi bi-geo-alt-fill"></i> {{$item->city}}</p>
-                        </a>
+                    <div class="col d-flex align-items-stretch">
+                        <div class="icon-box cus">
+                            <a href="/job">
+                                <img class="w-50 mb-3" src="/003.svg"
+                                    alt="">
+                                <h4>Работа</h4>
+                            </a>
+                            <p>Тут вы можете найти работу или поискасть к себе в бизнес сотрудников. Khalif поможет найти вам всё.</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        @endforeach
 
-    </div>
-</div>
+                    <div class="col d-flex align-items-stretch">
+                        <div class="icon-box cus">
+                            <a href="/items">
+                                <img class="w-50 mb-3" src="/004.svg"
+                                    alt="">
+                                <h4>Личные вещи</h4>
+                            </a>
+                            <p>Продавайте и покупайте личные вещи, начиная от одежды, заканчивая техникой и мебелью.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col d-flex align-items-stretch">
+                        <div class="icon-box cus">
+                            <a href="/items">
+                                <img class="w-50 mb-3" src="/005.svg" alt="">
+                                <h4>Туризм</h4>
+                            </a>
+                            <p>Туристические поездки во всевозможные направления по всему миру.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End What We Do Section -->
+
+    </main><!-- End #main -->
 @endsection
