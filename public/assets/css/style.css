@@ -58,6 +58,17 @@ h6 {
   opacity: 1;
 }
 
+@media(min-width: 991px) {
+  .width-poisk {
+    width: 100%;
+  }
+}
+@media(max-width: 990.5px) {
+  .width-poisk {
+    width: auto;
+  }
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -249,7 +260,7 @@ h6 {
   color: #fff;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.5px) {
   .mobile-nav-toggle {
     display: block;
   }

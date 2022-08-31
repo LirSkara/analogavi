@@ -98,6 +98,12 @@
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
+.border-bottom-right-none {
+    border-bottom-right-radius: 0px;
+}
+.border-bottom-left-none {
+    border-bottom-left-radius: 0px;
+}
 .btn-city {
     cursor: pointer;
     border-radius: 5px;
@@ -164,6 +170,12 @@
 .fs-category {
     font-size: 1.5rem !important;
 }
+.div-success {
+    width: 796px;
+    position: absolute;
+    top: 43px;
+    z-index: 1000;
+}
 @media (min-width: 1400px) {
     .cards {
         width: 24.5% !important;
@@ -173,6 +185,9 @@
     .cards {
         width: 32.8%;
     }
+    .div-success {
+        width: 623px;
+    }
 }
 @media (max-width: 1199.5px) {
     .cards {
@@ -180,6 +195,9 @@
     }
     .btn-width {
         width: auto;
+    }
+    .div-success {
+        width: 453px;
     }
 }
 @media (max-width: 991.5px) {
@@ -216,6 +234,13 @@
     }
     .btn-width {
         width: 50%;
+    }
+    .div-success {
+        top: 51px;
+        left: 0px;
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 @media (max-width: 767.5px) {

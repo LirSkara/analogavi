@@ -68,7 +68,7 @@
                     
                     <div class="col d-flex align-items-stretch">
                         <div class="icon-box cus">
-                            <a href="/items">
+                            <a href="/tours">
                                 <img class="w-50 mb-3" src="/005.svg" alt="">
                                 <h4>Туризм</h4>
                             </a>
